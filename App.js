@@ -1,19 +1,24 @@
-import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import React, {Component} from 'react';
+import {Router, Scene} from 'react-native-router-flux';
+import { mapping, light as lightTheme } from '@eva-design/eva';
+import { ApplicationProvider, Layout } from 'react-native-ui-kitten';
+import {HomeScreen} from './src/screens/HomeScreen';
+import {SecondScreen} from './src/screens/SecondScreen';
 
-export default function App() {
-  return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-    </View>
-  );
+export default class App extends React.Component {
+    render() {
+        return (
+            <ApplicationProvider
+                mapping={mapping}
+                theme={lightTheme}>
+                <Layout style={{flex: 1}}/>
+                <Router>
+                    <Scene key = "root" hideNavBar={true}>
+                        <Scene key = "home" component = {HomeScreen}/>
+                        <Scene key = "second" component = {SecondScreen}/>
+                    </Scene>
+                </Router>
+            </ApplicationProvider>
+        );
+    }
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
