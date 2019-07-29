@@ -11,7 +11,6 @@ export default class App extends React.Component {
             <ApplicationProvider
                 mapping={mapping}
                 theme={lightTheme}>
-                <Layout style={{flex: 1}}/>
                 <Router>
                     <Scene key = "root" hideNavBar={true}>
                         <Scene key = "home" component = {HomeScreen}/>
