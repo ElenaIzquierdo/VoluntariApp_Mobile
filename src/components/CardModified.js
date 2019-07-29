@@ -29,29 +29,35 @@ class CardModified extends React.Component {
         const {textStyle, titleStyle, imatgeStyle, texticonStyle, cardStyle, iconStyle,titlepriceStyle, ViewRow} = styles;
         return(
             <Card
-                title='Casal dilluns 15'
-                image={require('../images/casalfoto.jpg')}>
-                <Text style={{marginBottom: 10}}>
-                    The idea with React Native Elements is more about component structure than actual design.
-                </Text>
-                <Icon
-                    reverse
-                    name='chevron-right'
-                    type='evilicon'
-                    color={APP_COLORS.color_next}
-                />
-                <Icon
-                    reverse
-                    name='chevron-left'
-                    type='evilicon'
-                    color={APP_COLORS.color_next}
-                />
+                image={this.props.image}>
+                <View style={styles.viewCardFooterStyle}>
+                    <View style={styles.texticonStyle}>
+                        <Text style={titleStyle}>
+                            {this.props.title}
+                        </Text>
+                    </View>
+                    <View style={styles.texticonStyle}>
+                        <EvilIcons name="location" size={25} color = {APP_COLORS.text_color} style = {iconStyle}/>
+                        <Text>{this.props.grup}</Text>
+                    </View>
+                    <View style={styles.texticonStyle}>
+                        <EvilIcons name="calendar" size={25} color = {APP_COLORS.text_color} style = {iconStyle}/>
+                        <Text>{this.props.dia}</Text>
+                    </View>
+                    <View style={styles.texticonStyle}>
+                        <EvilIcons name="clock" size={25} color = {APP_COLORS.text_color} style = {iconStyle}/>
+                        <Text>{this.props.hora}</Text>
+                    </View>
+                </View>
             </Card>
         );
     }
 
 };
 const styles ={
+    viewCardFooterStyle: {
+        backgroundColor: APP_COLORS.color_neutral
+    },
     viewCard: {
         backgroundColor: APP_COLORS.color_neutral,
         height: '72%'
@@ -66,6 +72,7 @@ const styles ={
     texticonStyle: {
         flexDirection: 'row',
         paddingRight: '5%',
+        paddingTop: '3%'
     },
     titlepriceStyle: {
         flexDirection: 'row',
@@ -80,7 +87,8 @@ const styles ={
         paddingLeft: '2%'
     },
     titleStyle: {
-        color:APP_COLORS.text_color
+        color:APP_COLORS.black,
+        fontSize: 21
     },
     cardStyle: {
         height: '90%',
