@@ -9,16 +9,18 @@ import { ApplicationProvider, Layout } from 'react-native-ui-kitten';
 
 const ConnectedRouter = connect()(Router);
 
-export default class App extends React.Component {
+class App extends React.Component {
     render() {
         return (
             <Provider store={store}>
                 <ApplicationProvider
                     mapping={mapping}
                     theme={lightTheme}>
-                <ConnectedRouter scenes={Scenes}/>
+                    <ConnectedRouter scenes={Scenes}/>
                 </ApplicationProvider>
             </Provider>
         );
     }
 }
+
+export default App;
