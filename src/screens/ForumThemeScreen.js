@@ -1,27 +1,22 @@
-import React from 'react';
-import { View, Text, Image } from 'react-native';
+import * as React from 'react';
+import { StyleSheet, View } from 'react-native';
+import { Button, Layout, Text, TopNavigation, TopNavigationProps } from 'react-native-ui-kitten';
+import Header from '../components/Header';
 import {APP_COLORS} from "../constants/colors";
-import { Card, ListItem, Button, Icon } from 'react-native-elements';
-import { EvilIcons } from '@expo/vector-icons';
+import {Icon} from "react-native-elements";
 import {Actions} from "react-native-router-flux";
 
-class ForumTheme extends React.Component {
+class ForumThemeScreen extends React.Component{
     constructor(props) {
         super(props)
     }
     render(){
-        const {textStyle, viewStyle, infoStyle, footer, viewInformationStyle} = styles;
+        const {titleStyle, viewStyle, infoStyle, viewInformationStyle,viewTitleStyle} = styles;
         return(
             <View style={viewStyle}>
-                <View style={footer}>
-                    <Text style = {textStyle}> {this.props.titleForum} </Text>
-                    <Icon
-                        name='plus'
-                        type='evilicon'
-                        color={APP_COLORS.text_color}
-                        size={32}
-                        onPress = {() => Actions.forumtheme()}
-                    />
+                <Header headerText="VoluntariApp"/>
+                <View style={viewTitleStyle}>
+                    <Text style = {titleStyle}> Comisió centre interés </Text>
                 </View>
                 <View style={viewInformationStyle}>
                     <Text style = {infoStyle}> Creat per {this.props.creator} </Text>
@@ -31,16 +26,25 @@ class ForumTheme extends React.Component {
             </View>
         );
     }
+}
 
-};
-const styles ={
-    textStyle:{
+
+
+
+const styles = StyleSheet.create({
+    viewTitleStyle:{
+      padding:'10%'
+    },
+    titleStyle:{
         color: APP_COLORS.text_color,
         fontSize: 22,
         fontWeight: 'bold'
     },
     viewStyle:{
-        padding:'3%'
+        backgroundColor: APP_COLORS.color_neutral,
+        width: '100%',
+        height: '100%',
+        flex: 1,
     },
     infoStyle:{
         color: APP_COLORS.text_color,
@@ -53,6 +57,7 @@ const styles ={
     viewInformationStyle:{
         paddingLeft:'4%'
     }
-}
+});
 
-export default ForumTheme;
+export default ForumThemeScreen;
+

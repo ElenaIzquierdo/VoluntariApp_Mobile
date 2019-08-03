@@ -35,7 +35,7 @@ class HomeScreen extends React.Component{
                         size={32}
                     />
                 </View>
-                <Button onPress = {() => Actions.second()}>Forum</Button>
+                <Button onPress = {() => Actions.forum()}>Forum</Button>
             </View>
         );
     }
