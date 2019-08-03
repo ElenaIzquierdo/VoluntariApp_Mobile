@@ -9,11 +9,40 @@ class ForumTheme extends React.Component {
     constructor(props) {
         super(props)
     }
+    pintarEstat(){
+        if(this.props.finished){
+            return(
+                <View style={styles.iconInfoTextStyle}>
+                    <Icon
+                        name='close-o'
+                        type='evilicon'
+                        color={APP_COLORS.color_darkred}
+                        size={20}
+                    />
+                    <Text style = {styles.infoStyle}> Tancat</Text>
+                </View>
+            );
+        }
+        else{
+            return(
+                <View style={styles.iconInfoTextStyle}>
+                    <Icon
+                        name='check'
+                        type='evilicon'
+                        color={APP_COLORS.color_green}
+                        size={20}
+                    />
+                    <Text style = {styles.infoStyle}> Obert </Text>
+                </View>
+            );
+        }
+
+    }
     render(){
-        const {textStyle, viewStyle, infoStyle, footer, viewInformationStyle} = styles;
+        const {textStyle, viewStyle, infoStyle, iconTextStyle, viewInformationStyle, iconInfoTextStyle} = styles;
         return(
             <View style={viewStyle}>
-                <View style={footer}>
+                <View style={iconTextStyle}>
                     <Text style = {textStyle}> {this.props.titleForum} </Text>
                     <Icon
                         name='plus'
@@ -24,9 +53,27 @@ class ForumTheme extends React.Component {
                     />
                 </View>
                 <View style={viewInformationStyle}>
-                    <Text style = {infoStyle}> Creat per {this.props.creator} </Text>
-                    <Text style = {infoStyle}> {this.props.estat} </Text>
-                    <Text style = {infoStyle}> {this.props.data} </Text>
+                    <View style={iconInfoTextStyle}>
+                        <Icon
+                            name='user'
+                            type='evilicon'
+                            color={APP_COLORS.text_color}
+                            size={20}
+                        />
+                        <Text style = {infoStyle}> Creat per {this.props.creator} </Text>
+                    </View>
+
+                    <View style={iconInfoTextStyle}>
+                        <Icon
+                            name='calendar'
+                            type='evilicon'
+                            color={APP_COLORS.text_color}
+                            size={20}
+                        />
+                        <Text style = {infoStyle}> {this.props.data} </Text>
+                    </View>
+
+                    {this.pintarEstat()}
                 </View>
             </View>
         );
@@ -46,9 +93,12 @@ const styles ={
         color: APP_COLORS.text_color,
         fontSize: 16,
     },
-    footer: {
+    iconTextStyle: {
         flexDirection: 'row',
         justifyContent: 'space-between',
+    },
+    iconInfoTextStyle: {
+        flexDirection: 'row',
     },
     viewInformationStyle:{
         paddingLeft:'4%'

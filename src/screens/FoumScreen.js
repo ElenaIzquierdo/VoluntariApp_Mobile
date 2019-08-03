@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { StyleSheet, View } from 'react-native';
+import { StyleSheet, View, ScrollView } from 'react-native';
 import { Button, Layout, Text, TopNavigation, TopNavigationProps } from 'react-native-ui-kitten';
 import Header from '../components/Header';
 import ForumTheme from '../components/ForumTheme';
@@ -13,10 +13,14 @@ class ForumScreen extends React.Component{
         return(
             <View style={styles.viewStyle}>
                 <Header headerText="VoluntariApp"/>
-                <ForumTheme titleForum={"Comisió centre interés"} creator={"Julia Soler"} estat={"Obert"} data={"24/06/2019"}/>
-                <ForumTheme titleForum={"Comisió centre interés"} creator={"Julia Soler"} estat={"Obert"} data={"24/06/2019"}/>
-                <ForumTheme titleForum={"Comisió centre interés"} creator={"Julia Soler"} estat={"Obert"} data={"24/06/2019"}/>
-                <ForumTheme titleForum={"Comisió centre interés"} creator={"Julia Soler"} estat={"Obert"} data={"24/06/2019"}/>
+                <ScrollView>
+                    <ForumTheme titleForum={"Comisió centre interés"} creator={"Julia Soler"} finished={false} data={"24/06/2019"}/>
+                    <ForumTheme titleForum={"Idees reunió equip"} creator={"Victor Gasol"} finished={false} data={"10/05/2019"}/>
+                    <ForumTheme titleForum={"Idees cançons"} creator={"Laura Gonzalez"} finished={false} data={"04/04/2019"}/>
+                    <ForumTheme titleForum={"Activitat dilluns 22-Sherlock"} creator={"Laura Gonzalez"} finished={true} data={"18/03/2019"}/>
+                    <ForumTheme titleForum={"Activitat dilluns 22-Sherlock"} creator={"Laura Gonzalez"} finished={true} data={"18/03/2019"}/>
+                    <ForumTheme titleForum={"Activitat dilluns 22-Sherlock"} creator={"Laura Gonzalez"} finished={true} data={"18/03/2019"}/>
+                </ScrollView>
             </View>
         );
     }

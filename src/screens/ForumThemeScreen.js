@@ -11,7 +11,7 @@ class ForumThemeScreen extends React.Component{
         super(props)
     }
     render(){
-        const {titleStyle, viewStyle, infoStyle, viewInformationStyle,viewTitleStyle} = styles;
+        const {titleStyle, viewStyle, infoStyle, viewInformationStyle,viewTitleStyle,iconTextStyle} = styles;
         return(
             <View style={viewStyle}>
                 <Header headerText="VoluntariApp"/>
@@ -32,6 +32,10 @@ class ForumThemeScreen extends React.Component{
 
 
 const styles = StyleSheet.create({
+    iconTextStyle: {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+    },
     viewTitleStyle:{
       padding:'10%'
     },

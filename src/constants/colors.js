@@ -11,6 +11,7 @@ export const APP_COLORS={
     color_yellow: '#F2A71B',
     color_orange: '#F2911B',
     color_beish: '#F2C185',
-    color_white: '#F2F2F2'
+    color_white: '#F2F2F2',
+    color_darkred: '#8b0000',
 }
 //'#22563a',
