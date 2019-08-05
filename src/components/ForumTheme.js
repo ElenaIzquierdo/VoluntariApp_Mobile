@@ -83,7 +83,7 @@ class ForumTheme extends React.Component {
 const styles ={
     textStyle:{
         color: APP_COLORS.text_color,
-        fontSize: 22,
+        fontSize: 17,
         fontWeight: 'bold'
     },
     viewStyle:{

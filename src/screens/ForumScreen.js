@@ -11,8 +11,16 @@ class ForumScreen extends React.Component{
         super(props)
     }
 
-    pintarTemes(){
-        return this.props.themes.map((tema)=>{
+    pintarTemesOberts(){
+        return this.props.themes_open.map((tema)=>{
+            return(
+                <ForumTheme key={tema.id} titleForum={tema.title} creator={tema.creator} finished={tema.finished} data={tema.data}/>
+            )
+        });
+    }
+
+    pintarTemesTancats(){
+        return this.props.themes_close.map((tema)=>{
             return(
                 <ForumTheme key={tema.id} titleForum={tema.title} creator={tema.creator} finished={tema.finished} data={tema.data}/>
             )
@@ -24,7 +32,11 @@ class ForumScreen extends React.Component{
             <View style={styles.viewStyle}>
                 <Header headerText="VoluntariApp"/>
                 <ScrollView>
-                    {this.pintarTemes()}
+                    <Text style={styles.text} category='h6'>Temes oberts</Text>
+                    {this.pintarTemesOberts()}
+
+                    <Text style={styles.text} category='h6'>Temes tancats</Text>
+                    {this.pintarTemesTancats()}
                 </ScrollView>
             </View>
         );
@@ -38,11 +50,18 @@ const styles = StyleSheet.create({
         height: '100%',
         flex: 1,
     },
+    text: {
+        marginVertical: 16,
+        color: APP_COLORS.text_color,
+        alignSelf: 'center'
+
+    },
 });
 
 const mapStateToProps = (state) => {
     return {
-        themes: state.forumReducer.themes,
+        themes_open: state.forumReducer.themes_open,
+        themes_close: state.forumReducer.themes_close,
     }
 }
 
