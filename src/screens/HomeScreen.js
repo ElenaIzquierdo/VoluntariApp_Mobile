@@ -2,7 +2,7 @@ import * as React from 'react';
 import { StyleSheet, View } from 'react-native';
 import { Button, Layout, Text, TopNavigation, TopNavigationProps } from 'react-native-ui-kitten';
 import { Actions } from 'react-native-router-flux';
-import connect from "react-redux/es/connect/connect";
+import {  connect } from 'react-redux';
 import Header from '../components/Header';
 import CardModified from '../components/CardModified';
 import {APP_COLORS} from "../constants/colors";
