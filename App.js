@@ -1,7 +1,6 @@
 import React from 'react';
 import { Router } from 'react-native-router-flux'
-import { View, Text } from 'react-native';
-import { store } from './src/store';
+import {store} from './src/store';
 import { Provider, connect } from 'react-redux';
 import Scenes from './src/Scenes';
 import { mapping, light as lightTheme } from '@eva-design/eva';
@@ -9,7 +8,7 @@ import { ApplicationProvider, Layout } from 'react-native-ui-kitten';
 
 const ConnectedRouter = connect()(Router);
 
-class App extends React.Component {
+export default class App extends React.Component {
     render() {
         return (
             <Provider store={store}>
@@ -23,4 +22,3 @@ class App extends React.Component {
     }
 }
 
-export default App;

@@ -7,7 +7,6 @@ import Header from '../components/Header';
 import CardModified from '../components/CardModified';
 import {APP_COLORS} from "../constants/colors";
 import {Card, Icon} from "react-native-elements";
-import {changeIteratorParam} from "../actions/homeActions";
 
 class HomeScreen extends React.Component{
     constructor(props) {
@@ -67,5 +66,14 @@ const styles = StyleSheet.create({
     },
 });
 
-export default HomeScreen;
+const mapStateToProps = (state) => {
+    return {
+    }
+}
 
+const  mapDispatchToProps = (dispatch)=>{
+    return {
+    }
+}
+
+export default connect(mapStateToProps,mapDispatchToProps)(HomeScreen)
