@@ -4,30 +4,32 @@ import { Button, Layout, Text, TopNavigation, TopNavigationProps } from 'react-n
 import Header from '../components/Header';
 import ForumTheme from '../components/ForumTheme';
 import {APP_COLORS} from "../constants/colors";
+import { connect } from 'react-redux';
 
 class ForumScreen extends React.Component{
     constructor(props) {
         super(props)
     }
+
+    pintarTemes(){
+        return this.props.themes.map((tema)=>{
+            return(
+                <ForumTheme key={tema.id} titleForum={tema.title} creator={tema.creator} finished={tema.finished} data={tema.data}/>
+            )
+        });
+    }
+
     render(){
         return(
             <View style={styles.viewStyle}>
                 <Header headerText="VoluntariApp"/>
                 <ScrollView>
-                    <ForumTheme titleForum={"Comisió centre interés"} creator={"Julia Soler"} finished={false} data={"24/06/2019"}/>
-                    <ForumTheme titleForum={"Idees reunió equip"} creator={"Victor Gasol"} finished={false} data={"10/05/2019"}/>
-                    <ForumTheme titleForum={"Idees cançons"} creator={"Laura Gonzalez"} finished={false} data={"04/04/2019"}/>
-                    <ForumTheme titleForum={"Activitat dilluns 22-Sherlock"} creator={"Laura Gonzalez"} finished={true} data={"18/03/2019"}/>
-                    <ForumTheme titleForum={"Activitat dilluns 22-Sherlock"} creator={"Laura Gonzalez"} finished={true} data={"18/03/2019"}/>
-                    <ForumTheme titleForum={"Activitat dilluns 22-Sherlock"} creator={"Laura Gonzalez"} finished={true} data={"18/03/2019"}/>
+                    {this.pintarTemes()}
                 </ScrollView>
             </View>
         );
     }
 }
-
-
-
 
 const styles = StyleSheet.create({
     viewStyle: {
@@ -38,5 +40,16 @@ const styles = StyleSheet.create({
     },
 });
 
-export default ForumScreen;
+const mapStateToProps = (state) => {
+    return {
+        themes: state.forumReducer.themes,
+    }
+}
+
+const  mapDispatchToProps = (dispatch)=>{
+    return {
+    }
+}
+
+export default connect(mapStateToProps,mapDispatchToProps)(ForumScreen)
 
