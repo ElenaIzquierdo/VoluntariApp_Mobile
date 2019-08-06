@@ -35,7 +35,7 @@ class ForumScreen extends React.Component{
                     <Text style={styles.text} category='h6'>Temes oberts</Text>
                     {this.pintarTemesOberts()}
 
-                    <Text style={styles.text} category='h6'>Temes tancats</Text>
+                    <Text style={styles.textTancat} category='h6'>Temes tancats</Text>
                     {this.pintarTemesTancats()}
                 </ScrollView>
             </View>
@@ -52,10 +52,16 @@ const styles = StyleSheet.create({
     },
     text: {
         marginVertical: 16,
-        color: APP_COLORS.text_color,
+        color: APP_COLORS.color_green,
         alignSelf: 'center'
 
     },
+
+    textTancat:{
+        marginVertical: 16,
+        color: APP_COLORS.color_green,
+        alignSelf: 'center'
+    }
 });
 
 const mapStateToProps = (state) => {

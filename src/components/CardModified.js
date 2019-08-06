@@ -9,23 +9,7 @@ class CardModified extends React.Component {
         super(props)
     }
 
-
     render(){
-        const users = [
-            {
-                name: 'brynn',
-                avatar: 'https://s3.amazonaws.com/uifaces/faces/twitter/brynn/128.jpg'
-            },
-            {
-                name: 'elena',
-                avatar: 'https://s3.amazonaws.com/uifaces/faces/twitter/brynn/128.jpg'
-            },
-            {
-                name: 'paula',
-                avatar: 'https://s3.amazonaws.com/uifaces/faces/twitter/brynn/128.jpg'
-            },
-
-        ]
         const {textStyle, titleStyle, imatgeStyle, texticonStyle, cardStyle, iconStyle,titlepriceStyle, ViewRow} = styles;
         return(
             <Card

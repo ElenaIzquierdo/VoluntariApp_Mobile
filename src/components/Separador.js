@@ -11,10 +11,12 @@ class Separador extends React.Component {
 
 
     render(){
-        const {viewStyle} = styles;
+        const {viewStyle, textStyle} = styles;
         return(
             <View style={viewStyle}>
-                <Text>Hola</Text>
+                <Text style={textStyle}>Comentaris</Text>
+                <Text style={textStyle}>Tasques</Text>
+                <Text style={textStyle}>Participants</Text>
             </View>
         );
     }
@@ -22,10 +24,20 @@ class Separador extends React.Component {
 };
 const styles ={
     viewStyle: {
+        flexDirection: 'row',
         backgroundColor: APP_COLORS.color_orange,
         height: '10%',
-        marginTop: '5%'
+        marginTop: '5%',
+        justifyContent: 'space-between',
+        paddingRight: '3%',
+        paddingLeft: '3%',
+        alignItems: 'center'
     },
+    textStyle: {
+        color: APP_COLORS.color_neutral,
+        fontSize: 17,
+        fontWeight: 'bold'
+    }
 }
 
 export default Separador;

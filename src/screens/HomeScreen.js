@@ -41,10 +41,10 @@ class HomeScreen extends React.Component{
             <View style={styles.viewStyle}>
                 <Header headerText="VoluntariApp"/>
                 <Text style={styles.text} category='h5'>Properes activitats</Text>
-                <CardModified image={require('../images/casalfoto.jpg')} 
-                        title={this.props.events[this.props.iterator].title} 
-                        grup={this.props.events[this.props.iterator].grup} 
-                        dia={this.props.events[this.props.iterator].dia} 
+                <CardModified image={require('../images/casalfoto.jpg')}
+                        title={this.props.events[this.props.iterator].title}
+                        grup={this.props.events[this.props.iterator].grup}
+                        dia={this.props.events[this.props.iterator].dia}
                         hora={this.props.events[this.props.iterator].hora}/>
                 <View style={styles.footer}>
                     <Icon
@@ -64,7 +64,7 @@ class HomeScreen extends React.Component{
                         onPress={this.next}
                     />
                 </View>
-                <Button onPress = {() => Actions.forum()}>Forum</Button>
+                <Button onPress = {() => Actions.forumtheme()}>Forum</Button>
             </View>
         );
     }
@@ -79,7 +79,7 @@ const styles = StyleSheet.create({
     },
     text: {
         marginVertical: 16,
-        color: APP_COLORS.text_color,
+        color: APP_COLORS.color_green,
         alignSelf: 'center'
 
     },
