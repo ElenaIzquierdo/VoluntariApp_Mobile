@@ -6,6 +6,7 @@ import Separador from '../components/Separador';
 import {APP_COLORS} from "../constants/colors";
 import {Icon} from "react-native-elements";
 import {Actions} from "react-native-router-flux";
+import { connect } from 'react-redux';
 
 class ForumThemeScreen extends React.Component{
     constructor(props) {
@@ -16,7 +17,7 @@ class ForumThemeScreen extends React.Component{
         return(
             <View style={viewStyle}>
                 <Header headerText="VoluntariApp"/>
-                <Text style = {titleStyle}> Comisió centre interés </Text>
+                <Text style = {titleStyle}> {this.props.theme.title} </Text>
                 <View style={iconInfoTextStyle}>
                     <Icon
                         name='calendar'
@@ -24,7 +25,7 @@ class ForumThemeScreen extends React.Component{
                         color={APP_COLORS.text_color}
                         size={20}
                     />
-                    <Text style = {infoStyle}>24/06/2019 </Text>
+                    <Text style = {infoStyle}> {this.props.theme.data} </Text>
                 </View>
 
                 <View style={iconInfoTextStyle}>
@@ -34,11 +35,10 @@ class ForumThemeScreen extends React.Component{
                         color={APP_COLORS.text_color}
                         size={20}
                     />
-                    <Text style = {infoStyle}> Julia Soler </Text>
+                    <Text style = {infoStyle}> {this.props.theme.creator} </Text>
                 </View>
 
-                <Text style = {descriptionStyle}> En aquesta comisió pensem idees pel centre d'interes, realitzem tasques,
-                                            etc. </Text>
+                <Text style = {descriptionStyle}> {this.props.theme.description} </Text>
                 <Separador/>
 
             </View>
@@ -93,5 +93,17 @@ const styles = StyleSheet.create({
     },
 });
 
-export default ForumThemeScreen;
+const mapStateToProps = (state) => {
+    return {
+        theme: state.forumthemeReducer.theme,
+        comments: state.forumthemeReducer.comments,
+    }
+}
+
+const  mapDispatchToProps = (dispatch)=>{
+    return {
+    }
+}
+
+export default connect(mapStateToProps,mapDispatchToProps)(ForumThemeScreen)
 
