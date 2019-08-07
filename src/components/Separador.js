@@ -84,13 +84,20 @@ class Separador extends React.Component {
                       />
                     </View>
                     <ScrollView>
-                        <Comment user={'Elena Izquierdo'} content={'al final que fem?'} data={"24/06/2019 17:50"}/>
-                        <Comment user={'Laura Gonzalez'} content={'Les cartes i les activitats'} data={"24/06/2019 19:50"}/>
-                        <Comment user={'Julia Soler'} content={'Mireu les tasques per enterar-vos millor'} data={"25/06/2019 20:25"}/>
-                        <Comment user={'Elena Izquierdo'} content={'al final que fem?'} data={"25/06/2019 20:25"}/>
-                        <Comment user={'Elena Izquierdo'} content={'al final que fem?'} data={"25/06/2019 20:25"}/>
-                        <Comment user={'Elena Izquierdo'} content={'al final que fem?'} data={"25/06/2019 20:25"}/>
-                        <Comment user={'Elena Izquierdo'} content={'al final que fem?'} data={"25/06/2019 20:25"}/>
+                        <Comment user={'Elena Izquierdo'} content={'al final que fem?'}
+                                 data={"24/06/2019 17:50"} image={require('../images/user1.jpg')}/>
+                        <Comment user={'Laura Gonzalez'} content={'Les cartes i les activitats'}
+                                 data={"24/06/2019 19:50"} image={require('../images/user2.jpeg')}/>
+                        <Comment user={'Julia Soler'} content={'Mireu les tasques per enterar-vos millor'}
+                                 data={"25/06/2019 20:25"} image={require('../images/user3.jpg')}/>
+                        <Comment user={'Elena Izquierdo'} content={'al final que fem?'}
+                                 data={"25/06/2019 20:25"} image={require('../images/user1.jpg')}/>
+                        <Comment user={'Elena Izquierdo'} content={'al final que fem?'}
+                                 data={"25/06/2019 20:25"} image={require('../images/user1.jpg')}/>
+                        <Comment user={'Elena Izquierdo'} content={'al final que fem?'}
+                                 data={"25/06/2019 20:25"} image={require('../images/user1.jpg')}/>
+                        <Comment user={'Elena Izquierdo'} content={'al final que fem?'}
+                                 data={"25/06/2019 20:25"} image={require('../images/user1.jpg')}/>
                     </ScrollView>
                 </View>
             )
