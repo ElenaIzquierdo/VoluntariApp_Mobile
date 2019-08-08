@@ -1,9 +1,8 @@
 import React from 'react';
-import { View, Text, ScrollView } from 'react-native';
+import {View, Text, ScrollView, Image, Modal, TouchableHighlight, Alert} from 'react-native';
 import {APP_COLORS} from "../constants/colors";
 import Textarea from 'react-native-textarea';
 import { Button, Icon } from 'react-native-elements';
-
 import Comment from '../components/Comment';
 
 class Separador extends React.Component {
@@ -13,8 +12,13 @@ class Separador extends React.Component {
         this.state = {
             comments: true,
             tasks: false,
-            participants: false
+            participants: false,
+            modalVisible: false,
         }
+    }
+    setModalVisible(visible) {
+        console.log("HOLA")
+        this.setState({modalVisible: visible});
     }
 
     touchComment(){
@@ -70,6 +74,34 @@ class Separador extends React.Component {
         }
     }
 
+    pintarCommentaris(){
+        return this.props.comments.map((comment)=>{
+            return(
+                <Comment key={comment.id} user={comment.author} content={comment.content}
+                         data={comment.created_date} image={comment.image}/>
+            )
+        })
+    }
+
+    pintarPart(){
+        return this.props.participants.map((part)=>{
+            return(
+                <View style={styles.viewUserStyle} key={part.id}>
+                    <Image source={part.image} style={styles.imageUserStyle}/>
+                    <Text style={styles.nameStyle}>{part.name}</Text>
+                    <Icon
+                        name='close-o'
+                        type='evilicon'
+                        color={APP_COLORS.text_color}
+                        size={20}
+                        iconStyle={styles.iconDeleteStyle}
+                    />
+                </View>
+
+            )
+        })
+    }
+
     pintarContingut(){
         if(this.state.comments){
             return(
@@ -84,20 +116,7 @@ class Separador extends React.Component {
                       />
                     </View>
                     <ScrollView>
-                        <Comment user={'Elena Izquierdo'} content={'al final que fem?'}
-                                 data={"24/06/2019 17:50"} image={require('../images/user1.jpg')}/>
-                        <Comment user={'Laura Gonzalez'} content={'Les cartes i les activitats'}
-                                 data={"24/06/2019 19:50"} image={require('../images/user2.jpeg')}/>
-                        <Comment user={'Julia Soler'} content={'Mireu les tasques per enterar-vos millor'}
-                                 data={"25/06/2019 20:25"} image={require('../images/user3.jpg')}/>
-                        <Comment user={'Elena Izquierdo'} content={'al final que fem?'}
-                                 data={"25/06/2019 20:25"} image={require('../images/user1.jpg')}/>
-                        <Comment user={'Elena Izquierdo'} content={'al final que fem?'}
-                                 data={"25/06/2019 20:25"} image={require('../images/user1.jpg')}/>
-                        <Comment user={'Elena Izquierdo'} content={'al final que fem?'}
-                                 data={"25/06/2019 20:25"} image={require('../images/user1.jpg')}/>
-                        <Comment user={'Elena Izquierdo'} content={'al final que fem?'}
-                                 data={"25/06/2019 20:25"} image={require('../images/user1.jpg')}/>
+                        {this.pintarCommentaris()}
                     </ScrollView>
                 </View>
             )
@@ -109,8 +128,46 @@ class Separador extends React.Component {
         }
         if(this.state.participants){
             return(
-                <Text>Participants del tema</Text>
+                <View style={styles.viewContingutPStyle}>
+                    <Modal
+                        animationType="slide"
+                        transparent={false}
+                        visible={this.state.modalVisible}
+                        onRequestClose={() => {
+                            Alert.alert('Modal has been closed.');
+                        }}>
+                        <View style={{marginTop: 22}}>
+                            <View>
+                                <Text>Hello World!</Text>
+
+                                <TouchableHighlight
+                                    onPress={() => {
+                                        this.setModalVisible(!this.state.modalVisible);
+                                    }}>
+                                    <Text>Hide Modal</Text>
+                                </TouchableHighlight>
+                            </View>
+                        </View>
+                    </Modal>
+                    <View style={styles.viewPartStyle}>
+                        {this.pintarPart()}
+                    </View>
+                    <View style={styles.footer}>
+                        <Icon
+                            name='plus'
+                            type='evilicon'
+                            color={APP_COLORS.color_checked}
+                            size={25}
+                            reverse
+                            iconStyle={styles.iconDeleteStyle}
+                            onPress={() => {
+                                this.setModalVisible(true);
+                            }}
+                        />
+                    </View>
+                </View>
             )
+
         }
     }
 
@@ -181,6 +238,36 @@ const styles ={
         backgroundColor: APP_COLORS.color_green,
     },
     botoStyle: {
+    },
+    viewUserStyle: {
+        flexDirection: 'row'
+    },
+    imageUserStyle:{
+        width: 27,
+        height:27,
+        borderRadius: 25,
+        marginRight: '2%'
+    },
+    viewPartStyle: {
+        paddingLeft: '5%',
+        paddingTop: '3%'
+    },
+    nameStyle: {
+        fontSize: 17,
+        marginBottom: '3%'
+    },
+    iconDeleteStyle: {
+        marginLeft: '2%',
+    },
+    footer: {
+        paddingLeft: '75%',
+        paddingBottom: '3%',
+        marginBottom: '2%',
+        paddingTop: '40%'
+    },
+    viewContingutPStyle: {
+        height: '100%',
+        paddingBottom: '2%',
     }
 }
 

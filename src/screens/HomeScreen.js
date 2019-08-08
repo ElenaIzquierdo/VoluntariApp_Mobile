@@ -64,7 +64,7 @@ class HomeScreen extends React.Component{
                         onPress={this.next}
                     />
                 </View>
-                <Button onPress = {() => Actions.forumtheme()}>Forum</Button>
+                <Button onPress = {() => Actions.forum()}>Forum</Button>
             </View>
         );
     }

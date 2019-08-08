@@ -39,7 +39,7 @@ class ForumThemeScreen extends React.Component{
                 </View>
 
                 <Text style = {descriptionStyle}> {this.props.theme.description} </Text>
-                <Separador/>
+                <Separador comments={this.props.comments} participants={this.props.participants}/>
 
             </View>
         );
@@ -97,6 +97,7 @@ const mapStateToProps = (state) => {
     return {
         theme: state.forumthemeReducer.theme,
         comments: state.forumthemeReducer.comments,
+        participants: state.forumthemeReducer.participants
     }
 }
 
