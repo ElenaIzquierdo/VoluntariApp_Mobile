@@ -38,6 +38,16 @@ class ForumThemeScreen extends React.Component{
                     <Text style = {infoStyle}> {this.props.theme.creator} </Text>
                 </View>
 
+                <View style={iconInfoTextStyle}>
+                    <Icon
+                        name='location'
+                        type='evilicon'
+                        color={APP_COLORS.text_color}
+                        size={20}
+                    />
+                    <Text style = {infoStyle}> {this.props.theme.group} </Text>
+                </View>
+
                 <Text style = {descriptionStyle}> {this.props.theme.description} </Text>
                 <Separador comments={this.props.comments} participants={this.props.participants}/>
 
@@ -59,14 +69,14 @@ const styles = StyleSheet.create({
     },
     titleStyle:{
         color: APP_COLORS.text_color,
-        fontSize: 25,
+        fontSize: 21,
         fontWeight: 'bold',
         paddingTop: '4%',
         paddingLeft: '2%'
     },
     descriptionStyle:{
         color: APP_COLORS.text_color,
-        fontSize: 18,
+        fontSize: 17,
         paddingTop: '4%',
         paddingLeft: '7%'
     },

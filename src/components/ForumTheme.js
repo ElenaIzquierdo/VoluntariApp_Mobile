@@ -45,7 +45,7 @@ class ForumTheme extends React.Component {
                 <View style={iconTextStyle}>
                     <Text style = {textStyle}> {this.props.titleForum} </Text>
                     <Icon
-                        name='plus'
+                        name='eye'
                         type='evilicon'
                         color={APP_COLORS.text_color}
                         size={32}

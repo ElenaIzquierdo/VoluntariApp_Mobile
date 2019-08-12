@@ -4,7 +4,8 @@ const INITIAL_STATE ={
         creator:'Julia Soler',
         finished: false,
         data:'24/06/2019',
-        description: 'En aquesta comisio pensem idees pel centre dinteres, realitzem tasques, etc. '
+        description: 'En aquesta comisio pensem idees pel centre dinteres, realitzem tasques, etc. ',
+        group: 'COPI'
     },
     comments:[
         {id:0,author:'Elena Izquierdo',content:'Quines són les tasques que falta repartir?',

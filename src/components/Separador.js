@@ -1,5 +1,6 @@
 import React from 'react';
-import {View, Text, ScrollView, Image, Modal, TouchableHighlight, Alert} from 'react-native';
+import {View, ScrollView, Image, Alert, Text} from 'react-native';
+import Modal from 'react-native-modalbox';
 import {APP_COLORS} from "../constants/colors";
 import Textarea from 'react-native-textarea';
 import { Button, Icon } from 'react-native-elements';
@@ -13,11 +14,25 @@ class Separador extends React.Component {
             comments: true,
             tasks: false,
             participants: false,
-            modalVisible: false,
+            isOpen: false,
+            isDisabled: false,
+            swipeToClose: true,
+            sliderValue: 0.3
         }
     }
+
+    onClose() {
+        console.log('Modal just closed');
+    }
+
+    onOpen() {
+        console.log('Modal just opened');
+    }
+
+    onClosingState(state) {
+        console.log('the open/close of the swipeToClose just changed');
+    }
     setModalVisible(visible) {
-        console.log("HOLA")
         this.setState({modalVisible: visible});
     }
 
@@ -129,25 +144,9 @@ class Separador extends React.Component {
         if(this.state.participants){
             return(
                 <View style={styles.viewContingutPStyle}>
-                    <Modal
-                        animationType="slide"
-                        transparent={false}
-                        visible={this.state.modalVisible}
-                        onRequestClose={() => {
-                            Alert.alert('Modal has been closed.');
-                        }}>
-                        <View style={{marginTop: 22}}>
-                            <View>
-                                <Text>Hello World!</Text>
-
-                                <TouchableHighlight
-                                    onPress={() => {
-                                        this.setModalVisible(!this.state.modalVisible);
-                                    }}>
-                                    <Text>Hide Modal</Text>
-                                </TouchableHighlight>
-                            </View>
-                        </View>
+                    <Modal style={styles.modal} position={"top"} ref={"modal"} isDisabled={this.state.isDisabled}>
+                        <Text style={styles.modalTitle}>Afegeix participants</Text>
+                        <Button>Holaaa</Button>
                     </Modal>
                     <View style={styles.viewPartStyle}>
                         {this.pintarPart()}
@@ -160,14 +159,11 @@ class Separador extends React.Component {
                             size={25}
                             reverse
                             iconStyle={styles.iconDeleteStyle}
-                            onPress={() => {
-                                this.setModalVisible(true);
-                            }}
+                            onPress={() => this.refs.modal.open()}
                         />
                     </View>
                 </View>
             )
-
         }
     }
 
@@ -268,7 +264,19 @@ const styles ={
     viewContingutPStyle: {
         height: '100%',
         paddingBottom: '2%',
-    }
+    },
+    modalTitle: {
+        color: APP_COLORS.text_color,
+        fontSize: 18,
+        fontWeight: 'bold',
+        paddingTop: '4%',
+        paddingLeft: '2%'
+    },
+    modal: {
+        alignItems: 'center',
+        height: '50%',
+        width: '75%'
+    },
 }
 
 export default Separador;
