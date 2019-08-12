@@ -8,15 +8,15 @@ const INITIAL_STATE ={
         group: 'COPI'
     },
     comments:[
-        {id:0,author:'Elena Izquierdo',content:'Quines són les tasques que falta repartir?',
+        {id:'0',author:'Elena Izquierdo',content:'Quines són les tasques que falta repartir?',
             created_date:'25/05/2019 17:55', image:require('../images/user1.jpg')},
-        {id:1,author:'Julia Soler',content:'Fer les cartes dels personatges del segon pis i del primer',
+        {id:'1',author:'Julia Soler',content:'Fer les cartes dels personatges del segon pis i del primer',
             created_date:'26/05/2019 15:55', image:require('../images/user2.jpeg')},
-        {id:2,author:'Elena Izquierdo',content:'Vale, genial!',
+        {id:'2',author:'Elena Izquierdo',content:'Vale, genial!',
             created_date:'26/05/2019 19:05', image:require('../images/user1.jpg')},
-        {id:3,author:'Laura Gonzalez',content:'I jo, que he de fer?',
+        {id:'3',author:'Laura Gonzalez',content:'I jo, que he de fer?',
             created_date:'27/05/2019 16:05', image:require('../images/user3.jpg')},
-        {id:4,author:'Julia Soler',content:'Mira les tasques plis',
+        {id:'4',author:'Julia Soler',content:'Mira les tasques plis',
             created_date:'27/05/2019 18:15', image:require('../images/user2.jpeg')},
     ],
     participants:[

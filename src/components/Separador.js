@@ -1,5 +1,5 @@
 import React from 'react';
-import {View, ScrollView, Image, Alert, Text} from 'react-native';
+import {View, ScrollView, Image, Alert, Text, FlatList} from 'react-native';
 import Modal from 'react-native-modalbox';
 import {APP_COLORS} from "../constants/colors";
 import Textarea from 'react-native-textarea';
@@ -19,21 +19,6 @@ class Separador extends React.Component {
             swipeToClose: true,
             sliderValue: 0.3
         }
-    }
-
-    onClose() {
-        console.log('Modal just closed');
-    }
-
-    onOpen() {
-        console.log('Modal just opened');
-    }
-
-    onClosingState(state) {
-        console.log('the open/close of the swipeToClose just changed');
-    }
-    setModalVisible(visible) {
-        this.setState({modalVisible: visible});
     }
 
     touchComment(){
@@ -89,13 +74,27 @@ class Separador extends React.Component {
         }
     }
 
+    _keyExtractor = (item, index) => item.id;
+
+    _renderItem = ({item}) => (
+        <Comment
+            id={item.id}
+            image={item.image}
+            user={item.author}
+            content={item.content}
+            data={item.created_date}
+        />
+    );
+
     pintarCommentaris(){
-        return this.props.comments.map((comment)=>{
-            return(
-                <Comment key={comment.id} user={comment.author} content={comment.content}
-                         data={comment.created_date} image={comment.image}/>
-            )
-        })
+        return(
+            <FlatList
+                data={this.props.comments}
+                extraData={this.state}
+                keyExtractor={this._keyExtractor}
+                renderItem={this._renderItem}
+            />
+        )
     }
 
     pintarPart(){

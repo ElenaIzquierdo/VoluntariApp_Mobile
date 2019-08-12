@@ -1,10 +1,11 @@
 import * as React from 'react';
 import { StyleSheet, View, ScrollView } from 'react-native';
 import { Button, Layout, Text, TopNavigation, TopNavigationProps } from 'react-native-ui-kitten';
-import Header from '../components/Header';
+import {Header} from 'react-native-elements';
 import ForumTheme from '../components/ForumTheme';
 import {APP_COLORS} from "../constants/colors";
 import { connect } from 'react-redux';
+import {Actions} from "react-native-router-flux";
 
 class ForumScreen extends React.Component{
     constructor(props) {
@@ -30,7 +31,12 @@ class ForumScreen extends React.Component{
     render(){
         return(
             <View style={styles.viewStyle}>
-                <Header headerText="VoluntariApp"/>
+                <Header
+                    leftComponent={{ icon: 'menu', color: APP_COLORS.color_neutral }}
+                    centerComponent={{ text: 'VoluntariApp', style: { color: APP_COLORS.color_neutral, fontSize: 25, fontWeight: 'bold' } }}
+                    rightComponent={{ icon: 'home', color: APP_COLORS.color_neutral, onPress: () => Actions.home()}}
+                    backgroundColor={APP_COLORS.color_orange}
+                />
                 <ScrollView>
                     <Text style={styles.text} category='h6'>Temes oberts</Text>
                     {this.pintarTemesOberts()}

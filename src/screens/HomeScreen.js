@@ -3,7 +3,7 @@ import { StyleSheet, View } from 'react-native';
 import { Button, Layout, Text, TopNavigation, TopNavigationProps } from 'react-native-ui-kitten';
 import { Actions } from 'react-native-router-flux';
 import { connect } from 'react-redux';
-import Header from '../components/Header';
+import {Header} from 'react-native-elements';
 import CardModified from '../components/CardModified';
 import {APP_COLORS} from "../constants/colors";
 import {Card, Icon} from "react-native-elements";
@@ -39,7 +39,12 @@ class HomeScreen extends React.Component{
     render(){
         return(
             <View style={styles.viewStyle}>
-                <Header headerText="VoluntariApp"/>
+                <Header
+                    leftComponent={{ icon: 'menu', color: APP_COLORS.color_neutral }}
+                    centerComponent={{ text: 'VoluntariApp', style: { color: APP_COLORS.color_neutral, fontSize: 25, fontWeight: 'bold' } }}
+                    rightComponent={{ icon: 'home', color: APP_COLORS.color_neutral, onPress: () => Actions.home()}}
+                    backgroundColor={APP_COLORS.color_orange}
+                />
                 <Text style={styles.text} category='h5'>Properes activitats</Text>
                 <CardModified image={require('../images/casalfoto.jpg')}
                         title={this.props.events[this.props.iterator].title}

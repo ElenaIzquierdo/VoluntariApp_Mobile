@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { StyleSheet, View } from 'react-native';
 import { Button, Layout, Text, TopNavigation, TopNavigationProps } from 'react-native-ui-kitten';
-import Header from '../components/Header';
+import {Header} from 'react-native-elements';
 import Separador from '../components/Separador';
 import {APP_COLORS} from "../constants/colors";
 import {Icon} from "react-native-elements";
@@ -16,7 +16,12 @@ class ForumThemeScreen extends React.Component{
         const {titleStyle, viewStyle, infoStyle, descriptionStyle, iconInfoTextStyle} = styles;
         return(
             <View style={viewStyle}>
-                <Header headerText="VoluntariApp"/>
+                <Header
+                    leftComponent={{ icon: 'menu', color: APP_COLORS.color_neutral }}
+                    centerComponent={{ text: 'VoluntariApp', style: { color: APP_COLORS.color_neutral, fontSize: 25, fontWeight: 'bold' } }}
+                    rightComponent={{ icon: 'home', color: APP_COLORS.color_neutral, onPress: () => Actions.home()}}
+                    backgroundColor={APP_COLORS.color_orange}
+                />
                 <Text style = {titleStyle}> {this.props.theme.title} </Text>
                 <View style={iconInfoTextStyle}>
                     <Icon
