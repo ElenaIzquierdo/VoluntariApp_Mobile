@@ -42,9 +42,9 @@ class HomeScreen extends React.Component{
                 <Header
                     leftComponent={{ icon: 'menu', color: APP_COLORS.color_neutral }}
                     centerComponent={{ text: 'VoluntariApp', style: { color: APP_COLORS.color_neutral, fontSize: 25, fontWeight: 'bold' } }}
-                    rightComponent={{ icon: 'home', color: APP_COLORS.color_neutral, onPress: () => Actions.home()}}
                     backgroundColor={APP_COLORS.color_orange}
                 />
+
                 <Text style={styles.text} category='h5'>Properes activitats</Text>
                 <CardModified image={require('../images/casalfoto.jpg')}
                         title={this.props.events[this.props.iterator].title}
@@ -57,7 +57,7 @@ class HomeScreen extends React.Component{
                         name='chevron-left'
                         type='evilicon'
                         color={APP_COLORS.color_green}
-                        size={32}
+                        size={22}
                         onPress={this.previous}
                     />
                     <Icon
@@ -65,7 +65,7 @@ class HomeScreen extends React.Component{
                         name='chevron-right'
                         type='evilicon'
                         color={APP_COLORS.color_green}
-                        size={32}
+                        size={22}
                         onPress={this.next}
                     />
                 </View>
@@ -83,18 +83,17 @@ const styles = StyleSheet.create({
         flex: 1,
     },
     text: {
-        marginVertical: 16,
+        marginVertical: 14,
         color: APP_COLORS.color_green,
         alignSelf: 'center'
 
     },
     footer: {
         flexDirection: 'row',
-        marginBottom: '15%',
         justifyContent: 'space-between',
         paddingRight: '15%',
         paddingLeft: '15%',
-        paddingTop: '5%'
+        paddingTop: '1%'
     },
 });
 

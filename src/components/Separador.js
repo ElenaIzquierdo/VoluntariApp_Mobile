@@ -5,6 +5,7 @@ import {APP_COLORS} from "../constants/colors";
 import Textarea from 'react-native-textarea';
 import { Button, Icon } from 'react-native-elements';
 import Comment from '../components/Comment';
+import Participant from '../components/Participant';
 
 class Separador extends React.Component {
     constructor(props) {
@@ -74,7 +75,7 @@ class Separador extends React.Component {
         }
     }
 
-    _keyExtractor = (item, index) => item.id;
+    _keyExtractor = (item) => item.id.toString();
 
     _renderItem = ({item}) => (
         <Comment
@@ -90,50 +91,31 @@ class Separador extends React.Component {
         return(
             <FlatList
                 data={this.props.comments}
-                extraData={this.state}
+                style={{width:"100%",height:"100%"}}
                 keyExtractor={this._keyExtractor}
                 renderItem={this._renderItem}
             />
         )
     }
 
-    pintarPart(){
-        return this.props.participants.map((part)=>{
-            return(
-                <View style={styles.viewUserStyle} key={part.id}>
-                    <Image source={part.image} style={styles.imageUserStyle}/>
-                    <Text style={styles.nameStyle}>{part.name}</Text>
-                    <Icon
-                        name='close-o'
-                        type='evilicon'
-                        color={APP_COLORS.text_color}
-                        size={20}
-                        iconStyle={styles.iconDeleteStyle}
-                    />
-                </View>
+    _renderParticipant = ({item}) => (
+        <Participant key={item.id} id={item.id} image={item.image} name={item.name}/>
+    );
 
-            )
-        })
+    pintarPart(){
+        return(
+            <FlatList
+                data={this.props.participants}
+                keyExtractor={this._keyExtractor}
+                renderItem={this._renderParticipant}
+                showsVerticalScrollIndicator={false}
+            />
+        )
     }
 
     pintarContingut(){
         if(this.state.comments){
-            return(
-                <View>
-                    <View style={styles.container}>
-                      <Textarea
-                          containerStyle={styles.textareaContainer}
-                          style={styles.textarea}
-                          placeholder={'Fes el teu comentari'}
-                          placeholderTextColor={APP_COLORS.text_color}
-                          underlineColorAndroid={'transparent'}
-                      />
-                    </View>
-                    <ScrollView>
-                        {this.pintarCommentaris()}
-                    </ScrollView>
-                </View>
-            )
+            return this.pintarCommentaris()
         }
         if(this.state.tasks){
             return(
@@ -148,18 +130,20 @@ class Separador extends React.Component {
                         <Button>Holaaa</Button>
                     </Modal>
                     <View style={styles.viewPartStyle}>
-                        {this.pintarPart()}
-                    </View>
-                    <View style={styles.footer}>
-                        <Icon
-                            name='plus'
-                            type='evilicon'
-                            color={APP_COLORS.color_checked}
-                            size={25}
-                            reverse
-                            iconStyle={styles.iconDeleteStyle}
-                            onPress={() => this.refs.modal.open()}
-                        />
+                        <View style={styles.viewColumnP1}>
+                            {this.pintarPart()}
+                        </View>
+                        <View style={styles.viewColumnP2}>
+                            <Icon
+                                name='plus'
+                                type='evilicon'
+                                color={APP_COLORS.color_checked}
+                                size={25}
+                                reverse
+                                iconStyle={styles.iconAddStyle}
+                                onPress={() => this.refs.modal.open()}
+                            />
+                        </View>
                     </View>
                 </View>
             )
@@ -175,8 +159,8 @@ class Separador extends React.Component {
                     {this.pintarTasks()}
                     {this.pintarParticipants()}
                 </View>
-                <View style={{flex:1}}>
-                    {this.pintarContingut()}
+                <View style={{flex:1,height:"100%"}}>
+                {this.pintarContingut()}
                 </View>
             </View>
         );
@@ -185,12 +169,13 @@ class Separador extends React.Component {
 };
 const styles ={
     viewGeneralStyle: {
-      height: '100%'
+        flex:1,
+        height: '100%'
     },
     viewStyle: {
         flexDirection: 'row',
         backgroundColor: APP_COLORS.color_orange,
-        height: '8%',
+        height: '15%',
         marginTop: '5%',
         justifyContent: 'space-between',
         paddingRight: '4%',
@@ -232,33 +217,10 @@ const styles ={
         width:'10%',
         backgroundColor: APP_COLORS.color_green,
     },
-    botoStyle: {
-    },
-    viewUserStyle: {
-        flexDirection: 'row'
-    },
-    imageUserStyle:{
-        width: 27,
-        height:27,
-        borderRadius: 25,
-        marginRight: '2%'
-    },
     viewPartStyle: {
+        flexDirection: 'row',
         paddingLeft: '5%',
         paddingTop: '3%'
-    },
-    nameStyle: {
-        fontSize: 17,
-        marginBottom: '3%'
-    },
-    iconDeleteStyle: {
-        marginLeft: '2%',
-    },
-    footer: {
-        paddingLeft: '75%',
-        paddingBottom: '3%',
-        marginBottom: '2%',
-        paddingTop: '40%'
     },
     viewContingutPStyle: {
         height: '100%',
@@ -275,6 +237,13 @@ const styles ={
         alignItems: 'center',
         height: '50%',
         width: '75%'
+    },
+    viewColumnP1: {
+        width: '75%'
+    },
+    viewColumnP2: {
+        width: '25%',
+        paddingTop: '72%'
     },
 }
 
