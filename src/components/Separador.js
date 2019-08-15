@@ -6,6 +6,7 @@ import Textarea from 'react-native-textarea';
 import { Button, Icon } from 'react-native-elements';
 import Comment from '../components/Comment';
 import Participant from '../components/Participant';
+import Task from '../components/Task';
 
 class Separador extends React.Component {
     constructor(props) {
@@ -113,14 +114,26 @@ class Separador extends React.Component {
         )
     }
 
+    _renderTask = ({item}) => (
+        <Task title={item.title} finished={item.finished} assignees={item.assignees}/>
+    );
+
+    pintarTasques(){
+        return(
+            <FlatList
+                data={this.props.tasks}
+                keyExtractor={this._keyExtractor}
+                renderItem={this._renderTask}
+            />
+        )
+    }
+
     pintarContingut(){
         if(this.state.comments){
             return this.pintarCommentaris()
         }
         if(this.state.tasks){
-            return(
-                <Text>Tasques del tema</Text>
-            )
+            return this.pintarTasques()
         }
         if(this.state.participants){
             return(
@@ -140,7 +153,6 @@ class Separador extends React.Component {
                                 color={APP_COLORS.color_checked}
                                 size={25}
                                 reverse
-                                iconStyle={styles.iconAddStyle}
                                 onPress={() => this.refs.modal.open()}
                             />
                         </View>

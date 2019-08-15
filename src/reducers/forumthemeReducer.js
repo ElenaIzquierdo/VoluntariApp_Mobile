@@ -36,6 +36,13 @@ const INITIAL_STATE ={
         {id:12, name: 'Laura Gonzalez', image:require('../images/user3.jpg')},
         {id:13, name: 'Laura Gonzalez', image:require('../images/user3.jpg')},
         {id:14, name: 'Laura Gonzalez', image:require('../images/user3.jpg')},
+    ],
+    tasks:[
+        {id:0, title: 'Fer carta 1', assignees: ['Elena Izquierdo','Laura Gonzalez'], finished: false},
+        {id:1, title: 'Crear personatge 1', assignees: ['Aida Gonzalez'], finished: true},
+        {id:2, title: 'Crear personatge 2', assignees: ['Julia Soler'], finished: true},
+        {id:3, title: 'Fer carta 2', assignees: ['Victor Gasol'], finished: true},
+        {id:4, title: 'Preparar mural', assignees: ['Ema Formage'], finished: true}
     ]
 
 }

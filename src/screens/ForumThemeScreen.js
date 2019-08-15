@@ -13,7 +13,7 @@ class ForumThemeScreen extends React.Component{
         super(props)
     }
     render(){
-        const {titleStyle, viewStyle, infoStyle, descriptionStyle, iconInfoTextStyle} = styles;
+        const {titleStyle, viewStyle, infoStyle, descriptionStyle, iconInfoTextStyle, titleViewStyle, iconEditStyle} = styles;
         return(
             <View style={viewStyle}>
                 <Header
@@ -22,7 +22,16 @@ class ForumThemeScreen extends React.Component{
                     rightComponent={{ icon: 'home', color: APP_COLORS.color_neutral, onPress: () => Actions.home()}}
                     backgroundColor={APP_COLORS.color_orange}
                 />
-                <Text style = {titleStyle}> {this.props.theme.title} </Text>
+                <View style={titleViewStyle}>
+                    <Text style = {titleStyle}> {this.props.theme.title} </Text>
+                    <Icon
+                        name='pencil'
+                        type='evilicon'
+                        color={APP_COLORS.text_color}
+                        size={35}
+                        iconStyle={iconEditStyle}
+                    />
+                </View>
                 <View style={iconInfoTextStyle}>
                     <Icon
                         name='calendar'
@@ -54,7 +63,7 @@ class ForumThemeScreen extends React.Component{
                 </View>
 
                 <Text style = {descriptionStyle}> {this.props.theme.description} </Text>
-                <Separador comments={this.props.comments} participants={this.props.participants}/>
+                <Separador comments={this.props.comments} participants={this.props.participants} tasks={this.props.tasks}/>
 
             </View>
         );
@@ -106,13 +115,21 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         paddingLeft: '7%'
     },
+    titleViewStyle: {
+        flexDirection: 'row',
+        justifyContent: 'space-between'
+    },
+    iconEditStyle: {
+        margin: '2%'
+    }
 });
 
 const mapStateToProps = (state) => {
     return {
         theme: state.forumthemeReducer.theme,
         comments: state.forumthemeReducer.comments,
-        participants: state.forumthemeReducer.participants
+        participants: state.forumthemeReducer.participants,
+        tasks: state.forumthemeReducer.tasks
     }
 }
 
