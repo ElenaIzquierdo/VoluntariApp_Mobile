@@ -1,6 +1,15 @@
-export const changeIteratorParam =(iterator) => {
+export const changeIteratorNextParam =(iterator) => {
     return{
-        type: 'CHANGE_ITERATORPARAM',
+        type: 'CHANGE_ITERATOR_NEXT_PARAM',
+        data: {
+            iterator:iterator
+        }
+    }
+}
+
+export const changeIteratorPreviousParam =(iterator) => {
+    return{
+        type: 'CHANGE_ITERATOR_PREV_PARAM',
         data: {
             iterator:iterator
         }

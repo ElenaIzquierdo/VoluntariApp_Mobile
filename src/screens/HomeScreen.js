@@ -6,37 +6,62 @@ import { connect } from 'react-redux';
 import {Header} from 'react-native-elements';
 import CardModified from '../components/CardModified';
 import {APP_COLORS} from "../constants/colors";
-import {Card, Icon} from "react-native-elements";
-import {changeIteratorParam} from "../actions/homeActions";
+import { Icon} from "react-native-elements";
+import {changeIteratorNextParam, changeIteratorPreviousParam} from "../actions/homeActions";
+import Card2 from '../components/Card2';
+import {EvilIcons} from "@expo/vector-icons";
 
 class HomeScreen extends React.Component{
     constructor(props) {
         super(props);
         this.next = this.next.bind(this);
         this.previous = this.previous.bind(this);
+        this.next_eventsPrevious = this.next_eventsPrevious.bind(this);
+        this.previous_eventsPrevious = this.previous_eventsPrevious.bind(this);
     }
 
     next(){
-        if(this.props.iterator === this.props.events.length-1){
-            this.props.changeIteratorParam(0);
+        if(this.props.iterator === this.props.events_next.length-1){
+            this.props.changeIteratorNextParam(0);
         }
         else{
             var iter = this.props.iterator +1;
-            this.props.changeIteratorParam(iter);
+            this.props.changeIteratorNextParam(iter);
         }
     }
 
     previous(){
         if(this.props.iterator === 0){
-            this.props.changeIteratorParam(this.props.events.length-1);
+            this.props.changeIteratorNextParam(this.props.events_next.length-1);
         }
         else{
             var iter = this.props.iterator -1;
-            this.props.changeIteratorParam(iter);
+            this.props.changeIteratorNextParam(iter);
+        }
+    }
+
+    next_eventsPrevious(){
+        if(this.props.iterator_previous === this.props.events_previous.length-1){
+            this.props.changeIteratorPreviousParam(0);
+        }
+        else{
+            var iter = this.props.iterator_previous +1;
+            this.props.changeIteratorPreviousParam(iter);
+        }
+    }
+
+    previous_eventsPrevious(){
+        if(this.props.iterator_previous === 0){
+            this.props.changeIteratorPreviousParam(this.props.events_previous.length-1);
+        }
+        else{
+            var iter = this.props.iterator_previous -1;
+            this.props.changeIteratorPreviousParam(iter);
         }
     }
 
     render(){
+        const {viewCardStyle, viewIconArrowStyle, viewCardFooterStyle, texticonStyle, titleStyle, iconStyle, textStyle, infoviewStyle} = styles;
         return(
             <View style={styles.viewStyle}>
                 <Header
@@ -45,30 +70,54 @@ class HomeScreen extends React.Component{
                     backgroundColor={APP_COLORS.color_orange}
                 />
 
-                <Text style={styles.text} category='h5'>Properes activitats</Text>
-                <CardModified image={require('../images/casalfoto.jpg')}
-                        title={this.props.events[this.props.iterator].title}
-                        grup={this.props.events[this.props.iterator].grup}
-                        dia={this.props.events[this.props.iterator].dia}
-                        hora={this.props.events[this.props.iterator].hora}/>
-                <View style={styles.footer}>
-                    <Icon
-                        raised
-                        name='chevron-left'
-                        type='evilicon'
-                        color={APP_COLORS.color_green}
-                        size={22}
-                        onPress={this.previous}
-                    />
-                    <Icon
-                        raised
-                        name='chevron-right'
-                        type='evilicon'
-                        color={APP_COLORS.color_green}
-                        size={22}
-                        onPress={this.next}
-                    />
+                <View style={[viewCardStyle,{backgroundColor:'#B2C78E'}]}>
+                    <View style={viewCardFooterStyle}>
+                        <View style={viewIconArrowStyle}>
+                            <EvilIcons name="chevron-left" size={35} color = {APP_COLORS.black} onPress={this.previous}/>
+                        </View>
+                        <View style={infoviewStyle}>
+                            <Text style={titleStyle}>
+                                {this.props.events_next[this.props.iterator].title}
+                            </Text>
+                            <View style={texticonStyle}>
+                                <EvilIcons name="location" size={25} color = {APP_COLORS.text_color} style = {iconStyle}/>
+                                <Text style={textStyle}>{this.props.events_next[this.props.iterator].grup}</Text>
+                            </View>
+                            <View style={texticonStyle}>
+                                <EvilIcons name="calendar" size={25} color = {APP_COLORS.text_color} style = {iconStyle}/>
+                                <Text style={textStyle}>{this.props.events_next[this.props.iterator].dia} - {this.props.events_next[this.props.iterator].hora} h</Text>
+                            </View>
+                        </View>
+                        <View>
+                            <EvilIcons name="chevron-right" size={35} color = {APP_COLORS.black} onPress={this.next}/>
+                        </View>
+                    </View>
                 </View>
+
+                <View style={[viewCardStyle,{backgroundColor:'#F5C15F'}]}>
+                    <View style={viewCardFooterStyle}>
+                        <View style={viewIconArrowStyle}>
+                            <EvilIcons name="chevron-left" size={35} color = {APP_COLORS.black} onPress={this.previous_eventsPrevious}/>
+                        </View>
+                        <View style={infoviewStyle}>
+                            <Text style={titleStyle}>
+                                {this.props.events_previous[this.props.iterator_previous].title}
+                            </Text>
+                            <View style={texticonStyle}>
+                                <EvilIcons name="location" size={25} color = {APP_COLORS.text_color} style = {iconStyle}/>
+                                <Text style={textStyle}>{this.props.events_previous[this.props.iterator_previous].grup}</Text>
+                            </View>
+                            <View style={texticonStyle}>
+                                <EvilIcons name="calendar" size={25} color = {APP_COLORS.text_color} style = {iconStyle}/>
+                                <Text style={textStyle}>{this.props.events_previous[this.props.iterator_previous].dia} - {this.props.events_previous[this.props.iterator_previous].hora} h</Text>
+                            </View>
+                        </View>
+                        <View>
+                            <EvilIcons name="chevron-right" size={35} color = {APP_COLORS.black} onPress={this.next_eventsPrevious}/>
+                        </View>
+                    </View>
+                </View>
+
                 <Button onPress = {() => Actions.forum()}>Forum</Button>
             </View>
         );
@@ -95,18 +144,73 @@ const styles = StyleSheet.create({
         paddingLeft: '15%',
         paddingTop: '1%'
     },
+    viewCardStyle: {
+        width: '90%',
+        height: '18%',
+        borderWidth: 0.5,
+        borderColor: APP_COLORS.text_color,
+        alignSelf: 'center',
+        borderRadius: 8,
+        marginTop: '10%',
+        marginBottom: '2%',
+        justifyContent: 'center',
+    },
+    viewHeaderStyle: {
+        height: '20%',
+    },
+    viewCardFooterStyle: {
+        justifyContent: 'center',
+        alignItems: 'center',
+        flexDirection: 'row'
+    },
+    texticonStyle: {
+        flexDirection: 'row',
+        paddingRight: '5%',
+        paddingTop: '3%'
+    },
+    iconStyle: {
+        paddingLeft: '2%'
+    },
+    titleStyle: {
+        color:APP_COLORS.black,
+        fontSize: 17
+    },
+    textStyle: {
+        color:APP_COLORS.black,
+        fontSize: 12
+    },
+    imatgeStyle: {
+        height: '80%',
+        width:'80%',
+        alignSelf: 'center'
+    },
+    wrapperCardStyle: {
+        height: '40%'
+    },
+    viewIconArrowStyle: {
+        justifyContent: 'center',
+        alignItems: 'center',
+        width: '15%'
+    },
+    infoviewStyle: {
+        justifyContent: 'center',
+        alignItems: 'center',
+    }
 });
 
 const mapStateToProps = (state) => {
     return {
-        events: state.homeReducer.events,
-        iterator: state.homeReducer.iterator
+        events_next: state.homeReducer.events_next,
+        iterator: state.homeReducer.iterator_next,
+        events_previous: state.homeReducer.events_previous,
+        iterator_previous: state.homeReducer.iterator_previous
     }
 }
 
 const  mapDispatchToProps = (dispatch)=>{
     return {
-        changeIteratorParam: (i)=>dispatch(changeIteratorParam(i))
+        changeIteratorNextParam: (i)=>dispatch(changeIteratorNextParam(i)),
+        changeIteratorPreviousParam: (i)=>dispatch(changeIteratorPreviousParam(i))
     }
 }
 
