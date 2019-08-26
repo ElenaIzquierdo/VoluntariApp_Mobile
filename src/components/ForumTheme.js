@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, Image } from 'react-native';
+import { View, Text, TouchableHighlight  } from 'react-native';
 import {APP_COLORS} from "../constants/colors";
 import { Card, ListItem, Button, Icon } from 'react-native-elements';
 import { EvilIcons } from '@expo/vector-icons';
@@ -41,41 +41,38 @@ class ForumTheme extends React.Component {
     render(){
         const {textStyle, viewStyle, infoStyle, iconTextStyle, viewInformationStyle, iconInfoTextStyle} = styles;
         return(
+            <TouchableHighlight onPress = {() => Actions.forumtheme()}>
             <View style={viewStyle}>
-                <View style={iconTextStyle}>
-                    <Text style = {textStyle}> {this.props.titleForum} </Text>
-                    <Icon
-                        name='eye'
-                        type='evilicon'
-                        color={APP_COLORS.text_color}
-                        size={32}
-                        onPress = {() => Actions.forumtheme()}
-                    />
-                </View>
-                <View style={viewInformationStyle}>
-                    <View style={iconInfoTextStyle}>
-                        <Icon
-                            name='user'
-                            type='evilicon'
-                            color={APP_COLORS.text_color}
-                            size={20}
-                        />
-                        <Text style = {infoStyle}> Creat per {this.props.creator} </Text>
+
+                    <View style={iconTextStyle}>
+                        <Text style = {textStyle}> {this.props.titleForum} </Text>
+                    </View>
+                    <View style={viewInformationStyle}>
+                        <View style={iconInfoTextStyle}>
+                            <Icon
+                                name='user'
+                                type='evilicon'
+                                color={APP_COLORS.text_color}
+                                size={20}
+                            />
+                            <Text style = {infoStyle}> Creat per {this.props.creator} </Text>
+                        </View>
+
+                        <View style={iconInfoTextStyle}>
+                            <Icon
+                                name='calendar'
+                                type='evilicon'
+                                color={APP_COLORS.text_color}
+                                size={20}
+                            />
+                            <Text style = {infoStyle}> {this.props.data} </Text>
+                        </View>
+
+                        {this.pintarEstat()}
                     </View>
 
-                    <View style={iconInfoTextStyle}>
-                        <Icon
-                            name='calendar'
-                            type='evilicon'
-                            color={APP_COLORS.text_color}
-                            size={20}
-                        />
-                        <Text style = {infoStyle}> {this.props.data} </Text>
-                    </View>
-
-                    {this.pintarEstat()}
-                </View>
             </View>
+            </TouchableHighlight>
         );
     }
 

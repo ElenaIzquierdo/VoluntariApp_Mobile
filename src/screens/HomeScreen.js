@@ -1,10 +1,9 @@
 import * as React from 'react';
-import { StyleSheet, View } from 'react-native';
+import { StyleSheet, View, TouchableHighlight } from 'react-native';
 import { Button, Layout, Text, TopNavigation, TopNavigationProps } from 'react-native-ui-kitten';
 import { Actions } from 'react-native-router-flux';
 import { connect } from 'react-redux';
 import {Header} from 'react-native-elements';
-import CardModified from '../components/CardModified';
 import {APP_COLORS} from "../constants/colors";
 import { Icon} from "react-native-elements";
 import {changeIteratorNextParam, changeIteratorPreviousParam} from "../actions/homeActions";
@@ -70,56 +69,60 @@ class HomeScreen extends React.Component{
                     backgroundColor={APP_COLORS.color_orange}
                     rightComponent={{ icon: 'person', color: APP_COLORS.color_neutral, onPress: () => Actions.profile()}}
                 />
-                <View style={viewCardsStyle}>
-                    <View style={[viewCardNextStyle,{backgroundColor:'#B2C78E'}]}>
-                        <View style={viewCardFooterStyle}>
-                            <View style={viewIconArrowStyle}>
-                                <EvilIcons name="chevron-left" size={35} color = {APP_COLORS.black} onPress={this.previous}/>
-                            </View>
-                            <View style={infoviewStyle}>
-                                <Text style={titleStyle}>
-                                    {this.props.events_next[this.props.iterator].title}
-                                </Text>
-                                <View style={texticonStyle}>
-                                    <EvilIcons name="location" size={25} color = {APP_COLORS.text_color} style = {iconStyle}/>
-                                    <Text style={textStyle}>{this.props.events_next[this.props.iterator].grup}</Text>
-                                </View>
-                                <View style={texticonStyle}>
-                                    <EvilIcons name="calendar" size={25} color = {APP_COLORS.text_color} style = {iconStyle}/>
-                                    <Text style={textStyle}>{this.props.events_next[this.props.iterator].dia} - {this.props.events_next[this.props.iterator].hora} h</Text>
-                                </View>
-                            </View>
-                            <View>
-                                <EvilIcons name="chevron-right" size={35} color = {APP_COLORS.black} onPress={this.next}/>
-                            </View>
-                        </View>
-                    </View>
 
-                    <View style={[viewCardPreviousStyle,{backgroundColor:'#F5C15F'}]}>
-                        <View style={viewCardFooterStyle}>
-                            <View style={viewIconArrowStyle}>
-                                <EvilIcons name="chevron-left" size={35} color = {APP_COLORS.black} onPress={this.previous_eventsPrevious}/>
-                            </View>
-                            <View style={infoviewStyle}>
-                                <Text style={titleStyle}>
-                                    {this.props.events_previous[this.props.iterator_previous].title}
-                                </Text>
-                                <View style={texticonStyle}>
-                                    <EvilIcons name="location" size={25} color = {APP_COLORS.text_color} style = {iconStyle}/>
-                                    <Text style={textStyle}>{this.props.events_previous[this.props.iterator_previous].grup}</Text>
+                <View style={viewCardsStyle}>
+                    <TouchableHighlight onPress = {() => Actions.event()} style={[viewCardNextStyle,{backgroundColor:'#B2C78E'}]}>
+                        <View>
+                            <View style={viewCardFooterStyle}>
+                                <View style={viewIconArrowStyle}>
+                                    <EvilIcons name="chevron-left" size={35} color = {APP_COLORS.black} onPress={this.previous}/>
                                 </View>
-                                <View style={texticonStyle}>
-                                    <EvilIcons name="calendar" size={25} color = {APP_COLORS.text_color} style = {iconStyle}/>
-                                    <Text style={textStyle}>{this.props.events_previous[this.props.iterator_previous].dia} - {this.props.events_previous[this.props.iterator_previous].hora} h</Text>
+                                <View style={infoviewStyle}>
+                                    <Text style={titleStyle}>
+                                        {this.props.events_next[this.props.iterator].title}
+                                    </Text>
+                                    <View style={texticonStyle}>
+                                        <EvilIcons name="location" size={25} color = {APP_COLORS.text_color} style = {iconStyle}/>
+                                        <Text style={textStyle}>{this.props.events_next[this.props.iterator].grup}</Text>
+                                    </View>
+                                    <View style={texticonStyle}>
+                                        <EvilIcons name="calendar" size={25} color = {APP_COLORS.text_color} style = {iconStyle}/>
+                                        <Text style={textStyle}>{this.props.events_next[this.props.iterator].dia} - {this.props.events_next[this.props.iterator].hora} h</Text>
+                                    </View>
                                 </View>
-                            </View>
-                            <View>
-                                <EvilIcons name="chevron-right" size={35} color = {APP_COLORS.black} onPress={this.next_eventsPrevious}/>
+                                <View>
+                                    <EvilIcons name="chevron-right" size={35} color = {APP_COLORS.black} onPress={this.next}/>
+                                </View>
                             </View>
                         </View>
-                    </View>
+                    </TouchableHighlight>
+
+                    <TouchableHighlight onPress = {() => Actions.event()} style={[viewCardPreviousStyle,{backgroundColor:'#F5C15F'}]}>
+                        <View>
+                            <View style={viewCardFooterStyle}>
+                                <View style={viewIconArrowStyle}>
+                                    <EvilIcons name="chevron-left" size={35} color = {APP_COLORS.black} onPress={this.previous_eventsPrevious}/>
+                                </View>
+                                <View style={infoviewStyle}>
+                                    <Text style={titleStyle}>
+                                        {this.props.events_previous[this.props.iterator_previous].title}
+                                    </Text>
+                                    <View style={texticonStyle}>
+                                        <EvilIcons name="location" size={25} color = {APP_COLORS.text_color} style = {iconStyle}/>
+                                        <Text style={textStyle}>{this.props.events_previous[this.props.iterator_previous].grup}</Text>
+                                    </View>
+                                    <View style={texticonStyle}>
+                                        <EvilIcons name="calendar" size={25} color = {APP_COLORS.text_color} style = {iconStyle}/>
+                                        <Text style={textStyle}>{this.props.events_previous[this.props.iterator_previous].dia} - {this.props.events_previous[this.props.iterator_previous].hora} h</Text>
+                                    </View>
+                                </View>
+                                <View>
+                                    <EvilIcons name="chevron-right" size={35} color = {APP_COLORS.black} onPress={this.next_eventsPrevious}/>
+                                </View>
+                            </View>
+                        </View>
+                    </TouchableHighlight>
                 </View>
-                <Button onPress = {() => Actions.forum()}>Forum</Button>
             </View>
         );
     }
