@@ -3,13 +3,15 @@ import {homeReducer} from "./reducers/homeReducer";
 import {forumReducer} from "./reducers/forumReducer";
 import {forumthemeReducer} from "./reducers/forumthemeReducer";
 import {eventReducer} from "./reducers/eventReducer";
+import {centreinteresReducer} from "./reducers/centreinteresReducer";
 import thunk from 'redux-thunk';
 
 const rootReducer = combineReducers({
     homeReducer: homeReducer,
     forumReducer: forumReducer,
     forumthemeReducer: forumthemeReducer,
-    eventReducer: eventReducer
+    eventReducer: eventReducer,
+    centreinteresReducer: centreinteresReducer
 });
 
 const store= createStore(
