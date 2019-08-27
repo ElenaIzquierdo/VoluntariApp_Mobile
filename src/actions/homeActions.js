@@ -15,3 +15,12 @@ export const changeIteratorPreviousParam =(iterator) => {
         }
     }
 }
+
+export const changeSwitch = (value) =>{
+    return{
+        type: 'CHANGE_SWITCH',
+        data: {
+            valueSwitch: value
+        }
+    }
+}

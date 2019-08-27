@@ -1,14 +1,14 @@
 import * as React from 'react';
-import { StyleSheet, View, TouchableHighlight } from 'react-native';
+import { StyleSheet, View, TouchableHighlight, Switch } from 'react-native';
 import { Button, Layout, Text, TopNavigation, TopNavigationProps } from 'react-native-ui-kitten';
 import { Actions } from 'react-native-router-flux';
 import { connect } from 'react-redux';
 import {Header} from 'react-native-elements';
 import {APP_COLORS} from "../constants/colors";
 import { Icon} from "react-native-elements";
-import {changeIteratorNextParam, changeIteratorPreviousParam} from "../actions/homeActions";
-import Card2 from '../components/Card2';
-import {EvilIcons} from "@expo/vector-icons";
+import {changeIteratorNextParam, changeIteratorPreviousParam, changeSwitch} from "../actions/homeActions";
+import {EvilIcons, FontAwesome} from "@expo/vector-icons";
+import Modal from 'react-native-modalbox';
 
 class HomeScreen extends React.Component{
     constructor(props) {
@@ -59,8 +59,15 @@ class HomeScreen extends React.Component{
         }
     }
 
+    toggleSwitch = (value) => {
+
+        this.props.changeSwitch(value);
+    }
+
     render(){
-        const {viewCardsStyle, viewCardNextStyle, viewIconArrowStyle, viewCardFooterStyle, texticonStyle, titleStyle, iconStyle, textStyle, infoviewStyle, viewCardPreviousStyle} = styles;
+        const {iconModalStyle, modal, modalTitle, viewCardsStyle, viewCardNextStyle, viewIconArrowStyle,
+            viewCardFooterStyle, texticonStyle, titleStyle, iconStyle, textStyle, infoviewStyle, viewCardPreviousStyle,
+            textModalStyle, switchViewStyle} = styles;
         return(
             <View style={styles.viewStyle}>
                 <Header
@@ -71,7 +78,21 @@ class HomeScreen extends React.Component{
                 />
 
                 <View style={viewCardsStyle}>
-                    <TouchableHighlight onPress = {() => Actions.event()} style={[viewCardNextStyle,{backgroundColor:'#B2C78E'}]}>
+                    <Modal style={modal} position={"center"} ref={"modal"} isDisabled={this.props.isDisabled}>
+                        <Text style={modalTitle}> {this.props.events_next[this.props.iterator].title}</Text>
+                        <View style={switchViewStyle}>
+                            {this.props.events_next[this.props.iterator].attending ?
+                                <Text>Assistiràs</Text>:
+                                <Text>No assistiràs</Text>
+                            }
+                            <Switch value={this.props.events_next[this.props.iterator].attending} onValueChange = {this.toggleSwitch}/>
+                        </View>
+                        <FontAwesome name='download' size={55} color= {APP_COLORS.color_button_1} style={iconModalStyle}/>
+                        <Text style={textModalStyle}>Descarregar la fitxa de la tarda</Text>
+
+                    </Modal>
+
+                    <TouchableHighlight onPress={() => this.refs.modal.open()} style={[viewCardNextStyle,{backgroundColor:'#B2C78E'}]}>
                         <View>
                             <View style={viewCardFooterStyle}>
                                 <View style={viewIconArrowStyle}>
@@ -212,6 +233,32 @@ const styles = StyleSheet.create({
     viewCardsStyle: {
         paddingTop: '20%',
         flex: 1
+    },
+    modalTitle: {
+        color: APP_COLORS.text_color,
+        fontSize: 18,
+        fontWeight: 'bold',
+        paddingTop: '4%',
+        paddingLeft: '2%',
+        alignSelf: 'center'
+    },
+    modal: {
+        height: '45%',
+        width: '75%'
+    },
+    iconModalStyle: {
+        marginTop: '10%',
+        marginBottom: '3%',
+        alignSelf: 'center'
+    },
+    textModalStyle: {
+        color: APP_COLORS.text_color,
+        alignSelf: 'center'
+    },
+    switchViewStyle: {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        padding: '3%'
     }
 });
 
@@ -220,14 +267,17 @@ const mapStateToProps = (state) => {
         events_next: state.homeReducer.events_next,
         iterator: state.homeReducer.iterator_next,
         events_previous: state.homeReducer.events_previous,
-        iterator_previous: state.homeReducer.iterator_previous
+        iterator_previous: state.homeReducer.iterator_previous,
+        isDisabled: state.homeReducer.isDisabled,
+        switchValue: state.homeReducer.switchValue
     }
 }
 
 const  mapDispatchToProps = (dispatch)=>{
     return {
         changeIteratorNextParam: (i)=>dispatch(changeIteratorNextParam(i)),
-        changeIteratorPreviousParam: (i)=>dispatch(changeIteratorPreviousParam(i))
+        changeIteratorPreviousParam: (i)=>dispatch(changeIteratorPreviousParam(i)),
+        changeSwitch : (value) => dispatch(changeSwitch(value))
     }
 }
 
