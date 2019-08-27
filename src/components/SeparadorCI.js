@@ -3,6 +3,7 @@ import {View, Text, FlatList} from 'react-native';
 import {APP_COLORS} from "../constants/colors";
 import { Button, Icon } from 'react-native-elements';
 import Explication from "../components/Explication";
+import Objectiu from "../components/Objectiu";
 
 class SeparadorCI extends React.Component {
     constructor(props) {
@@ -47,7 +48,7 @@ class SeparadorCI extends React.Component {
     _keyExtractor = (item) => item.id.toString();
 
     _renderObjectiu = ({item}) => (
-        <Text style={styles.descriptionStyle}>{item.description}</Text>
+        <Objectiu description={item.description}/>
     );
 
     _renderExplicacio = ({item}) => (
