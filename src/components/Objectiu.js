@@ -3,7 +3,7 @@ import {View, Text, Image} from 'react-native';
 import { FontAwesome } from '@expo/vector-icons';
 import {APP_COLORS} from "../constants/colors";
 
-class Explication extends React.Component {
+class Objectiu extends React.Component {
     constructor(props) {
         super(props)
     }
@@ -42,4 +42,4 @@ const styles ={
     }
 }
 
-export default Explication;
+export default Objectiu;

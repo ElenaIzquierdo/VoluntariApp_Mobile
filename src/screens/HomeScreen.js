@@ -5,7 +5,6 @@ import { Actions } from 'react-native-router-flux';
 import { connect } from 'react-redux';
 import {Header} from 'react-native-elements';
 import {APP_COLORS} from "../constants/colors";
-import { Icon} from "react-native-elements";
 import {changeIteratorNextParam, changeIteratorPreviousParam, changeSwitch} from "../actions/homeActions";
 import {EvilIcons, FontAwesome} from "@expo/vector-icons";
 import Modal from 'react-native-modalbox';
@@ -145,7 +144,6 @@ class HomeScreen extends React.Component{
                     </TouchableHighlight>
                 </View>
                 <Button onPress = {() => Actions.ci()}>CI</Button>
-                <Button onPress = {() => Actions.forum()}>Forum</Button>
             </View>
         );
     }
