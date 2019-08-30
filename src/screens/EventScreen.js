@@ -45,9 +45,9 @@ class EventScreen extends React.Component{
     pintarValoracioGlobal(){
         return(
             <View style={styles.viewValoracioStyle}>
-                <FontAwesome name='star' size={22} color= {APP_COLORS.color_yellow} style={styles.starStyle}/>
-                <FontAwesome name='star' size={22} color= {APP_COLORS.color_yellow} style={styles.starStyle}/>
-                <FontAwesome name='star' size={22} color= {APP_COLORS.color_yellow} style={styles.starStyle}/>
+                <FontAwesome name='star' size={18} color= {APP_COLORS.color_yellow} style={styles.starStyle}/>
+                <FontAwesome name='star' size={18} color= {APP_COLORS.color_yellow} style={styles.starStyle}/>
+                <FontAwesome name='star' size={18} color= {APP_COLORS.color_yellow} style={styles.starStyle}/>
             </View>
         )
     }
@@ -119,7 +119,7 @@ class EventScreen extends React.Component{
     }
 
     render(){
-        const {titleStyle, iconInfoTextStyle, infoStyle, viewStyle, subtitleStyle, rowStyle, modalTitle, descriptionStyle, modalStyle} = styles;
+        const {titleStyle, iconInfoTextStyle, infoStyle, viewStyle, subtitleStyle, rowStyle, downloadStyle, descriptionStyle, viewValoracioStyle} = styles;
         return(
             <View style={viewStyle}>
                 <Header
@@ -129,6 +129,7 @@ class EventScreen extends React.Component{
                     backgroundColor={APP_COLORS.color_orange}
                 />
                 <View style={viewStyle}>
+                    <ScrollView>
                         <View>
                             <Text style = {titleStyle}> {this.props.event.title} </Text>
                         </View>
@@ -149,6 +150,22 @@ class EventScreen extends React.Component{
                                 size={20}
                             />
                             <Text style = {infoStyle}> {this.props.event.grup} </Text>
+                        </View>
+                        <View style={iconInfoTextStyle}>
+                            <Icon
+                                name='question'
+                                type='evilicon'
+                                color={APP_COLORS.text_color}
+                                size={20}
+                            />
+                            <Text style = {infoStyle}> {this.props.event.type} </Text>
+                        </View>
+                        <View>
+                            <View style={rowStyle}>
+                                <Text style = {subtitleStyle}> Activitat </Text>
+                                <FontAwesome name='download' size={22} color= {APP_COLORS.color_green} style={downloadStyle}/>
+                            </View>
+                            <Text style={descriptionStyle}>{this.props.event.activitat}</Text>
                         </View>
                         <View>
                             <View style={rowStyle}>
@@ -171,9 +188,12 @@ class EventScreen extends React.Component{
                                                         null}
 
                             </View>
-                            {this.pintarViewHide()}
-                            {this.pintarAssistencia()}
+                            <View style={iconInfoTextStyle}>
+                                {this.pintarAssistencia()}
+                                {this.pintarViewHide()}
+                            </View>
                         </View>
+                    </ScrollView>
                 </View>
             </View>
         );
@@ -184,6 +204,9 @@ const styles = StyleSheet.create({
     viewStyle: {
         backgroundColor: APP_COLORS.color_neutral,
         flex: 1,
+        height: '100%',
+        width: '100%',
+        paddingBottom: '1%'
     },
     titleStyle:{
         color: APP_COLORS.text_color,
@@ -215,6 +238,10 @@ const styles = StyleSheet.create({
     starStyle: {
         marginRight: '1%'
     },
+    downloadStyle: {
+        marginRight: '6%',
+        marginTop: '3%'
+    },
     rowStyle: {
         flexDirection: 'row',
         justifyContent: 'space-between'
@@ -242,27 +269,25 @@ const styles = StyleSheet.create({
     },
     viewAssStyle: {
         width:'55%',
-        paddingLeft: '5%',
         height: '100%',
     },
     questionStyle: {
         marginRight: '7%',
-        marginTop: '5%'
+        marginTop: '3%'
     },
     viewHideStyle: {
-        width: '10%',
-        marginLeft: '65%',
-        marginTop: '7%',
-        position: 'absolute',
-        borderWidth: 0.6,
+        width: '35%',
+        borderWidth: 0.5,
         borderColor: APP_COLORS.text_color,
         borderRadius: 8,
+        marginLeft: '6%',
+        paddingRight: '1%'
     },
     titleHideStyle: {
         color: APP_COLORS.text_color,
-        fontSize: 13,
+        fontSize: 12,
         fontWeight: 'bold',
-        paddingTop: '4%',
+        paddingTop: '1%',
         paddingLeft: '2%'
     },
     textHideStyle: {

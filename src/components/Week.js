@@ -51,7 +51,8 @@ const styles ={
         paddingTop: '2%'
     },
     iconStyle: {
-        marginRight: '4%'
+        marginRight: '4%',
+        marginTop: '2%'
     }
 }
 

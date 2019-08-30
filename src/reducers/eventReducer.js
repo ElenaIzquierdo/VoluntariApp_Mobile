@@ -1,8 +1,9 @@
 const INITIAL_STATE ={
-    event: {id:0,title:'Casal divendres 12',data:'12/05/2019', hora: '16:00', rate:4, grup: 'Grup Petits',
-        rate_description: 'El JC porta tota la setmana molt distret. ' +
+    event: {id:0,title:'Casal divendres 12',data:'12/05/2019', hora: '16:00', type: 'Casal', rate:4,
+        grup: 'Grup Petits', rate_description: 'El JC porta tota la setmana molt distret. ' +
             'El WB estava molt alterat i ha arribat plorant del cole.' ,
-        assMonitors: 'baixa', assInfants: 'mitja'},
+        assMonitors: 'baixa', assInfants: 'mitja', activitat: 'Intentarem treballar els sentits: olfacte, gust, vista, ' +
+            'tacte i oïda. '},
     rate_event: {id: 0, rotllana: 1, respecte: 2, berenar: 0, files: 1, activitat: 1},
     isDisabled: false,
     isHiden: true
