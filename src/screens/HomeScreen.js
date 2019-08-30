@@ -143,7 +143,8 @@ class HomeScreen extends React.Component{
                         </View>
                     </TouchableHighlight>
                 </View>
-                <Button onPress = {() => Actions.ci()}>CI</Button>
+                <Button onPress = {() => Actions.programacio()}>Programacio</Button>
+                <Button onPress = {() => Actions.forum()}>Forum</Button>
             </View>
         );
     }

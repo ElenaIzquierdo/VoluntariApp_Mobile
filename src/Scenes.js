@@ -7,6 +7,7 @@ import ForumThemeScreen from "./screens/ForumThemeScreen"
 import ProfileScreen from "./screens/ProfileScreen"
 import EventScreen from "./screens/EventScreen"
 import CentreInteresScreen from "./screens/CentreInteresScreen"
+import ProgramacioScreen from "./screens/ProgramacioScreen"
 
 const Scenes = Actions.create(
     <Scene key = "root" hideNavBar={true}>
@@ -16,6 +17,7 @@ const Scenes = Actions.create(
         <Scene key = "profile" component = {ProfileScreen}/>
         <Scene key = "event" component = {EventScreen}/>
         <Scene key = "ci" component = {CentreInteresScreen}/>
+        <Scene key = "programacio" component = {ProgramacioScreen}/>
     </Scene>
 )
 

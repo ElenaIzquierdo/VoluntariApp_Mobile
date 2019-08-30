@@ -54,14 +54,14 @@ const styles ={
     },
     titleStyle: {
         color: APP_COLORS.text_color,
-        fontSize: 18,
+        fontSize: 17,
         fontWeight: 'bold',
         paddingTop: '4%',
         paddingLeft: '2%'
     },
     titleFinishedStyle: {
         color: APP_COLORS.color_green,
-        fontSize: 18,
+        fontSize: 17,
         fontWeight: 'bold',
         paddingTop: '4%',
         paddingLeft: '2%'

@@ -4,6 +4,7 @@ import {forumReducer} from "./reducers/forumReducer";
 import {forumthemeReducer} from "./reducers/forumthemeReducer";
 import {eventReducer} from "./reducers/eventReducer";
 import {centreinteresReducer} from "./reducers/centreinteresReducer";
+import {programacioReducer} from "./reducers/programacioReducer";
 import thunk from 'redux-thunk';
 
 const rootReducer = combineReducers({
@@ -11,7 +12,8 @@ const rootReducer = combineReducers({
     forumReducer: forumReducer,
     forumthemeReducer: forumthemeReducer,
     eventReducer: eventReducer,
-    centreinteresReducer: centreinteresReducer
+    centreinteresReducer: centreinteresReducer,
+    programacioReducer: programacioReducer
 });
 
 const store= createStore(
