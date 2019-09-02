@@ -21,7 +21,7 @@ const styles ={
         height: '5%',
         backgroundColor: APP_COLORS.color_orange,
         marginTop: '3%',
-        marginBottom: '3%'
+        marginBottom: '5%'
     },
 }
 

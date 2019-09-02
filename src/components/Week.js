@@ -77,7 +77,7 @@ class Week extends React.Component {
                 <View>
                     <View style={rowStyle}>
                         <Text style={titleStyle}>Setmana {this.props.name}</Text>
-                        <FontAwesome name='download' size={25} color= {APP_COLORS.black} style={iconStyle}/>
+                        <FontAwesome name='download' size={25} color= {APP_COLORS.text_color} style={iconStyle}/>
                     </View>
                     <View>
                         <View style={iconInfoTextStyle}>
