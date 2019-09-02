@@ -8,6 +8,7 @@ import ProfileScreen from "./screens/ProfileScreen"
 import EventScreen from "./screens/EventScreen"
 import CentreInteresScreen from "./screens/CentreInteresScreen"
 import ProgramacioScreen from "./screens/ProgramacioScreen"
+import WeekScreen from "./screens/WeekScreen"
 
 const Scenes = Actions.create(
     <Scene key = "root" hideNavBar={true}>
@@ -18,6 +19,7 @@ const Scenes = Actions.create(
         <Scene key = "event" component = {EventScreen}/>
         <Scene key = "ci" component = {CentreInteresScreen}/>
         <Scene key = "programacio" component = {ProgramacioScreen}/>
+        <Scene key = "week" component = {WeekScreen}/>
     </Scene>
 )
 

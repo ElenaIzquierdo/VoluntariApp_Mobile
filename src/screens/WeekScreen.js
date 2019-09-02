@@ -1,22 +1,15 @@
 import * as React from 'react';
-import { StyleSheet, View, FlatList } from 'react-native';
+import { StyleSheet, View, ScrollView } from 'react-native';
 import { Button, Layout, Text, TopNavigation, TopNavigationProps } from 'react-native-ui-kitten';
 import {Header} from 'react-native-elements';
 import {APP_COLORS} from "../constants/colors";
 import { connect } from 'react-redux';
 import {Actions} from "react-native-router-flux";
-import Week from "../components/Week";
 
-class ProgramacioScreen extends React.Component{
+class WeekScreen extends React.Component{
     constructor(props) {
         super(props)
     }
-
-    _keyExtractor = (item) => item.id.toString();
-
-    _renderSetmana = ({item}) => (
-        <Week name={item.name} id={item.id} ass={item.ass} rate={item.global_rate}/>
-    );
 
     render(){
         return(
@@ -27,13 +20,7 @@ class ProgramacioScreen extends React.Component{
                     rightComponent={{ icon: 'home', color: APP_COLORS.color_neutral, onPress: () => Actions.home()}}
                     backgroundColor={APP_COLORS.color_orange}
                 />
-                <FlatList
-                    data={this.props.setmanes}
-                    style={{width:"100%",height:"100%"}}
-                    keyExtractor={this._keyExtractor}
-                    renderItem={this._renderSetmana}
-                />
-
+                <Text>Setmana</Text>
             </View>
         );
     }
@@ -49,17 +36,5 @@ const styles = StyleSheet.create({
 });
 
 
-const mapStateToProps = (state) => {
-    return {
-        setmanes: state.programacioReducer.setmanes,
-    }
-
-}
-
-const  mapDispatchToProps = (dispatch)=>{
-    return {
-    }
-}
-
-export default connect(mapStateToProps,mapDispatchToProps)(ProgramacioScreen)
+export default WeekScreen;
 
