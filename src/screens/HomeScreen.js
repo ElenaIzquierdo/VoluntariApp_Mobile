@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { StyleSheet, View, TouchableHighlight, Switch } from 'react-native';
-import { Button, Layout, Text, TopNavigation, TopNavigationProps } from 'react-native-ui-kitten';
+import { Button, Layout, Text } from 'react-native-ui-kitten';
 import { Actions } from 'react-native-router-flux';
 import { connect } from 'react-redux';
 import {Header} from 'react-native-elements';
@@ -8,6 +8,7 @@ import {APP_COLORS} from "../constants/colors";
 import {changeIteratorNextParam, changeIteratorPreviousParam, changeSwitch} from "../actions/homeActions";
 import {EvilIcons, FontAwesome} from "@expo/vector-icons";
 import Modal from 'react-native-modalbox';
+import BottomNav from "../components/BottomNav";
 
 class HomeScreen extends React.Component{
     constructor(props) {
@@ -70,7 +71,6 @@ class HomeScreen extends React.Component{
         return(
             <View style={styles.viewStyle}>
                 <Header
-                    leftComponent={{ icon: 'menu', color: APP_COLORS.color_neutral }}
                     centerComponent={{ text: 'VoluntariApp', style: { color: APP_COLORS.color_neutral, fontSize: 25, fontWeight: 'bold' } }}
                     backgroundColor={APP_COLORS.color_orange}
                     rightComponent={{ icon: 'person', color: APP_COLORS.color_neutral, onPress: () => Actions.profile()}}
@@ -143,8 +143,7 @@ class HomeScreen extends React.Component{
                         </View>
                     </TouchableHighlight>
                 </View>
-                <Button onPress = {() => Actions.programacio()}>Programacio</Button>
-                <Button onPress = {() => Actions.forum()}>Forum</Button>
+                <BottomNav/>
             </View>
         );
     }

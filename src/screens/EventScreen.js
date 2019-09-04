@@ -123,9 +123,9 @@ class EventScreen extends React.Component{
         return(
             <View style={viewStyle}>
                 <Header
-                    leftComponent={{ icon: 'menu', color: APP_COLORS.color_neutral }}
+                    leftComponent={{ icon: 'home', color: APP_COLORS.color_neutral, onPress: () => Actions.home() }}
                     centerComponent={{ text: 'VoluntariApp', style: { color: APP_COLORS.color_neutral, fontSize: 25, fontWeight: 'bold' } }}
-                    rightComponent={{ icon: 'home', color: APP_COLORS.color_neutral, onPress: () => Actions.home()}}
+                    rightComponent={{ icon: 'person', color: APP_COLORS.color_neutral, onPress: () => Actions.profile()}}
                     backgroundColor={APP_COLORS.color_orange}
                 />
                 <View style={viewStyle}>
