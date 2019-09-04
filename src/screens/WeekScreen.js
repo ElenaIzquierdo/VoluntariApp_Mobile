@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { StyleSheet, View, Switch, TouchableHighlight } from 'react-native';
-import { Button, Layout, Text, TopNavigation, TopNavigationProps } from 'react-native-ui-kitten';
+import { Text } from 'react-native-ui-kitten';
 import {Header} from 'react-native-elements';
 import {APP_COLORS} from "../constants/colors";
 import { connect } from 'react-redux';
@@ -8,6 +8,7 @@ import {Actions} from "react-native-router-flux";
 import SeparadorSimple from "../components/SeparadorSimple";
 import {changeSwitchMonday} from "../actions/weekActions";
 import {FontAwesome} from "@expo/vector-icons";
+import BottomNav from "../components/BottomNav";
 
 class WeekScreen extends React.Component{
     constructor(props) {
@@ -16,9 +17,9 @@ class WeekScreen extends React.Component{
 
     toggleSwitch = (value) => {
         this.props.changeSwitchMonday(value);
-    }
+    };
 
-    pintarFinished(finished){
+    static pintarFinished(finished){
         if(finished){
             return(<Text style={styles.textFinishedStyle}>Finalitzat</Text>)
         }
@@ -48,7 +49,7 @@ class WeekScreen extends React.Component{
                         </View>
                     </View>
                     <View style={styles.viewFinishedStyle}>
-                        {this.pintarFinished(dia.finished)}
+                        {WeekScreen.pintarFinished(dia.finished)}
                     </View>
                 </View>
             )
@@ -57,6 +58,7 @@ class WeekScreen extends React.Component{
 
     render(){
         return(
+            <View>
             <View style={styles.viewStyle}>
                 <Header
                     leftComponent={{ icon: 'home', color: APP_COLORS.color_neutral, onPress: () => Actions.home() }}
@@ -70,6 +72,9 @@ class WeekScreen extends React.Component{
                 </View>
                 <SeparadorSimple/>
                 {this.pintarDies()}
+
+            </View>
+            <BottomNav selected={"programacio"}/>
             </View>
         );
     }
@@ -79,7 +84,7 @@ const styles = StyleSheet.create({
     viewStyle: {
         backgroundColor: APP_COLORS.color_neutral,
         width: '100%',
-        height: '100%',
+        height: '90%',
     },
     titleStyle: {
         color: APP_COLORS.text_color,
@@ -132,13 +137,13 @@ const mapStateToProps = (state) => {
         message: state.weekReducer.message,
         setmana: state.weekReducer.setmana
     }
-}
+};
 
 const  mapDispatchToProps = (dispatch)=>{
     return {
         changeSwitchMonday : (value) => dispatch(changeSwitchMonday(value))
     }
-}
+};
 
 export default connect(mapStateToProps,mapDispatchToProps)(WeekScreen)
 

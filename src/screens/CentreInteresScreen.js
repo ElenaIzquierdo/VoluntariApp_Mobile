@@ -1,11 +1,11 @@
 import * as React from 'react';
-import { StyleSheet, View, ScrollView } from 'react-native';
-import { Button, Layout, Text, TopNavigation, TopNavigationProps } from 'react-native-ui-kitten';
+import { StyleSheet, View } from 'react-native';
 import {Header} from 'react-native-elements';
 import {APP_COLORS} from "../constants/colors";
 import { connect } from 'react-redux';
 import {Actions} from "react-native-router-flux";
 import SeparadorCI from '../components/SeparadorCI';
+import BottomNav from "../components/BottomNav";
 class CentreInteresScreen extends React.Component{
     constructor(props) {
         super(props)
@@ -22,6 +22,7 @@ class CentreInteresScreen extends React.Component{
                 />
                 <SeparadorCI objectius={this.props.objectius} estat_actual={this.props.estat_actual}
                                 explicacio={this.props.explicacio}/>
+                <BottomNav selected={"ci"}/>
             </View>
         );
     }
@@ -43,12 +44,12 @@ const mapStateToProps = (state) => {
         estat_actual: state.centreinteresReducer.estat_actual,
         explicacio: state.centreinteresReducer.explicacio,
     }
-}
+};
 
 const  mapDispatchToProps = (dispatch)=>{
     return {
     }
-}
+};
 
 export default connect(mapStateToProps,mapDispatchToProps)(CentreInteresScreen)
 

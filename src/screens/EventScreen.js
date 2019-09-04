@@ -1,6 +1,6 @@
 import * as React from 'react';
 import {StyleSheet, View, ScrollView} from 'react-native';
-import { Button, Layout, Text, TopNavigation, TopNavigationProps } from 'react-native-ui-kitten';
+import { Text } from 'react-native-ui-kitten';
 import {Header, Icon} from 'react-native-elements';
 import {APP_COLORS} from "../constants/colors";
 import { connect } from 'react-redux';
@@ -8,6 +8,7 @@ import {Actions} from "react-native-router-flux";
 import { FontAwesome,EvilIcons } from '@expo/vector-icons';
 
 import {isHidenChange} from "../actions/eventActions";
+import BottomNav from "../components/BottomNav";
 
 
 class EventScreen extends React.Component{
@@ -27,22 +28,22 @@ class EventScreen extends React.Component{
                     </View>
                     <View style={styles.rowStyle}>
                         <Text style={styles.textHideStyle}>Assistència baixa</Text>
-                        {this.pintarIconAssistencia("baixa")}
+                        {EventScreen.pintarIconAssistencia("baixa")}
                     </View>
                     <View style={styles.rowStyle}>
                         <Text style={styles.textHideStyle}>Assistència mitja</Text>
-                        {this.pintarIconAssistencia("mitja")}
+                        {EventScreen.pintarIconAssistencia("mitja")}
                     </View>
                     <View style={styles.rowStyle}>
                         <Text style={styles.textHideStyle}>Assistència alta</Text>
-                        {this.pintarIconAssistencia("alta")}
+                        {EventScreen.pintarIconAssistencia("alta")}
                     </View>
                 </View>
             );
         }
     }
 
-    pintarValoracioGlobal(){
+    static pintarValoracioGlobal(){
         return(
             <View style={styles.viewValoracioStyle}>
                 <FontAwesome name='star' size={18} color= {APP_COLORS.color_yellow} style={styles.starStyle}/>
@@ -52,7 +53,7 @@ class EventScreen extends React.Component{
         )
     }
 
-    pintarIconValoracio(i){
+    static pintarIconValoracio(i){
         if(i === 0){
             return(<EvilIcons name="close-o" size={18} color = {APP_COLORS.color_green}/>)
         }
@@ -69,29 +70,29 @@ class EventScreen extends React.Component{
             <View style={styles.valoracioViewStyle}>
                 <View style={styles.rowStyle}>
                     <Text style={styles.textStyle}>Respecte</Text>
-                    {this.pintarIconValoracio(this.props.rate_event.respecte)}
+                    {EventScreen.pintarIconValoracio(this.props.rate_event.respecte)}
                 </View>
                 <View style={styles.rowStyle}>
                     <Text style={styles.textStyle}>Rotllana</Text>
-                    {this.pintarIconValoracio(this.props.rate_event.rotllana)}
+                    {EventScreen.pintarIconValoracio(this.props.rate_event.rotllana)}
                 </View>
                 <View style={styles.rowStyle}>
                     <Text style={styles.textStyle}>Berenar</Text>
-                    {this.pintarIconValoracio(this.props.rate_event.berenar)}
+                    {EventScreen.pintarIconValoracio(this.props.rate_event.berenar)}
                 </View>
                 <View style={styles.rowStyle}>
                     <Text style={styles.textStyle}>Files</Text>
-                    {this.pintarIconValoracio(this.props.rate_event.files)}
+                    {EventScreen.pintarIconValoracio(this.props.rate_event.files)}
                 </View>
                 <View style={styles.rowStyle}>
                     <Text style={styles.textStyle}>Activitat</Text>
-                    {this.pintarIconValoracio(this.props.rate_event.activitat)}
+                    {EventScreen.pintarIconValoracio(this.props.rate_event.activitat)}
                 </View>
             </View>
         )
     }
 
-    pintarIconAssistencia(ass){
+    static pintarIconAssistencia(ass){
         if(ass === "baixa"){
             return(<FontAwesome name="angle-double-down" size={18} color = {APP_COLORS.color_green}/>)
         }
@@ -108,18 +109,18 @@ class EventScreen extends React.Component{
             <View style={styles.viewAssStyle}>
                 <View style={styles.rowStyle}>
                     <Text style={styles.textStyle}> Assistencia monitors</Text>
-                    {this.pintarIconAssistencia(this.props.event.assMonitors)}
+                    {EventScreen.pintarIconAssistencia(this.props.event.assMonitors)}
                 </View>
                 <View style={styles.rowStyle}>
                     <Text style={styles.textStyle}> Assistencia infants</Text>
-                    {this.pintarIconAssistencia(this.props.event.assInfants)}
+                    {EventScreen.pintarIconAssistencia(this.props.event.assInfants)}
                 </View>
             </View>
         )
     }
 
     render(){
-        const {titleStyle, iconInfoTextStyle, infoStyle, viewStyle, subtitleStyle, rowStyle, downloadStyle, descriptionStyle, viewValoracioStyle} = styles;
+        const {titleStyle, iconInfoTextStyle, infoStyle, viewStyle, subtitleStyle, rowStyle, downloadStyle, descriptionStyle} = styles;
         return(
             <View style={viewStyle}>
                 <Header
@@ -170,7 +171,7 @@ class EventScreen extends React.Component{
                         <View>
                             <View style={rowStyle}>
                                 <Text style = {subtitleStyle}> Valoració </Text>
-                                {this.pintarValoracioGlobal()}
+                                {EventScreen.pintarValoracioGlobal()}
                             </View>
                             <View>
                                 {this.pintarValoracioNens()}
@@ -195,6 +196,7 @@ class EventScreen extends React.Component{
                         </View>
                     </ScrollView>
                 </View>
+                <BottomNav selected={"programacio"}/>
             </View>
         );
     }
@@ -206,7 +208,6 @@ const styles = StyleSheet.create({
         flex: 1,
         height: '100%',
         width: '100%',
-        paddingBottom: '1%'
     },
     titleStyle:{
         color: APP_COLORS.text_color,
@@ -306,13 +307,13 @@ const mapStateToProps = (state) => {
         isHiden: state.eventReducer.isHiden
     }
 
-}
+};
 
 const  mapDispatchToProps = (dispatch)=>{
     return {
         isHidenChange : () => dispatch(isHidenChange())
     }
-}
+};
 
 export default connect(mapStateToProps,mapDispatchToProps)(EventScreen)
 

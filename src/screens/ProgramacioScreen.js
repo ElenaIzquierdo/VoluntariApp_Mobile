@@ -1,11 +1,11 @@
 import * as React from 'react';
 import { StyleSheet, View, FlatList } from 'react-native';
-import { Button, Layout, Text, TopNavigation, TopNavigationProps } from 'react-native-ui-kitten';
 import {Header} from 'react-native-elements';
 import {APP_COLORS} from "../constants/colors";
 import { connect } from 'react-redux';
 import {Actions} from "react-native-router-flux";
 import Week from "../components/Week";
+import BottomNav from "../components/BottomNav";
 
 class ProgramacioScreen extends React.Component{
     constructor(props) {
@@ -33,7 +33,7 @@ class ProgramacioScreen extends React.Component{
                     keyExtractor={this._keyExtractor}
                     renderItem={this._renderSetmana}
                 />
-
+                <BottomNav selected={"programacio"}/>
             </View>
         );
     }
@@ -54,12 +54,12 @@ const mapStateToProps = (state) => {
         setmanes: state.programacioReducer.setmanes,
     }
 
-}
+};
 
 const  mapDispatchToProps = (dispatch)=>{
     return {
     }
-}
+};
 
 export default connect(mapStateToProps,mapDispatchToProps)(ProgramacioScreen)
 

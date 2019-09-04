@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, Image } from 'react-native';
+import { View, Text } from 'react-native';
 import {APP_COLORS} from "../constants/colors";
 import {Icon} from "react-native-elements";
 import {Actions} from "react-native-router-flux";
@@ -52,7 +52,7 @@ class BottomNav extends React.Component {
                         size={30}
                         onPress = {() => Actions.ci()}
                     />
-                    <Text style={styles.textSelectedStyle}>Programacio</Text>
+                    <Text style={styles.textSelectedStyle}>Centre Interes</Text>
                 </View>
             )
         }
@@ -66,7 +66,7 @@ class BottomNav extends React.Component {
                         size={30}
                         onPress = {() => Actions.ci()}
                     />
-                    <Text style={styles.textStyle}>Programacio</Text>
+                    <Text style={styles.textStyle}>Centre Interes</Text>
                 </View>
             )
         }
@@ -84,7 +84,7 @@ class BottomNav extends React.Component {
                         size={30}
                         onPress = {() => Actions.forum()}
                     />
-                    <Text style={styles.textSelectedStyle}>Programacio</Text>
+                    <Text style={styles.textSelectedStyle}>Forum</Text>
                 </View>
             )
         }
@@ -98,7 +98,7 @@ class BottomNav extends React.Component {
                         size={30}
                         onPress = {() => Actions.forum()}
                     />
-                    <Text style={styles.textStyle}>Programacio</Text>
+                    <Text style={styles.textStyle}>Forum</Text>
                 </View>
             )
         }
@@ -114,7 +114,7 @@ class BottomNav extends React.Component {
             </View>
         )
     }
-};
+}
 
 const styles ={
     rowStyle: {
@@ -134,6 +134,6 @@ const styles ={
         color: APP_COLORS.color_green,
         fontSize: 11
     }
-}
+};
 
 export default BottomNav;
