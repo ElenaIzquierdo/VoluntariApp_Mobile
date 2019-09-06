@@ -1,8 +1,7 @@
 import React from 'react';
-import {View, ScrollView, Image, Alert, Text, FlatList} from 'react-native';
+import {View, Text, FlatList} from 'react-native';
 import Modal from 'react-native-modalbox';
 import {APP_COLORS} from "../constants/colors";
-import Textarea from 'react-native-textarea';
 import { Button, Icon } from 'react-native-elements';
 import Comment from '../components/Comment';
 import Participant from '../components/Participant';
@@ -10,7 +9,7 @@ import Task from '../components/Task';
 
 class Separador extends React.Component {
     constructor(props) {
-        super(props)
+        super(props);
         this.touchComment = this.touchComment.bind(this);
         this.state = {
             comments: true,
@@ -32,7 +31,6 @@ class Separador extends React.Component {
     }
 
     touchTasks(){
-        var tasks_new = this.state.tasks
         this.setState({
             tasks: true,
             comments: false,
@@ -41,7 +39,6 @@ class Separador extends React.Component {
     }
 
     touchParticipants(){
-        var part_new = this.state.participants
         this.setState({
             participants: true,
             comments: false,
@@ -90,12 +87,14 @@ class Separador extends React.Component {
 
     pintarCommentaris(){
         return(
-            <FlatList
-                data={this.props.comments}
-                style={{width:"100%",height:"100%"}}
-                keyExtractor={this._keyExtractor}
-                renderItem={this._renderItem}
-            />
+            <View>
+                <FlatList
+                    data={this.props.comments}
+                    style={{width:"100%",height:"100%"}}
+                    keyExtractor={this._keyExtractor}
+                    renderItem={this._renderItem}
+                />
+            </View>
         )
     }
 
@@ -130,7 +129,11 @@ class Separador extends React.Component {
 
     pintarContingut(){
         if(this.state.comments){
-            return this.pintarCommentaris()
+            return (
+                <View>
+                    {this.pintarCommentaris()}
+                </View>
+            )
         }
         if(this.state.tasks){
             return this.pintarTasques()
@@ -178,7 +181,8 @@ class Separador extends React.Component {
         );
     }
 
-};
+}
+
 const styles ={
     viewGeneralStyle: {
         flex:1,
@@ -205,10 +209,9 @@ const styles ={
         fontWeight: 'bold'
     },
     textarea: {
-        textAlignVertical: 'top',  // hack android
         fontSize: 14,
         color: APP_COLORS.black,
-        height: '100%',
+        height: '10%',
     },
     textareaContainer: {
         backgroundColor: APP_COLORS.color_white,
@@ -217,7 +220,7 @@ const styles ={
         borderWidth: 1,
         borderColor: APP_COLORS.color_green,
         borderRadius: 4,
-        height: '100%',
+        height: '11%',
     },
     container: {
         padding: '2%',
@@ -257,6 +260,6 @@ const styles ={
         width: '25%',
         paddingTop: '72%'
     },
-}
+};
 
 export default Separador;

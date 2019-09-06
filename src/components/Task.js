@@ -1,13 +1,13 @@
 import React from 'react';
-import { View, Text, Image } from 'react-native';
+import { View, Text, Alert, TouchableHighlight } from 'react-native';
 import {APP_COLORS} from "../constants/colors";
-import { Card, ListItem, Button, Icon } from 'react-native-elements';
-import { EvilIcons } from '@expo/vector-icons';
+import { Icon } from 'react-native-elements';
 import {Actions} from "react-native-router-flux";
 
 class Task extends React.Component {
     constructor(props) {
-        super(props)
+        super(props);
+        this.showAlertDelete = this.showAlertDelete.bind(this);
     }
     pintarEstat(){
         if(this.props.finished){
@@ -38,51 +38,61 @@ class Task extends React.Component {
         }
 
     }
-    render(){
-        const {textStyle, viewStyle, infoStyle, iconTextStyle, viewInformationStyle, iconInfoTextStyle,iconsEditStyle} = styles;
-        return(
-            <View style={viewStyle}>
-                <View style={iconTextStyle}>
-                    <Text style = {textStyle}> {this.props.title} </Text>
-                    <View style={iconsEditStyle}>
-                        <Icon
-                            name='eye'
-                            type='evilicon'
-                            color={APP_COLORS.text_color}
-                            size={32}
-                        />
-                        <Icon
-                            name='pencil'
-                            type='evilicon'
-                            color={APP_COLORS.text_color}
-                            size={32}
-                        />
-                        <Icon
-                            name='trash'
-                            type='evilicon'
-                            color={APP_COLORS.text_color}
-                            size={32}
-                        />
-                    </View>
-                </View>
-                <View style={viewInformationStyle}>
-                    {this.pintarEstat()}
-                    <View style={iconInfoTextStyle}>
-                        <Icon
-                            name='user'
-                            type='evilicon'
-                            color={APP_COLORS.text_color}
-                            size={20}
-                        />
-                        <Text style = {infoStyle}> Assignat a {this.props.assignees} </Text>
-                    </View>
 
-                </View>
-            </View>
+    showAlertDelete(){
+        Alert.alert(
+            'Borrar tasca',
+            'Està segur que vol borrar la tasca '+ this.props.title +'?',
+            [
+                {text: 'Cancelar'},
+                {text: 'OK'},
+            ],
+            { cancelable: false }
         );
     }
 
-};
+    render(){
+        const {textStyle, viewStyle, infoStyle, iconTextStyle, viewInformationStyle, iconInfoTextStyle,iconsEditStyle} = styles;
+        return(
+            <TouchableHighlight onPress = {() => Actions.task()}>
+                <View style={viewStyle}>
+                    <View style={iconTextStyle}>
+                        <Text style = {textStyle}> {this.props.title} </Text>
+                        <View style={iconsEditStyle}>
+                            <Icon
+                                name='pencil'
+                                type='evilicon'
+                                color={APP_COLORS.text_color}
+                                size={32}
+                            />
+                            <Icon
+                                name='trash'
+                                type='evilicon'
+                                color={APP_COLORS.text_color}
+                                size={32}
+                                onPress={this.showAlertDelete}
+                            />
+                        </View>
+                    </View>
+                    <View style={viewInformationStyle}>
+                        {this.pintarEstat()}
+                        <View style={iconInfoTextStyle}>
+                            <Icon
+                                name='user'
+                                type='evilicon'
+                                color={APP_COLORS.text_color}
+                                size={20}
+                            />
+                            <Text style = {infoStyle}> Assignat a {this.props.assignees} </Text>
+                        </View>
+
+                    </View>
+                </View>
+            </TouchableHighlight>
+        );
+    }
+
+}
 const styles ={
     textStyle:{
         color: APP_COLORS.text_color,
@@ -109,6 +119,6 @@ const styles ={
     iconsEditStyle: {
         flexDirection: 'row'
     }
-}
+};
 
 export default Task;
