@@ -1,14 +1,21 @@
 import * as React from 'react';
-import { StyleSheet, View, ScrollView } from 'react-native';
+import { StyleSheet, View, ScrollView, TextInput, Button } from 'react-native';
+import { Text } from 'react-native-ui-kitten';
 import {Header, Icon} from 'react-native-elements';
 import {APP_COLORS} from "../constants/colors";
 import { connect } from 'react-redux';
 import {Actions} from "react-native-router-flux";
 import {FontAwesome} from "@expo/vector-icons";
+import {changeDescriptionModified, changeDescription} from "../actions/taskActions";
 
 class TaskScreen extends React.Component{
     constructor(props) {
-        super(props)
+        super(props);
+        this.modifyDescription = this.modifyDescription.bind(this);
+    }
+
+    modifyDescription(){
+        this.props.changeDescriptionModified();
     }
 
     pintarEstat(){
@@ -43,8 +50,28 @@ class TaskScreen extends React.Component{
 
     pintarDescription(){
         if(this.props.task.description !== null){
+            if(!this.props.descriptionModified){
+                return(
+                    <Text style={styles.descriptionStyle}>{this.props.descriptionValue}</Text>
+                )
+            }
+            else{
+                return(
+                    <TextInput style={styles.textInputStyle}
+                               multiline = {true}
+                               placeholder = "Escribe aquí..."
+                               value={this.props.descriptionValue}
+                               onChangeText={(text) => this.props.changeDescription(text)}
+                    />
+                )
+            }
+        }
+        else{
             return(
-                <Text style={styles.descriptionStyle}>{this.props.task.description}</Text>
+                <TextInput style={styles.textInputStyle}
+                           multiline = {true}
+                           placeholder = "Escribe aquí..."
+                           value={'Afegir descripció...'}/>
             )
         }
     }
@@ -83,6 +110,7 @@ class TaskScreen extends React.Component{
                             color={APP_COLORS.text_color}
                             size={35}
                             iconStyle={iconEditStyle}
+                            onPress={this.modifyDescription}
                         />
                     </View>
                     {this.pintarDescription()}
@@ -151,18 +179,38 @@ const styles = StyleSheet.create({
     },
     deleteIconStyle: {
         marginTop: '4%'
+    },
+    textInputStyle: {
+        color: APP_COLORS.text_color,
+        fontSize: 17,
+        paddingTop: '4%',
+        paddingRight: '2%',
+        paddingLeft: '2%',
+        borderColor: APP_COLORS.text_color,
+        borderWidth: 1,
+        marginLeft: '8%',
+        width: '70%',
+        borderRadius: 6,
+        height: '15%'
+    },
+    buttonStyle: {
+        height: '5%',
+        width: '7%'
     }
 });
 
 const mapStateToProps = (state) => {
     return{
-        task: state.taskReducer.task
+        task: state.taskReducer.task,
+        descriptionModified: state.taskReducer.descriptionModified,
+        descriptionValue: state.taskReducer.descriptionValue
     }
 };
 
 const  mapDispatchToProps = (dispatch)=> {
     return{
-
+        changeDescriptionModified : () => dispatch(changeDescriptionModified()),
+        changeDescription: (descr) => dispatch(changeDescription(descr))
     }
 };
 

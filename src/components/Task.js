@@ -60,12 +60,6 @@ class Task extends React.Component {
                         <Text style = {textStyle}> {this.props.title} </Text>
                         <View style={iconsEditStyle}>
                             <Icon
-                                name='pencil'
-                                type='evilicon'
-                                color={APP_COLORS.text_color}
-                                size={32}
-                            />
-                            <Icon
                                 name='trash'
                                 type='evilicon'
                                 color={APP_COLORS.text_color}
