@@ -7,6 +7,7 @@ import {APP_COLORS} from "../constants/colors";
 import { connect } from 'react-redux';
 import {Actions} from "react-native-router-flux";
 import BottomNav from "../components/BottomNav";
+import {FontAwesome} from "@expo/vector-icons";
 
 class ForumScreen extends React.Component{
     constructor(props) {
@@ -19,6 +20,18 @@ class ForumScreen extends React.Component{
                 <ForumTheme key={tema.id} titleForum={tema.title} creator={tema.creator} finished={tema.finished} data={tema.data}/>
             )
         });
+    }
+
+    pintarFiltres(){
+        return(
+            <View style={styles.viewFilterStyle}>
+                <FontAwesome name='filter' size={25} color= {APP_COLORS.text_color} style={styles.filterIconStyle}/>
+                <View style={styles.viewTextFilterStyle}>
+                    <Text style={styles.textFilterStyle}>Temes oberts, tancats</Text>
+                    <Text style={styles.textFilterStyle}>Ordenat per data</Text>
+                </View>
+            </View>
+        )
     }
 
     pintarTemesTancats(){
@@ -39,10 +52,8 @@ class ForumScreen extends React.Component{
                     backgroundColor={APP_COLORS.color_orange}
                 />
                 <ScrollView>
-                    <Text style={styles.text} category='h6'>Temes oberts</Text>
+                    {this.pintarFiltres()}
                     {this.pintarTemesOberts()}
-
-                    <Text style={styles.textTancat} category='h6'>Temes tancats</Text>
                     {this.pintarTemesTancats()}
                 </ScrollView>
                 <BottomNav selected={"forum"}/>
@@ -64,11 +75,30 @@ const styles = StyleSheet.create({
         alignSelf: 'center'
 
     },
-
     textTancat:{
         marginVertical: 16,
         color: APP_COLORS.color_green,
         alignSelf: 'center'
+    },
+    filterIconStyle: {
+        marginLeft: '4%',
+        marginTop: '3%',
+        marginBottom: '3%'
+    },
+    textFilterStyle:{
+        color: APP_COLORS.text_color,
+        fontSize: 14,
+    },
+    viewFilterStyle: {
+        flexDirection: 'row',
+        borderBottomColor: APP_COLORS.text_color,
+        borderBottomWidth: 0.6,
+        width: '95%',
+        alignSelf: 'center'
+    },
+    viewTextFilterStyle: {
+        marginTop: '2%',
+        marginLeft: '5%'
     }
 });
 

@@ -1,11 +1,12 @@
 import * as React from 'react';
-import { StyleSheet, View, ScrollView, TextInput, Button } from 'react-native';
+import { StyleSheet, View, ScrollView, TextInput } from 'react-native';
 import { Text } from 'react-native-ui-kitten';
 import {Header, Icon} from 'react-native-elements';
 import {APP_COLORS} from "../constants/colors";
 import { connect } from 'react-redux';
 import {Actions} from "react-native-router-flux";
 import {FontAwesome} from "@expo/vector-icons";
+import Button from "../components/Button";
 import {changeDescriptionModified, changeDescription} from "../actions/taskActions";
 
 class TaskScreen extends React.Component{
@@ -52,26 +53,81 @@ class TaskScreen extends React.Component{
         if(this.props.task.description !== null){
             if(!this.props.descriptionModified){
                 return(
-                    <Text style={styles.descriptionStyle}>{this.props.descriptionValue}</Text>
+                    <View>
+                        <View style={styles.titleViewStyle}>
+                            <Text style={styles.subtitleStyle}>Descripció</Text>
+                            <Icon
+                                name='pencil'
+                                type='evilicon'
+                                color={APP_COLORS.text_color}
+                                size={35}
+                                iconStyle={styles.iconEditStyle}
+                                onPress={this.modifyDescription}
+                            />
+                        </View>
+                        <Text style={styles.descriptionStyle}>{this.props.descriptionValue}</Text>
+                    </View>
                 )
             }
             else{
                 return(
-                    <TextInput style={styles.textInputStyle}
-                               multiline = {true}
-                               placeholder = "Escribe aquí..."
-                               value={this.props.descriptionValue}
-                               onChangeText={(text) => this.props.changeDescription(text)}
-                    />
+                    <View>
+                        <View style={styles.titleViewStyle}>
+                            <Text style={styles.subtitleStyle}>Descripció</Text>
+                            <View style={styles.iconDescrStyle}>
+                                <Icon
+                                    name='close-o'
+                                    type='evilicon'
+                                    color={APP_COLORS.color_darkred}
+                                    size={35}
+                                    onPress={this.modifyDescription}
+                                />
+                                <Icon
+                                    name='check'
+                                    type='evilicon'
+                                    color={APP_COLORS.color_green}
+                                    size={35}
+                                    onPress={this.modifyDescription}
+                                />
+                            </View>
+                        </View>
+                        <TextInput style={styles.textInputStyle}
+                                   multiline = {true}
+                                   placeholder = "Escribe aquí..."
+                                   value={this.props.descriptionValue}
+                                   onChangeText={(text)=>this.props.changeDescription({text})}
+                        />
+                    </View>
                 )
             }
         }
         else{
             return(
-                <TextInput style={styles.textInputStyle}
-                           multiline = {true}
-                           placeholder = "Escribe aquí..."
-                           value={'Afegir descripció...'}/>
+                <View>
+                    <View style={styles.titleViewStyle}>
+                        <Text style={styles.subtitleStyle}>Descripció</Text>
+                        <View style={styles.iconDescrStyle}>
+                            <Icon
+                                name='close-o'
+                                type='evilicon'
+                                color={APP_COLORS.color_darkred}
+                                size={35}
+                                onPress={this.modifyDescription}
+                            />
+                            <Icon
+                                name='check'
+                                type='evilicon'
+                                color={APP_COLORS.color_green}
+                                size={35}
+                                onPress={this.modifyDescription}
+                            />
+                        </View>
+                    </View>
+                    <TextInput style={styles.textInputStyle}
+                               multiline = {true}
+                               placeholder = "Escribe aquí..."
+                               value={'Afegir descripció...'}/>
+                </View>
             )
         }
     }
@@ -97,22 +153,14 @@ class TaskScreen extends React.Component{
                     backgroundColor={APP_COLORS.color_orange}
                     rightComponent={{ icon: 'person', color: APP_COLORS.color_neutral, onPress: () => Actions.profile() }}
                 />
-                <ScrollView>
                     <View style={titleViewStyle}>
                         <Text style = {titleStyle}> {this.props.task.title} </Text>
+                        {this.props.task.finished ? <Button colorButton={APP_COLORS.color_checked} text={"Obrir"}/>:
+                                                    <Button colorButton={APP_COLORS.color_darkred} text={"Tancar"}/>}
+
                     </View>
                     {this.pintarEstat()}
-                    <View style={titleViewStyle}>
-                        <Text style={subtitleStyle}>Descripció</Text>
-                        <Icon
-                            name='pencil'
-                            type='evilicon'
-                            color={APP_COLORS.text_color}
-                            size={35}
-                            iconStyle={iconEditStyle}
-                            onPress={this.modifyDescription}
-                        />
-                    </View>
+
                     {this.pintarDescription()}
                     <View style={titleViewStyle}>
                         <Text style={subtitleStyle}>Assignats</Text>
@@ -123,7 +171,6 @@ class TaskScreen extends React.Component{
                         <Text style={subtitleStyle}>Adjunts</Text>
                         <FontAwesome name='paperclip' size={23} color= {APP_COLORS.text_color} style={iconEditStyle}/>
                     </View>
-                </ScrollView>
             </View>
         );
     }
@@ -154,6 +201,9 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         justifyContent: 'space-between'
     },
+    iconDescrStyle: {
+        flexDirection: 'row',
+    },
     assViewStyle: {
         flexDirection: 'row',
         justifyContent: 'space-between',
@@ -183,15 +233,15 @@ const styles = StyleSheet.create({
     textInputStyle: {
         color: APP_COLORS.text_color,
         fontSize: 17,
-        paddingTop: '4%',
         paddingRight: '2%',
         paddingLeft: '2%',
         borderColor: APP_COLORS.text_color,
         borderWidth: 1,
         marginLeft: '8%',
+        marginTop: '3%',
         width: '70%',
         borderRadius: 6,
-        height: '15%'
+        height: '17%'
     },
     buttonStyle: {
         height: '5%',
