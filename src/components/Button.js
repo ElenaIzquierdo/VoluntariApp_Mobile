@@ -6,7 +6,7 @@ class Button extends React.Component {
     render(){
         const {container, textStyle} = styles;
         return(
-            <View style={[container,{backgroundColor:this.props.colorButton}]}>
+            <View style={[container,{backgroundColor:this.props.colorButton},{marginLeft:this.props.marginL}]}>
                 <Text style={textStyle}>{this.props.text}</Text>
             </View>
         )

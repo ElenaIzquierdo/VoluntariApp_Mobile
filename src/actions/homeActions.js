@@ -5,7 +5,7 @@ export const changeIteratorNextParam =(iterator) => {
             iterator:iterator
         }
     }
-}
+};
 
 export const changeIteratorPreviousParam =(iterator) => {
     return{
@@ -14,7 +14,7 @@ export const changeIteratorPreviousParam =(iterator) => {
             iterator:iterator
         }
     }
-}
+};
 
 export const changeSwitch = (value) =>{
     return{
@@ -23,4 +23,4 @@ export const changeSwitch = (value) =>{
             valueSwitch: value
         }
     }
-}
+};
