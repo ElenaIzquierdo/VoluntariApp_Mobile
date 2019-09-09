@@ -10,7 +10,8 @@ const INITIAL_STATE ={
         {id:5,title:'Activitat dilluns 22-Sherlock', creator:'Laura Gonzalez', finished: true, data:'18/03/2019'},
         {id:6,title:'Activitat dilluns 22-Sherlock', creator:'Laura Gonzalez', finished: true, data:'18/03/2019'},
     ],
-}
+    isDisabled: false
+};
 
 const forumReducer = (state = INITIAL_STATE,action) => {
     switch(action.type) {

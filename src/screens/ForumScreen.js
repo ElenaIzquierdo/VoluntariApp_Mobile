@@ -1,13 +1,14 @@
 import * as React from 'react';
-import { StyleSheet, View, ScrollView } from 'react-native';
+import {StyleSheet, View, ScrollView} from 'react-native';
 import { Text } from 'react-native-ui-kitten';
-import {Header} from 'react-native-elements';
+import {Header, CheckBox} from 'react-native-elements';
 import ForumTheme from '../components/ForumTheme';
 import {APP_COLORS} from "../constants/colors";
 import { connect } from 'react-redux';
 import {Actions} from "react-native-router-flux";
 import BottomNav from "../components/BottomNav";
 import {FontAwesome} from "@expo/vector-icons";
+import Modal from 'react-native-modalbox';
 
 class ForumScreen extends React.Component{
     constructor(props) {
@@ -25,7 +26,8 @@ class ForumScreen extends React.Component{
     pintarFiltres(){
         return(
             <View style={styles.viewFilterStyle}>
-                <FontAwesome name='filter' size={25} color= {APP_COLORS.text_color} style={styles.filterIconStyle}/>
+                <FontAwesome name='filter' size={25} color= {APP_COLORS.text_color} style={styles.filterIconStyle}
+                             onPress={() => this.refs.modal.open()}/>
                 <View style={styles.viewTextFilterStyle}>
                     <Text style={styles.textFilterStyle}>Temes oberts, tancats</Text>
                     <Text style={styles.textFilterStyle}>Ordenat per data</Text>
@@ -51,6 +53,22 @@ class ForumScreen extends React.Component{
                     rightComponent={{ icon: 'person', color: APP_COLORS.color_neutral, onPress: () => Actions.profile()}}
                     backgroundColor={APP_COLORS.color_orange}
                 />
+                <Modal style={styles.modalStyle} position={"center"} ref={"modal"} isDisabled={this.props.isDisabled}>
+                    <Text style={styles.modalTitle}>Filtrar per</Text>
+                    <View style={styles.viewTextFilterStyle}>
+                            <CheckBox title={"Temes tancats"} checked={true} size={14} textStyle={styles.textFilterStyle}
+                                        center={true} checkedColor={APP_COLORS.color_checked} containerStyle={styles.checkBoxContainerStyle}/>
+                            <CheckBox title={"Temes oberts"} checked={true} size={14} textStyle={styles.textFilterStyle}
+                                        center={true} checkedColor={APP_COLORS.color_checked} containerStyle={styles.checkBoxContainerStyle}/>
+                    </View>
+                    <Text style={styles.modalTitle}>Ordenar per</Text>
+                    <View style={styles.viewTextFilterStyle}>
+                            <CheckBox title={"Data ceació"} checked={true} size={14} textStyle={styles.textFilterStyle}
+                                      center={true} checkedColor={APP_COLORS.color_checked} containerStyle={styles.checkBoxContainerStyle}/>
+                            <CheckBox title={"Títol"} checked={false} size={14} textStyle={styles.textFilterStyle}
+                                      center={true} checkedColor={APP_COLORS.color_checked} containerStyle={styles.checkBoxContainerStyle}/>
+                    </View>
+                </Modal>
                 <ScrollView>
                     {this.pintarFiltres()}
                     {this.pintarTemesOberts()}
@@ -99,6 +117,21 @@ const styles = StyleSheet.create({
     viewTextFilterStyle: {
         marginTop: '2%',
         marginLeft: '5%'
+    },
+    modalStyle: {
+        height: '45%',
+        width: '75%'
+    },
+    modalTitle: {
+        color: APP_COLORS.text_color,
+        fontSize: 18,
+        fontWeight: 'bold',
+        paddingTop: '4%',
+        paddingLeft: '2%',
+        alignSelf: 'center'
+    },
+    checkBoxContainerStyle: {
+        backgroundColor: APP_COLORS.color_neutral
     }
 });
 
@@ -106,6 +139,7 @@ const mapStateToProps = (state) => {
     return {
         themes_open: state.forumReducer.themes_open,
         themes_close: state.forumReducer.themes_close,
+        isDisabled: state.forumReducer.isDisabled
     }
 };
 
