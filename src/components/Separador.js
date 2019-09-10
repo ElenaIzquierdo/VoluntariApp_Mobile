@@ -8,6 +8,7 @@ import Participant from '../components/Participant';
 import Task from '../components/Task';
 import Button from "../components/Button";
 import {FontAwesome} from "@expo/vector-icons";
+import {Actions} from "react-native-router-flux";
 
 class Separador extends React.Component {
     constructor(props) {
@@ -156,7 +157,8 @@ class Separador extends React.Component {
                             <Text style={styles.textFilterStyle}>Temes oberts, tancats</Text>
                             <Text style={styles.textFilterStyle}>Ordenat per data</Text>
                         </View>
-                        <Button colorButton={APP_COLORS.color_checked} marginL={"27%"} text={"Nova"}/>
+                        <Button colorButton={APP_COLORS.color_checked} marginL={"27%"} text={"Nova"}
+                                path={() => Actions.newtask()}/>
                     </View>
                     {this.pintarTasques()}
                 </View>
