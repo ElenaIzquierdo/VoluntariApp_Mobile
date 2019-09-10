@@ -38,8 +38,6 @@ class Comment extends React.Component {
                     {this.pintarAvatar()}
                     <Text style={nameStyle}>{this.props.user}</Text>
                 </View>
-
-
                 <Text style={contenttextStyle}>{this.props.content}</Text>
                 <Text style={datatextStyle}>{this.props.data}</Text>
 

@@ -1,11 +1,13 @@
 import React from 'react';
-import {View, Text, FlatList} from 'react-native';
+import {View, Text, FlatList, TextInput} from 'react-native';
 import Modal from 'react-native-modalbox';
 import {APP_COLORS} from "../constants/colors";
-import { Button, Icon } from 'react-native-elements';
+import { Icon } from 'react-native-elements';
 import Comment from '../components/Comment';
 import Participant from '../components/Participant';
 import Task from '../components/Task';
+import Button from "../components/Button";
+import {FontAwesome} from "@expo/vector-icons";
 
 class Separador extends React.Component {
     constructor(props) {
@@ -131,12 +133,34 @@ class Separador extends React.Component {
         if(this.state.comments){
             return (
                 <View>
-                    {this.pintarCommentaris()}
+                    <View style={{height:'12%', flexDirection: 'row'}}>
+                        <TextInput style={styles.textInputStyle}
+                                   multiline = {true}
+                                   placeholder = "Escribe aquí..."
+                                   value={'Afegir comentari...'}/>
+                        <Button colorButton={APP_COLORS.color_checked} marginL={"3%"} text={"Fet"}/>
+                    </View>
+
+                        {this.pintarCommentaris()}
+
                 </View>
             )
         }
         if(this.state.tasks){
-            return this.pintarTasques()
+            return(
+                <View>
+                    <View style={styles.viewFilterStyle}>
+                        <FontAwesome name='filter' size={25} color= {APP_COLORS.text_color} style={styles.filterIconStyle}
+                                     onPress={()=>this.props.closeModal()}/>
+                        <View style={styles.viewTextFilterStyle}>
+                            <Text style={styles.textFilterStyle}>Temes oberts, tancats</Text>
+                            <Text style={styles.textFilterStyle}>Ordenat per data</Text>
+                        </View>
+                        <Button colorButton={APP_COLORS.color_checked} marginL={"27%"} text={"Nou"}/>
+                    </View>
+                    {this.pintarTasques()}
+                </View>
+            )
         }
         if(this.state.participants){
             return(
@@ -259,6 +283,39 @@ const styles ={
     viewColumnP2: {
         width: '25%',
         paddingTop: '72%'
+    },
+    textInputStyle: {
+        color: APP_COLORS.text_color,
+        fontSize: 14,
+        paddingRight: '2%',
+        paddingLeft: '2%',
+        borderColor: APP_COLORS.text_color,
+        borderWidth: 1,
+        marginLeft: '5%',
+        marginTop: '3%',
+        width: '70%',
+        borderRadius: 6,
+        height: '70%'
+    },
+    filterIconStyle: {
+        marginLeft: '4%',
+        marginTop: '3%',
+        marginBottom: '3%'
+    },
+    textFilterStyle:{
+        color: APP_COLORS.text_color,
+        fontSize: 14,
+    },
+    viewFilterStyle: {
+        flexDirection: 'row',
+        borderBottomColor: APP_COLORS.text_color,
+        borderBottomWidth: 0.6,
+        width: '95%',
+        alignSelf: 'center'
+    },
+    viewTextFilterStyle: {
+        marginTop: '2%',
+        marginLeft: '5%'
     },
 };
 
