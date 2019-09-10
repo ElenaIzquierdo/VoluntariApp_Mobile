@@ -13,7 +13,7 @@ class NewForumThemeScreen extends React.Component{
     }
 
     render(){
-        const {viewStyle, inputStyle, labelStyle, titleStyle} = styles;
+        const {viewStyle, inputStyle, labelStyle, titleStyle, viewFormStyle} = styles;
         return(
             <View style={viewStyle}>
                 <Header
@@ -24,13 +24,17 @@ class NewForumThemeScreen extends React.Component{
                 />
                 <View style={viewStyle}>
                     <Text style={titleStyle}>Crear nou tema pel fòrum</Text>
-                    <Input label={"Títol"} errorMessage={"Aquest camp és obligatori"} inputStyle={inputStyle}
-                            labelStyle={labelStyle}/>
-                    <Input label={"Descripció"} inputStyle={inputStyle} labelStyle={labelStyle}/>
+                    <View style={viewFormStyle}>
+                        <Input label={"Títol"} errorMessage={"Aquest camp és obligatori"} inputStyle={inputStyle}
+                                labelStyle={labelStyle}/>
+                        <Input label={"Grup"} inputStyle={inputStyle} labelStyle={labelStyle}
+                               errorMessage={"Aquest camp és obligatori"}/>
+                        <Input label={"Descripció"} inputStyle={inputStyle} labelStyle={labelStyle}/>
+                    </View>
                 </View>
-                <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
-                    <TouchableHighlight style={{paddingLeft: '5%'}} onPress={() => Actions.forum()}>
-                        <Text style={{color:APP_COLORS.text_color}}>Cancel</Text>
+                <View style={{flexDirection: 'row', justifyContent: 'space-between', height: '7%'}}>
+                    <TouchableHighlight style={{paddingLeft: '5%', paddingTop: '3%'}} onPress={() => Actions.forum()}>
+                        <Text style={{color:APP_COLORS.color_darkred}}>Cancel</Text>
                     </TouchableHighlight>
                     <Button colorButton={APP_COLORS.color_checked} text={"Crear"} path={() => Actions.forumtheme()}/>
                 </View>
@@ -52,7 +56,7 @@ const styles = StyleSheet.create({
         marginLeft: '7%',
     },
     labelStyle: {
-        fontSize: 14,
+        fontSize: 16,
         marginLeft: '3%',
         marginTop: '2%'
     },
@@ -61,8 +65,13 @@ const styles = StyleSheet.create({
         fontSize: 18,
         fontWeight: 'bold',
         marginLeft: '4%',
-        marginTop: '5%'
+        marginTop: '5%',
+        alignSelf: 'center'
     },
+    viewFormStyle: {
+       alignContent: 'center',
+        paddingTop: '15%'
+    }
 });
 
 export default NewForumThemeScreen;
