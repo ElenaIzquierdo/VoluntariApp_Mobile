@@ -156,7 +156,7 @@ class Separador extends React.Component {
                             <Text style={styles.textFilterStyle}>Temes oberts, tancats</Text>
                             <Text style={styles.textFilterStyle}>Ordenat per data</Text>
                         </View>
-                        <Button colorButton={APP_COLORS.color_checked} marginL={"27%"} text={"Nou"}/>
+                        <Button colorButton={APP_COLORS.color_checked} marginL={"27%"} text={"Nova"}/>
                     </View>
                     {this.pintarTasques()}
                 </View>

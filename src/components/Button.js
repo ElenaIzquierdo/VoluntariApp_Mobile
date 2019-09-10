@@ -22,6 +22,7 @@ const styles = {
       marginTop: '3%',
       marginRight: '3%',
       borderRadius: 8,
+      paddingTop: '1%'
   },
     textStyle: {
       alignSelf: 'center',
