@@ -1,14 +1,15 @@
 import React from 'react';
-import { View, Text } from 'react-native';
+import { Text, TouchableHighlight } from 'react-native';
 import {APP_COLORS} from "../constants/colors";
 
 class Button extends React.Component {
     render(){
         const {container, textStyle} = styles;
         return(
-            <View style={[container,{backgroundColor:this.props.colorButton},{marginLeft:this.props.marginL}]}>
+            <TouchableHighlight style={[container,{backgroundColor:this.props.colorButton},{marginLeft:this.props.marginL}]}
+                                onPress={this.props.path}>
                 <Text style={textStyle}>{this.props.text}</Text>
-            </View>
+            </TouchableHighlight>
         )
     }
 }
