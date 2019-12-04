@@ -5,25 +5,35 @@ import {Header, Avatar, Icon, CheckBox} from 'react-native-elements';
 import {APP_COLORS} from "../constants/colors";
 import { connect } from 'react-redux';
 import {Actions} from "react-native-router-flux";
+import {changeCheckedDay} from "../actions/profileActions";
 
 class ProfileScreen extends React.Component{
     constructor(props) {
         super(props)
     }
 
+    _onPressButton(day) {
+        this.props.changeCheckedDay(day);
+    }
+
     pintarDies(){
         return(
             <View>
                     <CheckBox title={"Dilluns"} checked={this.props.user.dies[0]} size={14} textStyle={styles.infoStyle}
-                              center={false} checkedColor={APP_COLORS.color_checked} containerStyle={styles.checkBoxContainerStyle}/>
+                              center={false} checkedColor={APP_COLORS.color_checked} containerStyle={styles.checkBoxContainerStyle}
+                              onPress={this._onPressButton.bind(this,0)}/>
                     <CheckBox title={"Dimarts"} checked={this.props.user.dies[1]} size={14} textStyle={styles.infoStyle}
-                              center={false} checkedColor={APP_COLORS.color_checked} containerStyle={styles.checkBoxContainerStyle}/>
+                              center={false} checkedColor={APP_COLORS.color_checked} containerStyle={styles.checkBoxContainerStyle}
+                              onPress={this._onPressButton.bind(this,1)}/>
                     <CheckBox title={"Dimecres"} checked={this.props.user.dies[2]} size={14} textStyle={styles.infoStyle}
-                              center={false} checkedColor={APP_COLORS.color_checked} containerStyle={styles.checkBoxContainerStyle}/>
+                              center={false} checkedColor={APP_COLORS.color_checked} containerStyle={styles.checkBoxContainerStyle}
+                              onPress={this._onPressButton.bind(this,2)}/>
                     <CheckBox title={"Dijous"} checked={this.props.user.dies[3]} size={14} textStyle={styles.infoStyle}
-                              center={false} checkedColor={APP_COLORS.color_checked} containerStyle={styles.checkBoxContainerStyle}/>
+                              center={false} checkedColor={APP_COLORS.color_checked} containerStyle={styles.checkBoxContainerStyle}
+                              onPress={this._onPressButton.bind(this,3)}/>
                     <CheckBox title={"Divendres"} checked={this.props.user.dies[4]} size={14} textStyle={styles.infoStyle}
-                              center={false} checkedColor={APP_COLORS.color_checked} containerStyle={styles.checkBoxContainerStyle}/>
+                              center={false} checkedColor={APP_COLORS.color_checked} containerStyle={styles.checkBoxContainerStyle}
+                              onPress={this._onPressButton.bind(this,4)}/>
             </View>
         )
     }
@@ -117,6 +127,7 @@ const mapStateToProps = (state) => {
 
 const  mapDispatchToProps = (dispatch)=>{
     return {
+        changeCheckedDay : (day) => dispatch(changeCheckedDay(day))
     }
 };
 

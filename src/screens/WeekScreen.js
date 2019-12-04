@@ -15,10 +15,6 @@ class WeekScreen extends React.Component{
         super(props)
     }
 
-    toggleSwitch = (value) => {
-        this.props.changeSwitchForDay(value);
-    };
-
     _onPressButton(day) {
         this.props.changeSwitchForDay(day);
     }
