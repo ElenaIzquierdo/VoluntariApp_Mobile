@@ -1,12 +1,12 @@
 import * as React from 'react';
 import { StyleSheet, View, Switch, TouchableHighlight } from 'react-native';
 import { Text } from 'react-native-ui-kitten';
-import {Header} from 'react-native-elements';
+import {Header, CheckBox} from 'react-native-elements';
 import {APP_COLORS} from "../constants/colors";
 import { connect } from 'react-redux';
 import {Actions} from "react-native-router-flux";
 import SeparadorSimple from "../components/SeparadorSimple";
-import {changeSwitchMonday} from "../actions/weekActions";
+import {changeSwitchForDay} from "../actions/weekActions";
 import {FontAwesome} from "@expo/vector-icons";
 import BottomNav from "../components/BottomNav";
 
@@ -16,8 +16,12 @@ class WeekScreen extends React.Component{
     }
 
     toggleSwitch = (value) => {
-        this.props.changeSwitchMonday(value);
+        this.props.changeSwitchForDay(value);
     };
+
+    _onPressButton(day) {
+        this.props.changeSwitchForDay(day);
+    }
 
     static pintarFinished(finished){
         if(finished){
@@ -45,7 +49,9 @@ class WeekScreen extends React.Component{
 
                         <View style={{flexDirection: 'row'}}>
                             <FontAwesome name='download' size={22} color= {APP_COLORS.text_color} style={styles.iconStyle}/>
-                            <Switch value={dia.attendee} onValueChange = {this.toggleSwitch}/>
+                            <CheckBox center key={dia.id} checked = {dia.attendee} onPress={this._onPressButton.bind(this,dia.id)}
+                                        checkedIcon='dot-circle-o' uncheckedIcon='circle-o' iconRight size={18} containerStyle = {styles.containerCheckStyle}
+                                        checkedColor = {APP_COLORS.color_green} uncheckedColor = {APP_COLORS.color_green}/>
                         </View>
                     </View>
                     <View style={styles.viewFinishedStyle}>
@@ -129,6 +135,12 @@ const styles = StyleSheet.create({
         marginRight: '4%',
         marginTop: '2%'
     },
+    containerCheckStyle: {
+        margin: '1%',
+        padding: '1%',
+        paddingTop: '3%'
+        
+    }
 });
 
 
@@ -141,7 +153,7 @@ const mapStateToProps = (state) => {
 
 const  mapDispatchToProps = (dispatch)=>{
     return {
-        changeSwitchMonday : (value) => dispatch(changeSwitchMonday(value))
+        changeSwitchForDay : (day) => dispatch(changeSwitchForDay(day))
     }
 };
 

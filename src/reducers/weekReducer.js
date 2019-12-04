@@ -15,11 +15,11 @@ const weekReducer = (state = INITIAL_STATE,action) => {
     switch(action.type) {
         case 'FETCH_WEEK':
             return state;
-        case 'CHANGE_SWITCH_WEEK':
-            var new_setmana = state.setmana;
-            new_setmana[action.data.day].attendee = true
-            return {...state, setmana: new_setmana}
 
+        case 'CHANGE_SWITCH_WEEK':
+            const new_setmana = [...state.setmana];
+            new_setmana[action.data.day].attendee = !new_setmana[action.data.day].attendee
+            return {...state, setmana: new_setmana};
         default: return state
     }
 };
