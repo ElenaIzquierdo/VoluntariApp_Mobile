@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { StyleSheet, View, TouchableHighlight, Switch } from 'react-native';
-import { Button, Layout, Text } from 'react-native-ui-kitten';
+import {  Text } from 'react-native-ui-kitten';
 import { Actions } from 'react-native-router-flux';
 import { connect } from 'react-redux';
 import {Header} from 'react-native-elements';

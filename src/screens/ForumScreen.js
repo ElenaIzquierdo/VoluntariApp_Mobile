@@ -35,7 +35,7 @@ class ForumScreen extends React.Component{
                     <Text style={styles.textFilterStyle}>Temes oberts, tancats</Text>
                     <Text style={styles.textFilterStyle}>Ordenat per data</Text>
                 </View>
-                <Button colorButton={APP_COLORS.color_checked} marginL={"27%"} text={"Nou"} path={() => Actions.newforumtheme()}/>
+                <Button colorButton={APP_COLORS.color_checked} marginL={"27%"} text={"Nou"} path={() => Actions.newforumtheme()} width={"15%"}/>
             </View>
         )
     }

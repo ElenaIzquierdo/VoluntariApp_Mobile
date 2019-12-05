@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { StyleSheet, View } from 'react-native';
-import { Button, Layout, Text, TopNavigation, TopNavigationProps } from 'react-native-ui-kitten';
+import {Text} from 'react-native-ui-kitten';
 import {Header} from 'react-native-elements';
 import Separador from '../components/Separador';
 import {APP_COLORS} from "../constants/colors";

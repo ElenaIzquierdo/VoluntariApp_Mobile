@@ -36,7 +36,7 @@ class NewForumThemeScreen extends React.Component{
                     <TouchableHighlight style={{paddingLeft: '5%', paddingTop: '3%'}} onPress={() => Actions.forum()}>
                         <Text style={{color:APP_COLORS.color_darkred}}>Cancel</Text>
                     </TouchableHighlight>
-                    <Button colorButton={APP_COLORS.color_checked} text={"Crear"} path={() => Actions.forumtheme()}/>
+                    <Button colorButton={APP_COLORS.color_checked} text={"Crear"} path={() => Actions.forumtheme()} width={"15%"}/>
                 </View>
                 <BottomNav selected={"forum"}/>
             </View>

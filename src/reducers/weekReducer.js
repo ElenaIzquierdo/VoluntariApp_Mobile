@@ -8,7 +8,7 @@ const INITIAL_STATE ={
         {id:3, name: 'Dijous', date: '10/01/2019', attendee: false, finished: true},
         {id:4, name: 'Divendres', date: '11/01/2019', attendee: false, finished: false}
     ],
-    switchValue: false
+    modified: false
 }
 
 const weekReducer = (state = INITIAL_STATE,action) => {
@@ -20,6 +20,12 @@ const weekReducer = (state = INITIAL_STATE,action) => {
             const new_setmana = [...state.setmana];
             new_setmana[action.data.day].attendee = !new_setmana[action.data.day].attendee
             return {...state, setmana: new_setmana};
+
+        case 'SET_TRUE_MODIFIED_ATTRIBUTE':
+            return {...state, modified: true}
+
+        case 'SET_FALSE_MODIFIED_ATTRIBUTE':
+            return {...state, modified: false}
         default: return state
     }
 };

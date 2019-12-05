@@ -1,14 +1,15 @@
 import * as React from 'react';
-import { StyleSheet, View, Switch, TouchableHighlight } from 'react-native';
+import { StyleSheet, View, TouchableHighlight,  } from 'react-native';
 import { Text } from 'react-native-ui-kitten';
 import {Header, CheckBox} from 'react-native-elements';
 import {APP_COLORS} from "../constants/colors";
 import { connect } from 'react-redux';
 import {Actions} from "react-native-router-flux";
 import SeparadorSimple from "../components/SeparadorSimple";
-import {changeSwitchForDay} from "../actions/weekActions";
+import {changeSwitchForDay, setTrueModifiedAttribute, setFalseModifiedAttribute, saveChanges} from "../actions/weekActions";
 import {FontAwesome} from "@expo/vector-icons";
 import BottomNav from "../components/BottomNav";
+import Button from "../components/Button";
 
 class WeekScreen extends React.Component{
     constructor(props) {
@@ -16,7 +17,18 @@ class WeekScreen extends React.Component{
     }
 
     _onPressButton(day) {
+        if(!this.props.modified){
+            this.props.setTrueModifiedAttribute()
+        }
         this.props.changeSwitchForDay(day);
+    }
+
+    _onPressCancelModify(){
+        this.props.setFalseModifiedAttribute()
+    }
+
+    _onPressSave(){
+        this.props.saveChanges()
     }
 
     static pintarFinished(finished){
@@ -58,6 +70,19 @@ class WeekScreen extends React.Component{
         })
     }
 
+    displayButtons(){
+        if(this.props.modified){
+            return(
+                <View style={styles.rowStyle}>
+                    <TouchableHighlight style={{paddingLeft: '5%', paddingTop: '3%'}} onPress={this._onPressCancelModify.bind(this)}>
+                        <Text style={{color:APP_COLORS.color_darkred}}>Cancel·lar</Text>
+                    </TouchableHighlight>
+                    <Button text={"Guardar"} colorButton={APP_COLORS.color_green} width={"15%"} path={this._onPressSave.bind(this)}/>
+                </View>
+            )
+        }
+    }
+
     render(){
         return(
             <View>
@@ -74,6 +99,7 @@ class WeekScreen extends React.Component{
                 </View>
                 <SeparadorSimple/>
                 {this.pintarDies()}
+                {this.displayButtons()}
 
             </View>
             <BottomNav selected={"programacio"}/>
@@ -143,13 +169,17 @@ const styles = StyleSheet.create({
 const mapStateToProps = (state) => {
     return {
         message: state.weekReducer.message,
-        setmana: state.weekReducer.setmana
+        setmana: state.weekReducer.setmana,
+        modified: state.weekReducer.modified
     }
 };
 
 const  mapDispatchToProps = (dispatch)=>{
     return {
-        changeSwitchForDay : (day) => dispatch(changeSwitchForDay(day))
+        changeSwitchForDay : (day) => dispatch(changeSwitchForDay(day)),
+        setTrueModifiedAttribute : () => dispatch(setTrueModifiedAttribute()),
+        setFalseModifiedAttribute : () => dispatch(setFalseModifiedAttribute()),
+        saveChanges : () => dispatch(saveChanges())
     }
 };
 

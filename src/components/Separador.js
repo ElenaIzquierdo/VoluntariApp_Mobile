@@ -139,7 +139,7 @@ class Separador extends React.Component {
                                    multiline = {true}
                                    placeholder = "Escribe aquí..."
                                    value={'Afegir comentari...'}/>
-                        <Button colorButton={APP_COLORS.color_checked} marginL={"3%"} text={"Fet"}/>
+                        <Button colorButton={APP_COLORS.color_checked} marginL={"3%"} text={"Fet"} width={"15%"}/>
                     </View>
 
                         {this.pintarCommentaris()}

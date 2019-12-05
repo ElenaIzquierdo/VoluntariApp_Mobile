@@ -155,8 +155,8 @@ class TaskScreen extends React.Component{
                 />
                     <View style={titleViewStyle}>
                         <Text style = {titleStyle}> {this.props.task.title} </Text>
-                        {this.props.task.finished ? <Button colorButton={APP_COLORS.color_checked} text={"Obrir"}/>:
-                                                    <Button colorButton={APP_COLORS.color_darkred} text={"Finalitzar"}/>}
+                        {this.props.task.finished ? <Button colorButton={APP_COLORS.color_checked} text={"Obrir"} width={"15%"}/>:
+                                                    <Button colorButton={APP_COLORS.color_darkred} text={"Finalitzar"} width={"15%"}/>}
 
                     </View>
                     {this.pintarEstat()}

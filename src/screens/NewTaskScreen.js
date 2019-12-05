@@ -33,9 +33,9 @@ class NewTaskScreen extends React.Component{
                 </View>
                 <View style={{flexDirection: 'row', justifyContent: 'space-between', height: '7%'}}>
                     <TouchableHighlight style={{paddingLeft: '5%', paddingTop: '3%'}} onPress={() => Actions.forumtheme()}>
-                        <Text style={{color:APP_COLORS.color_darkred}}>Cancel</Text>
+                        <Text style={{color:APP_COLORS.color_darkred}}>Cancel·lar</Text>
                     </TouchableHighlight>
-                    <Button colorButton={APP_COLORS.color_checked} text={"Crear"} path={() => Actions.forumtheme()}/>
+                    <Button colorButton={APP_COLORS.color_checked} text={"Crear"} path={() => Actions.forumtheme()} width={"15%"}/>
                 </View>
                 <BottomNav selected={"forum"}/>
             </View>

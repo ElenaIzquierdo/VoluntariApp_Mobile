@@ -6,7 +6,7 @@ class Button extends React.Component {
     render(){
         const {container, textStyle} = styles;
         return(
-            <TouchableHighlight style={[container,{backgroundColor:this.props.colorButton},{marginLeft:this.props.marginL}]}
+            <TouchableHighlight style={[container,{backgroundColor:this.props.colorButton},{marginLeft:this.props.marginL},{width:this.props.width}]}
                                 onPress={this.props.path}>
                 <Text style={textStyle}>{this.props.text}</Text>
             </TouchableHighlight>
@@ -18,12 +18,12 @@ export default Button;
 
 const styles = {
   container: {
-      height: '66%',
-      width: '15%',
-      marginTop: '3%',
-      marginRight: '3%',
-      borderRadius: 8,
-      paddingTop: '1%'
+    height: '66%',
+    marginTop: '3%',
+    marginRight: '3%',
+    borderRadius: 8,
+    paddingTop: '1%',
+    alignItems: 'center'
   },
     textStyle: {
       alignSelf: 'center',
