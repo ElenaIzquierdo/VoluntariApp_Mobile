@@ -5,12 +5,29 @@ import {Header, Avatar, Icon, CheckBox} from 'react-native-elements';
 import {APP_COLORS} from "../constants/colors";
 import { connect } from 'react-redux';
 import {Actions} from "react-native-router-flux";
-import {changeCheckedDay} from "../actions/profileActions";
+import {changeCheckedDay, updateProfilePicture} from "../actions/profileActions";
+
+import * as Permissions from 'expo-permissions';
+import * as ImagePicker from 'expo-image-picker';
+
+//import ImagePicker from "react-native-image-picker";
+
 
 class ProfileScreen extends React.Component{
     constructor(props) {
         super(props)
     }
+
+    componentDidMount() {
+        this.getPermissionAsync();
+      }
+    
+      getPermissionAsync = async () => {
+          const { status } = await Permissions.askAsync(Permissions.CAMERA_ROLL);
+          if (status !== 'granted') {
+            alert('Sorry, we need camera roll permissions to make this work!');
+          }
+      }
 
     _onPressButton(day) {
         this.props.changeCheckedDay(day);
@@ -38,6 +55,26 @@ class ProfileScreen extends React.Component{
         )
     }
 
+    _pickImage = async () => {
+        let result = await ImagePicker.launchImageLibraryAsync({
+            mediaTypes: ImagePicker.MediaTypeOptions.Images,
+            allowsEditing: true,
+            aspect: [4, 4],
+            quality: 1
+          });
+          console.log("SCREEN",result.uri)
+
+          updateProfilePicture(result.uri)
+    }
+
+/*    pickImage = () => {
+        ImagePicker.launchImageLibrary(response => {
+            console.log("response", response)
+            if(response.uri) {
+                updateProfilePicture(respone.uri)
+            }
+        })
+    }*/
     render(){
         const { viewStyle, nameStyle, viewnamephotoStyle, correuStyle, infoStyle, viewinfoStyle } = styles;
         return(
@@ -52,8 +89,9 @@ class ProfileScreen extends React.Component{
                         <Avatar
                             size="large"
                             rounded
-                            source={this.props.user.profilephoto}
+                            source={{uri: this.props.user.profilephotoURI}}
                             showEditButton={true}
+                            onEditPress={this._pickImage}
                         />
                         <View>
                             <Text style={nameStyle}>{this.props.user.nom} {this.props.user.cognom}</Text>
@@ -127,7 +165,8 @@ const mapStateToProps = (state) => {
 
 const  mapDispatchToProps = (dispatch)=>{
     return {
-        changeCheckedDay : (day) => dispatch(changeCheckedDay(day))
+        changeCheckedDay : (day) => dispatch(changeCheckedDay(day)),
+        updateProfilePicture : (uri) => dispatch(updateProfilePicture(uri))
     }
 };
 

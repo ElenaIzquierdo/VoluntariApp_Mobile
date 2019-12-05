@@ -7,7 +7,8 @@ const INITIAL_STATE ={
         grup: 'Petits',
         projecte: 'COPI',
         dies: [true,false,true,false,false],
-        profilephoto: require('../images/user1.jpg')
+        profilephotoURI: "file:///data/user/0/host.exp.exponent/cache/ExperienceData/%2540anonymous%252FVoluntariAppMobile-5a525f5f-b0f3-4e2b-979c-ad33eb315826/ImagePicker/8e4f835f-3629-452d-9493-0259879c2f44.jpg"
+
     }
 };
 
@@ -23,6 +24,11 @@ const profileReducer = (state = INITIAL_STATE,action) => {
             }
             else new_user.dies[action.data.day] = true
             return {...state, user: new_user};
+
+        case 'CHANGE_PROFILE_PICTURE':
+            const new_user_2 = {...state.user}
+            new_user_2.profilephotoURI = action.data.uri
+            return {...state, user: new_user_2};
 
         default: return state
     }
