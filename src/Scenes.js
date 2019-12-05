@@ -12,9 +12,11 @@ import WeekScreen from "./screens/WeekScreen"
 import TaskScreen from "./screens/TaskScreen"
 import NewForumThemeScreen from "./screens/NewForumThemeScreen"
 import NewTaskScreen from "./screens/NewTaskScreen"
+import LoginScreen from "./screens/LoginScreen"
 
 const Scenes = Actions.create(
     <Scene key = "root" hideNavBar={true}>
+        <Scene key = "login" component = {LoginScreen}/>
         <Scene key = "home" component = {HomeScreen}/>
         <Scene key = "forum" component = {ForumScreen}/>
         <Scene key = "forumtheme" component = {ForumThemeScreen}/>
