@@ -1,14 +1,16 @@
 import * as React from 'react';
-import { StyleSheet, View } from 'react-native';
+import { StyleSheet, View, TouchableHighlight } from 'react-native';
 import { Text } from 'react-native-ui-kitten';
 import {Header, Avatar, Icon, CheckBox} from 'react-native-elements';
 import {APP_COLORS} from "../constants/colors";
 import { connect } from 'react-redux';
 import {Actions} from "react-native-router-flux";
-import {changeCheckedDay, updateProfilePicture} from "../actions/profileActions";
+import {changeCheckedDay, updateProfilePicture, setTrueModifiedAttribute, setFalseModifiedAttribute, saveChanges} from "../actions/profileActions";
 
 import * as Permissions from 'expo-permissions';
 import * as ImagePicker from 'expo-image-picker';
+
+import Button from "../components/Button";
 
 //import ImagePicker from "react-native-image-picker";
 
@@ -30,8 +32,20 @@ class ProfileScreen extends React.Component{
       }
 
     _onPressButton(day) {
+        if(!this.props.modified){
+            this.props.setTrueModifiedAttribute()
+        }
         this.props.changeCheckedDay(day);
     }
+
+    _onPressCancelModify(){
+        this.props.setFalseModifiedAttribute()
+    }
+
+    _onPressSave(){
+        this.props.saveChanges()
+    }
+
 
     pintarDies(){
         return(
@@ -75,8 +89,22 @@ class ProfileScreen extends React.Component{
             }
         })
     }*/
+
+    displayButtons(){
+        if(this.props.modified){
+            return(
+                <View style={styles.rowStyle}>
+                    <TouchableHighlight style={{paddingLeft: '5%', paddingTop: '3%'}} onPress={this._onPressCancelModify.bind(this)}>
+                        <Text style={{color:APP_COLORS.color_darkred}}>Cancel·lar</Text>
+                    </TouchableHighlight>
+                    <Button text={"Guardar"} colorButton={APP_COLORS.color_green} width={"15%"} path={this._onPressSave.bind(this)}/>
+                </View>
+            )
+        }
+    }
+
     render(){
-        const { viewStyle, nameStyle, viewnamephotoStyle, correuStyle, infoStyle, viewinfoStyle } = styles;
+        const { viewStyle, nameStyle, viewnamephotoStyle, correuStyle, infoStyle, viewinfoStyle, buttonChangesStyle } = styles;
         return(
             <View style={viewStyle}>
                 <Header
@@ -112,6 +140,9 @@ class ProfileScreen extends React.Component{
                         <Text style={nameStyle}>Dies a assistir</Text>
                         {this.pintarDies()}
                     </View>
+                </View>
+                <View style={buttonChangesStyle}>
+                    {this.displayButtons()}
                 </View>
             </View>
         );
@@ -154,19 +185,32 @@ const styles = StyleSheet.create({
     checkBoxContainerStyle: {
         backgroundColor: APP_COLORS.color_neutral,
         borderColor: APP_COLORS.color_neutral
+    },
+    rowStyle: {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        paddingLeft: '2%',
+        paddingRight: '3%',
+    },
+    buttonChangesStyle: {
+        paddingBottom: '8%'
     }
 });
 
 const mapStateToProps = (state) => {
     return {
         user: state.profileReducer.user,
+        modified: state.profileReducer.modified
     }
 };
 
 const  mapDispatchToProps = (dispatch)=>{
     return {
         changeCheckedDay : (day) => dispatch(changeCheckedDay(day)),
-        updateProfilePicture : (uri) => dispatch(updateProfilePicture(uri))
+        updateProfilePicture : (uri) => dispatch(updateProfilePicture(uri)),
+        setTrueModifiedAttribute : () => dispatch(setTrueModifiedAttribute()),
+        setFalseModifiedAttribute : () => dispatch(setFalseModifiedAttribute()),
+        saveChanges : () => dispatch(saveChanges())
     }
 };
 
