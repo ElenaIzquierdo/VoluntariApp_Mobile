@@ -5,7 +5,7 @@ const INITIAL_STATE ={
         cognom: 'Izquierdo',
         correu: 'eizquierdograu@gmail.com',
         grup: 'Petits',
-        projecte: 'COPI',
+        centre: 'Raval',
         dies: [true,false,true,false,false],
         profilephotoURI: "file:///data/user/0/host.exp.exponent/cache/ExperienceData/%2540anonymous%252FVoluntariAppMobile-5a525f5f-b0f3-4e2b-979c-ad33eb315826/ImagePicker/8e4f835f-3629-452d-9493-0259879c2f44.jpg"
 

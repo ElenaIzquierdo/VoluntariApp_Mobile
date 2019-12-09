@@ -7,7 +7,6 @@ import Button from "../components/Button";
 import Title from "../components/Title";
 import Logo from "../components/Logo";
 import Subtitle from "../components/Subtitle";
-
 import { Input } from 'react-native-elements'
 
 class LoginScreen extends React.Component{
@@ -20,7 +19,7 @@ class LoginScreen extends React.Component{
                 </View>
                 <View style={styles.viewInputStyle}>
                     <Input label={"correu electrònic"} labelStyle={styles.labelStyle} inputStyle={styles.inputStyle}
-                            containerStyle={styles.containerStyle}/>
+                            containerStyle={styles.containerStyle} keyboardType={'email-address'}/>
                     <Input label={"contrassenya"} labelStyle={styles.labelStyle} inputStyle={styles.inputStyle} 
                             containerStyle={styles.containerStyle} secureTextEntry={true}/>
                 </View>

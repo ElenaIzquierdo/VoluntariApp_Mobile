@@ -1,13 +1,34 @@
 import * as React from 'react';
 import {Actions} from "react-native-router-flux";
-import {Header, Input} from 'react-native-elements';
-import {View, ScrollView} from 'react-native';
+import {Header, Input, CheckBox} from 'react-native-elements';
+import {View, Text} from 'react-native';
 import {APP_COLORS} from "../constants/colors";
 
 import Subtitle from "../components/Subtitle";
 import Button from "../components/Button";
 
 class RegisterScreen extends React.Component{
+    displayDays(){
+        return(
+            <View style={styles.viewDiesStyle}>
+                <Text style={styles.textDiesStyle}>dies</Text>
+                <View style={styles.rowStyle}>
+                    <CheckBox title={"dll"} size={12} textStyle={styles.infoStyle} center={false} 
+                            checkedColor={APP_COLORS.color_checked} containerStyle={styles.checkBoxContainerStyle}/>
+                    <CheckBox title={"dm"} size={12} textStyle={styles.infoStyle} center={false} 
+                            checkedColor={APP_COLORS.color_checked} containerStyle={styles.checkBoxContainerStyle}/>
+                    <CheckBox title={"dc"} size={12} textStyle={styles.infoStyle} center={false} 
+                            checkedColor={APP_COLORS.color_checked} containerStyle={styles.checkBoxContainerStyle}/>
+                </View>
+                <View style={styles.rowStyle}>
+                    <CheckBox title={"dj"} size={12} textStyle={styles.infoStyle} center={false} 
+                            checkedColor={APP_COLORS.color_checked} containerStyle={styles.checkBoxContainerStyle}/>
+                    <CheckBox title={"dv"} size={12} textStyle={styles.infoStyle} center={false} 
+                            checkedColor={APP_COLORS.color_checked} containerStyle={styles.checkBoxContainerStyle}/>
+                </View>
+            </View>
+        )
+    }
     render(){
         return(
             <View style={styles.viewStyle}>
@@ -25,15 +46,21 @@ class RegisterScreen extends React.Component{
                     <Input label={"correu electrònic"} labelStyle={styles.labelStyle} inputStyle={styles.inputStyle}
                             containerStyle={styles.containerStyle} keyboardType={'email-address'}/>
                     <Input label={"telefon mobil"} labelStyle={styles.labelStyle} inputStyle={styles.inputStyle}
-                            containerStyle={styles.containerStyle} keyboardType= {'number-pad'}/>
-                    <Input label={"contrassenya"} labelStyle={styles.labelStyle} inputStyle={styles.inputStyle}
-                            containerStyle={styles.containerStyle} secureTextEntry={true}/>
-                    <Input label={"grup"} labelStyle={styles.labelStyle} inputStyle={styles.inputStyle}
-                            containerStyle={styles.containerStyle}/>
-                    <Input label={"centre"} labelStyle={styles.labelStyle} inputStyle={styles.inputStyle}
-                            containerStyle={styles.containerStyle}/>
-                    <Input label={"dies"} labelStyle={styles.labelStyle} inputStyle={styles.inputStyle}
-                            containerStyle={styles.containerStyle}/>      
+                            containerStyle={styles.containerSmallStyle} keyboardType= {'number-pad'}/>
+                    <View style={styles.rowStyle}>
+                        <Input label={"contrassenya"} labelStyle={styles.labelStyle} inputStyle={styles.inputStyle}
+                            containerStyle={styles.containerSmallStyle} secureTextEntry={true}/>
+                        <Input label={"contrassenya"} labelStyle={styles.labelStyle} inputStyle={styles.inputStyle}
+                            containerStyle={styles.containerSmallStyle} secureTextEntry={true}/>
+                    </View>
+                    
+                    <View style={styles.rowStyle}>
+                        <Input label={"grup"} labelStyle={styles.labelStyle} inputStyle={styles.inputStyle}
+                                containerStyle={styles.containerSmallStyle}/>
+                        <Input label={"centre"} labelStyle={styles.labelStyle} inputStyle={styles.inputStyle}
+                                containerStyle={styles.containerSmallStyle}/>
+                    </View>
+                    {this.displayDays()}     
                 </View>
                 <View style={styles.viewButtonStyle}>
                     <Button colorButton={APP_COLORS.color_green} marginL={'5%'} width={'20%'} path={() => Actions.home()} text={"Acceptar"}/>
@@ -54,7 +81,7 @@ const styles = {
         paddingTop: '5%'
     },
     formStyle: {
-        paddingTop:'5%',
+        paddingTop:'7%',
         alignContent: 'center',
         paddingLeft: '3%'
     },
@@ -73,6 +100,29 @@ const styles = {
         marginTop: '5%',
         paddingRight: '7%',
         marginBottom: '6%'
+    },
+    rowStyle:{
+        flexDirection: 'row',
+    },
+    containerSmallStyle: {
+        width: '45%'
+    },
+    infoStyle:{
+        color: APP_COLORS.color_green,
+        fontSize: 16,
+    },
+    checkBoxContainerStyle: {
+        backgroundColor: APP_COLORS.color_neutral,
+        borderColor: APP_COLORS.color_neutral
+    },
+    textDiesStyle: {
+        color: APP_COLORS.color_green,
+        fontSize: 16,
+        fontWeight: 'bold'
+    },
+    viewDiesStyle: {
+        paddingLeft: '3%',
+        paddingTop: '2%'
     }
 }
 

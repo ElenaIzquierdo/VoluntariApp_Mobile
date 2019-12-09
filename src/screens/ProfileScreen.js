@@ -135,7 +135,7 @@ class ProfileScreen extends React.Component{
                                 color={APP_COLORS.text_color}
                                 size={23}
                             />
-                            <Text style = {infoStyle}> {this.props.user.grup} - {this.props.user.projecte} </Text>
+                            <Text style = {infoStyle}> {this.props.user.grup} - {this.props.user.centre} </Text>
                         </View>
                         <Text style={nameStyle}>Dies a assistir</Text>
                         {this.pintarDies()}
