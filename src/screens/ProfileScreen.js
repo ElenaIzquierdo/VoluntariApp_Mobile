@@ -103,6 +103,23 @@ class ProfileScreen extends React.Component{
         }
     }
 
+    displayAvatar(){
+        if(this.props.user.profilephotoURI == null){
+            var str_name=this.props.user.nom_usuari;
+            var initial_name=str_name.charAt(0).toUpperCase();
+            return(
+                <Avatar rounded title={initial_name} size="large"
+                    titleStyle={styles.titleAvatarStyle} showEditButton={true} onEditPress={this._pickImage}/>
+            )
+        }
+        else{
+            return(
+                <Avatar size="large" rounded source={{uri: this.props.user.profilephotoURI}}
+                    showEditButton={true}  onEditPress={this._pickImage}/>
+            )
+        }
+    }
+
     render(){
         const { viewStyle, nameStyle, viewnamephotoStyle, correuStyle, infoStyle, viewinfoStyle, buttonChangesStyle } = styles;
         return(
@@ -114,15 +131,9 @@ class ProfileScreen extends React.Component{
                 />
                 <View style={viewStyle}>
                     <View style={viewnamephotoStyle}>
-                        <Avatar
-                            size="large"
-                            rounded
-                            source={{uri: this.props.user.profilephotoURI}}
-                            showEditButton={true}
-                            onEditPress={this._pickImage}
-                        />
+                        {this.displayAvatar()}
                         <View>
-                            <Text style={nameStyle}>{this.props.user.nom} {this.props.user.cognom}</Text>
+                            <Text style={nameStyle}>{this.props.user.nom_usuari}</Text>
                             <Text style={correuStyle}>{this.props.user.correu}</Text>
                         </View>
                     </View>
@@ -194,6 +205,9 @@ const styles = StyleSheet.create({
     },
     buttonChangesStyle: {
         paddingBottom: '8%'
+    },
+    titleAvatarStyle:{
+        color: APP_COLORS.color_green,
     }
 });
 
