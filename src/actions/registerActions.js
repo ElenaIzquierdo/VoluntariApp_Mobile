@@ -16,3 +16,18 @@ export const changeCheckedDay = (day) =>{
         }
     }
 };
+
+export const changeErrorRegisterMapProperty=(propertyName) =>{
+    return {
+        type:'CHANGE_ERROR_PROPERTY',
+        data:{
+            propertyName
+        }
+    }
+};
+
+export const resetErrorRegisterMap=() =>{
+    return{
+        type: 'RESET_ERROR_MAP'
+    }
+}
