@@ -22,12 +22,12 @@ class LoginScreen extends React.Component{
                     <Input label={"correu electrònic"} labelStyle={styles.labelStyle} inputStyle={styles.inputStyle}
                             containerStyle={styles.containerStyle}/>
                     <Input label={"contrassenya"} labelStyle={styles.labelStyle} inputStyle={styles.inputStyle} 
-                            containerStyle={styles.containerStyle}/>
+                            containerStyle={styles.containerStyle} secureTextEntry={true}/>
                 </View>
                 <View style={styles.viewButtonStyle}>
                     <Button colorButton={APP_COLORS.color_green} marginL={'5%'} width={'20%'} path={() => Actions.home()} text={"Entrar"}/>
                 </View>
-                <Subtitle text={"No tens compta?"} linkText={"Registrat!"} path={() => Actions.home()}/>
+                <Subtitle text={"No tens compta?"} linkText={"Registrat!"} path={() => Actions.register()}/>
             </View>
         )
     }

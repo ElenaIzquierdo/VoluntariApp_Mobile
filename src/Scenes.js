@@ -13,10 +13,12 @@ import TaskScreen from "./screens/TaskScreen"
 import NewForumThemeScreen from "./screens/NewForumThemeScreen"
 import NewTaskScreen from "./screens/NewTaskScreen"
 import LoginScreen from "./screens/LoginScreen"
+import RegisterScreen from "./screens/RegisterScreen"
 
 const Scenes = Actions.create(
     <Scene key = "root" hideNavBar={true}>
         <Scene key = "login" component = {LoginScreen}/>
+        <Scene key = "register" component = {RegisterScreen}/>
         <Scene key = "home" component = {HomeScreen}/>
         <Scene key = "forum" component = {ForumScreen}/>
         <Scene key = "forumtheme" component = {ForumThemeScreen}/>
