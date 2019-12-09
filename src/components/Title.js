@@ -16,7 +16,6 @@ const styles ={
     viewStyle:{
         alignContent: 'center',
         alignItems: 'center',
-        paddingTop: '15%'
     },
     textStyle:{
         color: APP_COLORS.color_green,
