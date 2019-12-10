@@ -10,6 +10,7 @@ import {taskReducer} from "./reducers/taskReducer";
 import {profileReducer} from "./reducers/profileReducer";
 import {registerReducer} from "./reducers/registerReducer";
 import {loginReducer} from "./reducers/loginReducer";
+import {provaReducer} from "./reducers/provaReducer";
 import thunk from 'redux-thunk';
 
 const rootReducer = combineReducers({
@@ -23,7 +24,8 @@ const rootReducer = combineReducers({
     taskReducer: taskReducer,
     profileReducer: profileReducer,
     registerReducer: registerReducer,
-    loginReducer: loginReducer
+    loginReducer: loginReducer,
+    provaReducer: provaReducer
 });
 
 const store= createStore(
