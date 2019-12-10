@@ -20,12 +20,6 @@ class Objectiu extends React.Component {
 
 };
 const styles ={
-    fetStyle: {
-        color: APP_COLORS.color_green,
-        fontSize: 12,
-        paddingTop: '5%',
-        paddingLeft: '3%'
-    },
     viewStyle: {
         marginBottom: '3%',
         flexDirection: 'row',

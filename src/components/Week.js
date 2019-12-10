@@ -9,7 +9,7 @@ class Week extends React.Component {
         super(props)
     }
 
-    static pintarIconAssistencia(ass){
+    static renderIconAssistencia(ass){
         if(ass === "baixa"){
             return(<FontAwesome name="angle-double-down" size={18} color = {APP_COLORS.color_green} style={styles.iconAssStyle}/>)
         }
@@ -23,7 +23,7 @@ class Week extends React.Component {
             return(<Text style={[{color: APP_COLORS.text_color},styles.iconAssStyle]}>-</Text>)
         }
     }
-    static pintarIconValoracio(rate){
+    static renderIconValoracio(rate){
         if(rate === 0 || rate === null){
             return(<Text style={[{color: APP_COLORS.text_color},styles.iconAssStyle]}>-</Text>)
         }
@@ -82,11 +82,11 @@ class Week extends React.Component {
                     <View>
                         <View style={iconInfoTextStyle}>
                             <Text style={infoStyle}>Assistencia</Text>
-                            {Week.pintarIconAssistencia(this.props.ass)}
+                            {Week.renderIconAssistencia(this.props.ass)}
                         </View>
                         <View style={iconInfoTextStyle}>
                             <Text style={infoStyle}>Valoracio</Text>
-                            {Week.pintarIconValoracio(this.props.rate)}
+                            {Week.renderIconValoracio(this.props.rate)}
                         </View>
                     </View>
                 </View>

@@ -1,7 +1,6 @@
 
 import React from 'react';
 import {Image} from 'react-native';
-import {APP_COLORS} from "../constants/colors";
 
 const Logo = () => {
     return (

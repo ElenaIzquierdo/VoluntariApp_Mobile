@@ -4,10 +4,10 @@ import {APP_COLORS} from "../constants/colors";
 
 class Input extends React.Component {
     render(){
-        const {container, textStyle} = styles;
+        const {container, textInputStyle} = styles;
         return(
             <View style={container}>
-                <TextInput style={styles.textInputStyle}
+                <TextInput style={textInputStyle}
                            multiline = {true}
                            placeholder = "Escribe aquí..."
                            value={'Afegir descripció...'}/>
@@ -25,10 +25,6 @@ const styles = {
         marginTop: '3%',
         marginRight: '3%',
         borderRadius: 8
-    },
-    textStyle: {
-        alignSelf: 'center',
-        color: APP_COLORS.color_white
     },
     textInputStyle: {
         color: APP_COLORS.text_color,

@@ -1,6 +1,5 @@
 import React from 'react';
-import {View, Text, Image} from 'react-native';
-import {Icon} from 'react-native-elements';
+import {View, Text} from 'react-native';
 import {APP_COLORS} from "../constants/colors";
 
 class Explication extends React.Component {
@@ -13,7 +12,7 @@ class Explication extends React.Component {
             return(
                 <View style={styles.rowStyle}>
                     <Text style={styles.titleFinishedStyle}>{this.props.title}</Text>
-                    <Text style={styles.fetStyle}>- Fet</Text>
+                    <Text style={styles.doneStyle}>- Fet</Text>
                 </View>
             )
         }
@@ -34,7 +33,7 @@ class Explication extends React.Component {
 
 };
 const styles ={
-    fetStyle: {
+    doneStyle: {
         color: APP_COLORS.color_green,
         fontSize: 12,
         paddingTop: '5%',

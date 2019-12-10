@@ -28,7 +28,7 @@ class SeparadorCI extends React.Component {
         })
     }
 
-    pintarObjectius(){
+    renderSelectedObjectius(){
         if(this.state.objectius){
             return(<Text style={styles.textMarkedStyle}>Objectius</Text>)
         }
@@ -37,7 +37,7 @@ class SeparadorCI extends React.Component {
         }
     }
 
-    pintarExplicacio(){
+    renderSelectedExplicacio(){
         if(this.state.explicacio){
             return(<Text style={styles.textMarkedStyle}>Explicacio</Text>)
         }
@@ -55,7 +55,7 @@ class SeparadorCI extends React.Component {
         <Explication description={item.description} title={item.title} finished={item.finished}/>
     );
 
-    pintarContingut(){
+    renderContingut(){
         if(this.state.objectius){
             return(
                 <FlatList
@@ -82,11 +82,11 @@ class SeparadorCI extends React.Component {
         return(
             <View style={viewGeneralStyle}>
                 <View style={viewStyle}>
-                    {this.pintarObjectius()}
-                    {this.pintarExplicacio()}
+                    {this.renderSelectedObjectius()}
+                    {this.renderSelectedExplicacio()}
                 </View>
                 <View style={{flex:1,height:"100%"}}>
-                    {this.pintarContingut()}
+                    {this.renderContingut()}
                 </View>
             </View>
         );

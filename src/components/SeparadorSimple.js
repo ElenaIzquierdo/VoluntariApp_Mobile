@@ -8,16 +8,16 @@ class SeparadorSimple extends React.Component {
     }
 
     render(){
-        const { viewGeneralStyle, viewStyle} = styles;
+        const { mainViewStyle} = styles;
         return(
-            <View style={viewGeneralStyle}>
+            <View style={mainViewStyle}>
             </View>
         );
     }
 
 };
 const styles ={
-    viewGeneralStyle: {
+    mainViewStyle: {
         height: '5%',
         backgroundColor: APP_COLORS.color_orange,
         marginTop: '3%',

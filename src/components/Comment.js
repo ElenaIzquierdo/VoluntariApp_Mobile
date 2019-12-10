@@ -8,7 +8,7 @@ class Comment extends React.Component {
         super(props)
     }
 
-    pintarAvatar(){
+    displayAvatar(){
         if(this.props.image == null){
             var str_name=this.props.user.split(" ");
             var initial_name=str_name[0].charAt(0).toUpperCase();
@@ -35,11 +35,11 @@ class Comment extends React.Component {
         return(
             <View style={viewStyle}>
                 <View style={viewUserStyle}>
-                    {this.pintarAvatar()}
+                    {this.displayAvatar()}
                     <Text style={nameStyle}>{this.props.user}</Text>
                 </View>
                 <Text style={contenttextStyle}>{this.props.content}</Text>
-                <Text style={datatextStyle}>{this.props.data}</Text>
+                <Text style={datetextStyle}>{this.props.data}</Text>
 
             </View>
         );
@@ -56,7 +56,7 @@ const styles ={
     contenttextStyle:{
         paddingLeft: '10%'
     },
-    datatextStyle:{
+    datetextStyle:{
         paddingLeft: '10%',
         color:APP_COLORS.text_color
     },

@@ -1,15 +1,14 @@
 import React from 'react';
 import { View, Text, TouchableHighlight  } from 'react-native';
 import {APP_COLORS} from "../constants/colors";
-import { Card, ListItem, Button, Icon } from 'react-native-elements';
-import { EvilIcons } from '@expo/vector-icons';
+import { Icon } from 'react-native-elements';
 import {Actions} from "react-native-router-flux";
 
 class ForumTheme extends React.Component {
     constructor(props) {
         super(props)
     }
-    pintarEstat(){
+    displayStatus(){
         if(this.props.finished){
             return(
                 <View style={styles.iconInfoTextStyle}>
@@ -68,7 +67,7 @@ class ForumTheme extends React.Component {
                             <Text style = {infoStyle}> {this.props.data} </Text>
                         </View>
 
-                        {this.pintarEstat()}
+                        {this.displayStatus()}
                     </View>
 
             </View>

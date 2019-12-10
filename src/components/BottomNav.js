@@ -9,7 +9,7 @@ class BottomNav extends React.Component {
         super(props)
     }
 
-    pintarProgramacio() {
+    displaySchedule() {
         if (this.props.selected === "programacio"){
             return (
                 <View>
@@ -41,7 +41,7 @@ class BottomNav extends React.Component {
 
     }
 
-    pintarCI() {
+    displayCI() {
         if (this.props.selected === "ci"){
             return (
                 <View>
@@ -73,7 +73,7 @@ class BottomNav extends React.Component {
 
     }
 
-    pintarForum() {
+    displayForum() {
         if (this.props.selected === "forum"){
             return (
                 <View>
@@ -108,9 +108,9 @@ class BottomNav extends React.Component {
     render(){
         return(
             <View style={styles.rowStyle}>
-                {this.pintarProgramacio()}
-                {this.pintarCI()}
-                {this.pintarForum()}
+                {this.displaySchedule()}
+                {this.displayCI()}
+                {this.displayForum()}
             </View>
         )
     }
