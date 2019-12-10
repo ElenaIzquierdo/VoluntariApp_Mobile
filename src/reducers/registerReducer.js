@@ -6,7 +6,13 @@ const INITIAL_STATE ={
     centre: "",
     password: "",
     password_repeted: "",
-    dies: [false,false,false,false,false],
+    dies: [
+        {id: 0, day_name: "dll", attendance: false},
+        {id: 1, day_name: "dm", attendance: false},
+        {id: 2, day_name: "dc", attendance: false},
+        {id: 3, day_name: "dj", attendance: false},
+        {id: 4, day_name: "dv", attendance: false}
+    ],  
     errors: {
         days: false,
         username_empty: false,
@@ -16,8 +22,11 @@ const INITIAL_STATE ={
         group_empty: false,
         center_empty: false,
         password_size_dif_8: false,
-        password_different: false
-    }
+        password_different: false,
+        incorrect_email: false
+    },
+    group_choices: ["Casalet", "Petits", "Mitjans", "Grans", "Adolescents"],
+    centre_choices: ["Raval", "Santa Coloma", "Sant Roc", "Sant Adrià", "Salt"]
 };
 
 const registerReducer = (state = INITIAL_STATE,action) => {
@@ -27,11 +36,11 @@ const registerReducer = (state = INITIAL_STATE,action) => {
             result[action.data.propertyName]=action.data.value
             return result;
         case 'CHANGE_CHECKED_DAY':
-            const new_dies = {...state.dies};
-            if(new_dies[action.data.day]){
-                new_dies[action.data.day] = false
+            const new_dies = [...state.dies];
+            if(new_dies[action.data.day].attendance){
+                new_dies[action.data.day].attendance = false
             }
-            else new_dies[action.data.day] = true
+            else new_dies[action.data.day].attendance = true
             return {...state, dies: new_dies};
         case 'CHANGE_ERROR_PROPERTY':
             const new_errors = {...state.errors}

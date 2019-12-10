@@ -2,7 +2,7 @@ import * as React from 'react';
 import {Actions} from "react-native-router-flux";
 import { connect } from 'react-redux';
 import {Header, Input, CheckBox} from 'react-native-elements';
-import {View, Text, TouchableHighlight} from 'react-native';
+import {View, Text, TouchableHighlight, Picker} from 'react-native';
 import {APP_COLORS} from "../constants/colors";
 
 import Subtitle from "../components/Subtitle";
@@ -11,39 +11,74 @@ import {changeRegisterFormProperty, changeCheckedDay, changeErrorRegisterMapProp
 
 
 class RegisterScreen extends React.Component{
-    hasAtLeastOne(){
+    howMuchDaysSelected(){
         var i;
         let count = 0;
-        for(i = 0; i < this.props.dies.length; i++){
-            console.log(this.props.dies[i])
-            if(this.props.dies[i]){
-                count = count +1;
-            } 
-        }
-        console.log("COUNT ", count);
-        if(count == 0) this.props.changeErrorRegisterMapProperty("days");
+        this.props.dies.map((dia)=>{
+            if(dia.attendance) count++;
+        })
+        return count;
     }
-    validateFormRegister(){  
+    validateFormRegister(){
+        let count = 0;
         this.props.resetErrorRegisterMap()
         if(this.props.nom_usuari === ""){
             this.props.changeErrorRegisterMapProperty("username_empty")
+            count ++
         } 
         if(this.props.correu === ""){
             this.props.changeErrorRegisterMapProperty("email_empty")
+            count ++
         } 
         if(this.props.telf.length != 9 && this.props.telf.length != 0){
             this.props.changeErrorRegisterMapProperty("telph_size_dif_9")
+            count ++
         }
         if(this.props.password.lenght < 8){
             this.props.changeErrorRegisterMapProperty("password_size_dif_8")
+            count ++
         }
         if(this.props.password === ""){
             this.props.changeErrorRegisterMapProperty("password_size_dif_8")
+            count ++
         }
         if(this.props.password != this.props.password_repeted){
             this.props.changeErrorRegisterMapProperty("password_different")
+            count ++
         }
-        //this.hasAtLeastOne()
+        if(!this.props.correu.includes('@')){
+            this.props.changeErrorRegisterMapProperty("incorrect_email")
+            count ++
+        }
+        if(this.howMuchDaysSelected() == 0){
+            this.props.changeErrorRegisterMapProperty("days");
+            count ++
+        }
+        if(count == 0) Actions.home()
+    }
+
+    renderThirdFirstDays(){
+        return this.props.dies.map((day)=>{
+            if(day.id < 3){
+                return(
+                    <CheckBox key={day.id} title={day.day_name} size={12} textStyle={styles.infoStyle} center={false} 
+                                checkedColor={APP_COLORS.color_checked} containerStyle={styles.checkBoxContainerStyle}
+                                checked={day.attendance} onPress={()=>this.props.changeCheckedDay(day.id)}/>
+                )
+            }
+        })
+    }
+
+    renderTwoLastDays(){
+        return this.props.dies.map((day)=>{
+            if(day.id >= 3){
+                return(
+                    <CheckBox key={day.id} title={day.day_name} size={12} textStyle={styles.infoStyle} center={false} 
+                                checkedColor={APP_COLORS.color_checked} containerStyle={styles.checkBoxContainerStyle}
+                                checked={day.attendance} onPress={()=>this.props.changeCheckedDay(day.id)}/>
+                )
+            }
+        })
     }
 
     displayDays(){
@@ -51,29 +86,18 @@ class RegisterScreen extends React.Component{
             <View style={styles.viewDiesStyle}>
                 <Text style={styles.textDiesStyle}>dies</Text>
                 <View style={styles.rowStyle}>
-                    <CheckBox title={"dll"} size={12} textStyle={styles.infoStyle} center={false} 
-                            checkedColor={APP_COLORS.color_checked} containerStyle={styles.checkBoxContainerStyle}
-                            checked={this.props.dies[0]} onPress={()=>this.props.changeCheckedDay(0)}/>
-                    <CheckBox title={"dm"} size={12} textStyle={styles.infoStyle} center={false} 
-                            checkedColor={APP_COLORS.color_checked} containerStyle={styles.checkBoxContainerStyle}
-                            checked={this.props.dies[1]} onPress={()=>this.props.changeCheckedDay(1)}/>
-                    <CheckBox title={"dc"} size={12} textStyle={styles.infoStyle} center={false} 
-                            checkedColor={APP_COLORS.color_checked} containerStyle={styles.checkBoxContainerStyle}
-                            checked={this.props.dies[2]} onPress={()=>this.props.changeCheckedDay(2)}/>
+                    {this.renderThirdFirstDays()}
                 </View>
                 <View style={styles.rowStyle}>
-                    <CheckBox title={"dj"} size={12} textStyle={styles.infoStyle} center={false} 
-                            checkedColor={APP_COLORS.color_checked} containerStyle={styles.checkBoxContainerStyle}
-                            checked={this.props.dies[3]} onPress={()=>this.props.changeCheckedDay(3)}/>
-                    <CheckBox title={"dv"} size={12} textStyle={styles.infoStyle} center={false} 
-                            checkedColor={APP_COLORS.color_checked} containerStyle={styles.checkBoxContainerStyle}
-                            checked={this.props.dies[4]} onPress={()=>this.props.changeCheckedDay(4)}/>
+                    {this.renderTwoLastDays()}
                 </View>
                 {this.props.errors["days"] ? <Text style={styles.errorTextStyle}>Has d'escollir un dia a la setmana mínim</Text>:null}
             </View>
         )
     }
+
     render(){
+        
         return(
             <View style={styles.viewStyle}>
                 <Header
@@ -95,7 +119,8 @@ class RegisterScreen extends React.Component{
                             containerStyle={styles.containerStyle} keyboardType={'email-address'} value={this.props.correu}
                             onChangeText={(text) => this.props.changeRegisterFormProperty("correu",text)}/>
                     {this.props.errors["email_empty"] ? <Text style={styles.errorTextStyle}>El correu no pot ser buit</Text>:null}
-
+                    {this.props.errors["incorrect_email"] ? <Text style={styles.errorTextStyle}>El correu ha de ser una direcció vàlida</Text>:null}
+                    
                     <Input label={"telefon mobil"} labelStyle={styles.labelStyle} inputStyle={styles.inputStyle}
                             containerStyle={styles.containerSmallStyle} keyboardType= {'number-pad'}
                             value={this.props.telf}
@@ -122,12 +147,31 @@ class RegisterScreen extends React.Component{
                     </View>
                     
                     <View style={styles.rowStyle}>
-                        <Input label={"grup"} labelStyle={styles.labelStyle} inputStyle={styles.inputStyle}
-                                containerStyle={styles.containerSmallStyle} value={this.props.grup}
-                                onChangeText={(text) => this.props.changeRegisterFormProperty("grup",text)}/>
-                        <Input label={"centre"} labelStyle={styles.labelStyle} inputStyle={styles.inputStyle}
-                                containerStyle={styles.containerSmallStyle} value={this.props.centre}
-                                onChangeText={(text) => this.props.changeRegisterFormProperty("centre",text)}/>
+                        <View style={styles.viewPickerStyle}>
+                            <Text style={styles.textDiesStyle}>grup</Text>
+                            <Picker selectedValue={this.props.grup}
+                                    style={{height: 50, width: 135}}
+                                    onValueChange={(itemValue) => this.props.changeRegisterFormProperty("grup",itemValue)}>
+                                    
+                                <Picker.Item label={this.props.group_choices[0]} value={this.props.group_choices[0]} />
+                                <Picker.Item label={this.props.group_choices[1]} value={this.props.group_choices[1]} />
+                                <Picker.Item label={this.props.group_choices[2]} value={this.props.group_choices[2]} />
+                                <Picker.Item label={this.props.group_choices[3]} value={this.props.group_choices[3]} />
+                                <Picker.Item label={this.props.group_choices[4]} value={this.props.group_choices[4]} />
+                            </Picker>
+                        </View>
+                        <View style={styles.viewPicker2Style}>
+                            <Text style={styles.textDiesStyle}>centre</Text>
+                            <Picker selectedValue={this.props.centre}
+                                    style={{height: 50, width: 150}}
+                                    onValueChange={(itemValue) => this.props.changeRegisterFormProperty("centre",itemValue)}>
+                                <Picker.Item label={this.props.centre_choices[0]} value={this.props.centre_choices[0]} />
+                                <Picker.Item label={this.props.centre_choices[1]} value={this.props.centre_choices[1]} />
+                                <Picker.Item label={this.props.centre_choices[2]} value={this.props.centre_choices[2]} />
+                                <Picker.Item label={this.props.centre_choices[3]} value={this.props.centre_choices[3]} />
+                                <Picker.Item label={this.props.centre_choices[4]} value={this.props.centre_choices[4]} />
+                            </Picker>
+                        </View>
                     </View>
                     {this.displayDays()}     
                 </View>
@@ -214,6 +258,12 @@ const styles = {
     textButtonStyle: {
         alignSelf: 'center',
         color: APP_COLORS.color_white
+    },
+    viewPickerStyle: {
+        marginLeft:'3%'
+    },
+    viewPicker2Style: {
+        marginLeft:'9%'
     }
 }
 
@@ -227,7 +277,9 @@ const mapStateToProps = (state) => {
         password: state.registerReducer.password,
         password_repeted: state.registerReducer.password_repeted,
         dies: state.registerReducer.dies,
-        errors: state.registerReducer.errors
+        errors: state.registerReducer.errors,
+        group_choices: state.registerReducer.group_choices,
+        centre_choices: state.registerReducer.centre_choices
     }
 };
 

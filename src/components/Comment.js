@@ -31,7 +31,7 @@ class Comment extends React.Component {
     }
 
     render(){
-        const {contenttextStyle, datatextStyle, viewStyle, viewUserStyle,nameStyle} = styles;
+        const {contenttextStyle, datetextStyle, viewStyle, viewUserStyle,nameStyle} = styles;
         return(
             <View style={viewStyle}>
                 <View style={viewUserStyle}>
