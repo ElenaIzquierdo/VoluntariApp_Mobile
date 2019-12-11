@@ -1,4 +1,5 @@
 import React from 'react';
+import Moment from 'react-moment';
 import { View, Text, TouchableHighlight  } from 'react-native';
 import {APP_COLORS} from "../constants/colors";
 import { Icon } from 'react-native-elements';
@@ -64,7 +65,9 @@ class ForumTheme extends React.Component {
                                 color={APP_COLORS.text_color}
                                 size={20}
                             />
-                            <Text style = {infoStyle}> {this.props.data} </Text>
+                            <Moment style = {infoStyle} element={Text} format="DD/MM/YYYY HH:mm">
+                                {this.props.data}
+                            </Moment>
                         </View>
 
                         {this.displayStatus()}
