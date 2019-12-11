@@ -19,35 +19,46 @@ class ForumScreen extends React.Component{
     }
 
     componentWillMount(){
-        this.props.fetchClosedForumTopics();
-        this.props.fetchOpenedForumTopics();
+        this.props.fetchClosedForumTopics("created_date");
+        this.props.fetchOpenedForumTopics("created_date");
     }
 
     pressOkModal(){
-        console.log("HOLAAAA")
         if(!this.props.filters["opened"] && !this.props.filters["closed"]){
-            console.log("Hola")
             this.props.changeFilterProperty("opened")
             this.props.changeFilterProperty("closed")
         }
-        if(this.props.filters["opened"] === true && this.props.filters["closed"] === true){
-            var status = ""
+
+        if(this.props.filters["order_by_name"]){
+            this.props.fetchClosedForumTopics("title");
+            this.props.fetchOpenedForumTopics("title");
         }
-        if(this.props.filters["order_by_name"] === true){
-            var order = "title"
+        else{
+            this.props.fetchClosedForumTopics("created_date");
+            this.props.fetchOpenedForumTopics("created_date");
         }
-        if(this.props.filters["order_by_date"] === true){
-            var order = "created_date"
-        }
+
         this.props.closeModal()
     }
 
     renderOpenTopics(){
-        return this.props.opened_topics.map((tema)=>{
-            return(
-                <ForumTheme key={tema.id} titleForum={tema.title} creator={tema.creator} finished={tema.finished} data={tema.created_date}/>
-            )
-        });
+        if(this.props.filters["opened"]){
+            return this.props.opened_topics.map((tema)=>{
+                return(
+                    <ForumTheme key={tema.id} titleForum={tema.title} creator={tema.creator} finished={tema.finished} data={tema.created_date}/>
+                )
+            });
+        }
+    }
+
+    renderClosedTopics(){
+        if(this.props.filters["closed"]){
+            return this.props.closed_topics.map((topic)=>{
+                return(
+                    <ForumTheme key={topic.id} titleForum={topic.title} creator={topic.creator} finished={topic.finished} data={topic.created_date}/>
+                )
+            });
+        }
     }
 
     renderFilters(){
@@ -64,13 +75,7 @@ class ForumScreen extends React.Component{
         )
     }
 
-    renderClosedTopics(){
-        return this.props.closed_topics.map((topic)=>{
-            return(
-                <ForumTheme key={topic.id} titleForum={topic.title} creator={topic.creator} finished={topic.finished} data={topic.created_date}/>
-            )
-        });
-    }
+    
 
     render(){
         if(this.props.isFetching){
@@ -101,12 +106,12 @@ class ForumScreen extends React.Component{
                         </View>
                         <Text style={styles.modalTitle}>Ordenar per</Text>
                         <View style={styles.viewTextFilterStyle}>
-                                <CheckBox title={"Data ceació"} checked={this.props.filters["order_by_name"]} size={14} textStyle={styles.textFilterStyle}
-                                          center={true} checkedColor={APP_COLORS.color_checked} containerStyle={styles.checkBoxContainerStyle}
-                                          onPress={()=>this.props.changeFilterProperty("order_by_name")} checkedIcon='dot-circle-o' uncheckedIcon='circle-o' />
-                                <CheckBox title={"Títol"} checked={this.props.filters["order_by_date"]} size={14} textStyle={styles.textFilterStyle}
+                                <CheckBox title={"Data ceació"} checked={this.props.filters["order_by_date"]} size={14} textStyle={styles.textFilterStyle}
                                           center={true} checkedColor={APP_COLORS.color_checked} containerStyle={styles.checkBoxContainerStyle}
                                           onPress={()=>this.props.changeFilterProperty("order_by_date")} checkedIcon='dot-circle-o' uncheckedIcon='circle-o' />
+                                <CheckBox title={"Títol"} checked={this.props.filters["order_by_name"]} size={14} textStyle={styles.textFilterStyle}
+                                          center={true} checkedColor={APP_COLORS.color_checked} containerStyle={styles.checkBoxContainerStyle}
+                                          onPress={()=>this.props.changeFilterProperty("order_by_name")} checkedIcon='dot-circle-o' uncheckedIcon='circle-o' />
                         </View>
                         <View>
                             <TouchableHighlight style={{paddingRight: '5%'}} onPress={this.pressOkModal.bind(this)}>
@@ -194,8 +199,8 @@ const mapStateToProps = (state) => {
 const  mapDispatchToProps = (dispatch)=>{
     return {
         closeModal: () => dispatch(closeModal()),
-        fetchClosedForumTopics: () => dispatch(fetchClosedForumTopics()),
-        fetchOpenedForumTopics: () => dispatch(fetchOpenedForumTopics()),
+        fetchClosedForumTopics: (order) => dispatch(fetchClosedForumTopics(order)),
+        fetchOpenedForumTopics: (order) => dispatch(fetchOpenedForumTopics(order)),
         changeFilterProperty: (propertyName) => dispatch(changeFilterProperty(propertyName)),
         fetchFilteredTopics: (status,order) => dispatch(fetchFilteredTopics(status,order))
     }

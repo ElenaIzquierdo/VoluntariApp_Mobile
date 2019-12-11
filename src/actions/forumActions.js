@@ -4,11 +4,12 @@ export const closeModal =() => {
     }
 };
 
-export const fetchClosedForumTopics = () => {
+export const fetchClosedForumTopics = (order) => {
     return (dispatch) => {
         dispatch(requestForumTopics());
         const baseUrl = 'http://165.22.76.147:8080/voluntariapp/forum?status=closed';
-        fetch(baseUrl, {
+        const url1 = '&sort='+order
+        fetch(baseUrl+url1, {
             method: 'GET',
             headers: {
                 Accept: 'application/json',
@@ -35,11 +36,12 @@ const receiveClosedForumTopics =(closedTopics)=>{
     }
 }
 
-export const fetchOpenedForumTopics = () => {
+export const fetchOpenedForumTopics = (order) => {
     return (dispatch) => {
         dispatch(requestForumTopics());
         const baseUrl = 'http://165.22.76.147:8080/voluntariapp/forum?status=open';
-        fetch(baseUrl, {
+        const url1 = '&sort='+order
+        fetch(baseUrl+url1, {
             method: 'GET',
             headers: {
                 Accept: 'application/json',
@@ -69,7 +71,7 @@ export const changeFilterProperty=(propertyName) =>{
     }
 };
 
-export const fetchFilteredTopics = (status, order) => {
+export const fetchFilteredTopics = (order) => {
     return (dispatch) => {
         dispatch(requestForumTopics());
         const baseUrl = 'http://165.22.76.147:8080/voluntariapp/forum';
