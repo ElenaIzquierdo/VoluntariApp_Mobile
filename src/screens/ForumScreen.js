@@ -10,7 +10,7 @@ import BottomNav from "../components/BottomNav";
 import {FontAwesome} from "@expo/vector-icons";
 import Modal from 'react-native-modalbox';
 import Button from "../components/Button";
-import {closeModal, fetchClosedForumTopics, fetchOpenedForumTopics} from "../actions/forumActions";
+import {closeModal, fetchClosedForumTopics, fetchOpenedForumTopics, changeFilterProperty, fetchFilteredTopics} from "../actions/forumActions";
 
 
 class ForumScreen extends React.Component{
@@ -21,6 +21,25 @@ class ForumScreen extends React.Component{
     componentWillMount(){
         this.props.fetchClosedForumTopics();
         this.props.fetchOpenedForumTopics();
+    }
+
+    pressOkModal(){
+        console.log("HOLAAAA")
+        if(!this.props.filters["opened"] && !this.props.filters["closed"]){
+            console.log("Hola")
+            this.props.changeFilterProperty("opened")
+            this.props.changeFilterProperty("closed")
+        }
+        if(this.props.filters["opened"] === true && this.props.filters["closed"] === true){
+            var status = ""
+        }
+        if(this.props.filters["order_by_name"] === true){
+            var order = "title"
+        }
+        if(this.props.filters["order_by_date"] === true){
+            var order = "created_date"
+        }
+        this.props.closeModal()
     }
 
     renderOpenTopics(){
@@ -73,23 +92,24 @@ class ForumScreen extends React.Component{
                     <Modal style={styles.modalStyle} position={"center"} isOpen={this.props.isOpen}>
                         <Text style={styles.modalTitle}>Filtrar per</Text>
                         <View style={styles.viewTextFilterStyle}>
-                                <CheckBox title={"Temes tancats"} checked={true} size={14} textStyle={styles.textFilterStyle}
-                                            center={true} checkedColor={APP_COLORS.color_checked} containerStyle={styles.checkBoxContainerStyle}/>
-                                <CheckBox title={"Temes oberts"} checked={true} size={14} textStyle={styles.textFilterStyle}
-                                            center={true} checkedColor={APP_COLORS.color_checked} containerStyle={styles.checkBoxContainerStyle}/>
+                                <CheckBox title={"Temes tancats"} checked={this.props.filters["closed"]} size={14} textStyle={styles.textFilterStyle}
+                                            center={true} checkedColor={APP_COLORS.color_checked} containerStyle={styles.checkBoxContainerStyle}
+                                            onPress={()=>this.props.changeFilterProperty("closed")}/>
+                                <CheckBox title={"Temes oberts"} checked={this.props.filters["opened"]} size={14} textStyle={styles.textFilterStyle}
+                                            center={true} checkedColor={APP_COLORS.color_checked} containerStyle={styles.checkBoxContainerStyle}
+                                            onPress={()=>this.props.changeFilterProperty("opened")}/>
                         </View>
                         <Text style={styles.modalTitle}>Ordenar per</Text>
                         <View style={styles.viewTextFilterStyle}>
-                                <CheckBox title={"Data ceació"} checked={true} size={14} textStyle={styles.textFilterStyle}
-                                          center={true} checkedColor={APP_COLORS.color_checked} containerStyle={styles.checkBoxContainerStyle}/>
-                                <CheckBox title={"Títol"} checked={false} size={14} textStyle={styles.textFilterStyle}
-                                          center={true} checkedColor={APP_COLORS.color_checked} containerStyle={styles.checkBoxContainerStyle}/>
+                                <CheckBox title={"Data ceació"} checked={this.props.filters["order_by_name"]} size={14} textStyle={styles.textFilterStyle}
+                                          center={true} checkedColor={APP_COLORS.color_checked} containerStyle={styles.checkBoxContainerStyle}
+                                          onPress={()=>this.props.changeFilterProperty("order_by_name")} checkedIcon='dot-circle-o' uncheckedIcon='circle-o' />
+                                <CheckBox title={"Títol"} checked={this.props.filters["order_by_date"]} size={14} textStyle={styles.textFilterStyle}
+                                          center={true} checkedColor={APP_COLORS.color_checked} containerStyle={styles.checkBoxContainerStyle}
+                                          onPress={()=>this.props.changeFilterProperty("order_by_date")} checkedIcon='dot-circle-o' uncheckedIcon='circle-o' />
                         </View>
-                        <View style={{flexDirection: 'row',justifyContent: 'space-between'}}>
-                            <TouchableHighlight style={{paddingLeft: '5%'}} onPress={() => this.props.closeModal()}>
-                                <Text style={{color:APP_COLORS.text_color}}>Cancel</Text>
-                            </TouchableHighlight>
-                            <TouchableHighlight style={{paddingRight: '5%'}} onPress={() => this.props.closeModal()}>
+                        <View>
+                            <TouchableHighlight style={{paddingRight: '5%'}} onPress={this.pressOkModal.bind(this)}>
                                 <Text style={{color:APP_COLORS.color_checked}} >Ok</Text>
                             </TouchableHighlight>
                         </View>
@@ -166,7 +186,8 @@ const mapStateToProps = (state) => {
         opened_topics: state.forumReducer.opened_topics,
         closed_topics: state.forumReducer.closed_topics,
         isOpen: state.forumReducer.isOpen,
-        isFetching: state.forumReducer.isFetching
+        isFetching: state.forumReducer.isFetching,
+        filters: state.forumReducer.filters
     }
 };
 
@@ -174,7 +195,9 @@ const  mapDispatchToProps = (dispatch)=>{
     return {
         closeModal: () => dispatch(closeModal()),
         fetchClosedForumTopics: () => dispatch(fetchClosedForumTopics()),
-        fetchOpenedForumTopics: () => dispatch(fetchOpenedForumTopics())
+        fetchOpenedForumTopics: () => dispatch(fetchOpenedForumTopics()),
+        changeFilterProperty: (propertyName) => dispatch(changeFilterProperty(propertyName)),
+        fetchFilteredTopics: (status,order) => dispatch(fetchFilteredTopics(status,order))
     }
 };
 

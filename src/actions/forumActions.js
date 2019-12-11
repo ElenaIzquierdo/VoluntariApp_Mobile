@@ -59,3 +59,48 @@ const receiveOpenedForumTopics =(openedTopics)=>{
         data: openedTopics
     }
 }
+
+export const changeFilterProperty=(propertyName) =>{
+    return {
+        type:'CHANGE_FILTER_PROPERTY',
+        data:{
+            propertyName
+        }
+    }
+};
+
+export const fetchFilteredTopics = (status, order) => {
+    return (dispatch) => {
+        dispatch(requestForumTopics());
+        const baseUrl = 'http://165.22.76.147:8080/voluntariapp/forum';
+        if(status != ""){
+            const url1 = '?status='+status
+            const url2 = '&order='+order
+            const url = baseUrl + url1 + url2
+            fetch(url, {
+                method: 'GET',
+                headers: {
+                    Accept: 'application/json',
+                    'Content-Type': 'application/json',
+                },
+                dataType: 'json',
+            }).then((resp) =>
+                resp.json().then((body) =>
+                    dispatch(receiveOpenedForumTopics(body)))
+                );
+        }
+        
+       
+        fetch(baseUrl, {
+            method: 'GET',
+            headers: {
+                Accept: 'application/json',
+                'Content-Type': 'application/json',
+            },
+            dataType: 'json',
+        }).then((resp) =>
+            resp.json().then((body) =>
+                dispatch(receiveOpenedForumTopics(body)))
+            );
+    }
+}
