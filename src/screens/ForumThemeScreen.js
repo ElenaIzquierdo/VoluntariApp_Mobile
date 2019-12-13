@@ -7,11 +7,9 @@ import {Icon} from "react-native-elements";
 import {Actions} from "react-native-router-flux";
 import { connect } from 'react-redux';
 import Moment from 'react-moment';
-import {fetchForumTopic, fetchForumTopicComments, changeModal, changeNewComment} from "../actions/forumthemeActions";
+import {fetchForumTopic, fetchForumTopicComments, changeModal, changeNewComment, publishNewComment} from "../actions/forumthemeActions";
 import Comment from "../components/Comment";
-import Comments from "../components/Comments";
 import Modal from 'react-native-modalbox';
-import Button from "../components/Button";
 
 class ForumThemeScreen extends React.Component{
     constructor(props) {
@@ -75,6 +73,17 @@ class ForumThemeScreen extends React.Component{
         )
     }
 
+    publishComment(){
+        console.log("HOla publish comment")
+        this.props.publishNewComment(this.props.new_comment);
+        this.props.changeModal();
+    }
+    
+    cancelNewComment(){
+        this.props.changeNewComment("");
+        this.props.changeModal();
+    }
+
     render(){
         const {titleStyle, viewStyle, infoStyle, descriptionStyle, iconInfoTextStyle, titleViewStyle, iconEditStyle} = styles;
         if(this.props.isFetching){
@@ -96,16 +105,16 @@ class ForumThemeScreen extends React.Component{
                     <Modal style={styles.modalStyle} isOpen={this.props.modalOpen}>
                         <Text style={styles.modalTitle}>Afegir comentari</Text>
                         <TextInput
-                            style={{ height: 50, borderColor: 'gray', borderWidth: 1, padding: '2%', textAlignVertical: "top" }}
+                            style={{ height: 50, borderColor: 'gray', borderWidth: 1, padding: '2%', textAlignVertical: "top", borderRadius: 6 }}
                             onChangeText={text => this.props.changeNewComment(text)}
                             value={this.props.new_comment} multiline={true}
                             />
                         <View style={{flexDirection: 'row',justifyContent: 'space-between'}}>
-                            <TouchableHighlight style={{paddingLeft: '5%'}} onPress={() => this.props.changeModal()}>
+                            <TouchableHighlight style={{paddingLeft: '5%'}} onPress={this.cancelNewComment.bind(this)}>
                                 <Text style={{color:APP_COLORS.text_color}}>Cancel</Text>
                             </TouchableHighlight>
 
-                            <TouchableHighlight style={{paddingRight: '5%'}} onPress={() => this.props.changeModal()}>
+                            <TouchableHighlight style={{paddingRight: '5%'}} onPress={this.publishComment.bind(this)}>
                                 <Text style={{color:APP_COLORS.color_checked}} >Acceptar</Text>
                             </TouchableHighlight>
                         </View>
@@ -256,7 +265,8 @@ const  mapDispatchToProps = (dispatch)=>{
         fetchForumTopic: (id) => dispatch(fetchForumTopic(id)),
         fetchForumTopicComments: (id) => dispatch(fetchForumTopicComments(id)),
         changeModal: () => dispatch(changeModal()),
-        changeNewComment: (text) => dispatch(changeNewComment(text))
+        changeNewComment: (text) => dispatch(changeNewComment(text)),
+        publishNewComment: (comment) => dispatch(publishNewComment(comment))
     }
 }
 

@@ -68,3 +68,12 @@ export const changeNewComment =(text) => {
     }
 };
 
+export const publishNewComment =(comment) =>{
+    console.log("HOLA! Actions")
+    //POST
+    return{
+        type: 'CHANGE_NEW_COMMENT',
+        data: ""
+    }
+}
+
