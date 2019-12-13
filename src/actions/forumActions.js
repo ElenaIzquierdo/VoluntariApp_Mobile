@@ -8,18 +8,33 @@ export const fetchClosedForumTopics = (order) => {
     return (dispatch) => {
         dispatch(requestForumTopics());
         const baseUrl = 'http://165.22.76.147:8080/voluntariapp/forum?status=closed';
-        const url1 = '&sort='+order
-        fetch(baseUrl+url1, {
-            method: 'GET',
-            headers: {
-                Accept: 'application/json',
-                'Content-Type': 'application/json',
-            },
-            dataType: 'json',
-        }).then((resp) =>
-            resp.json().then((body) =>
-                dispatch(receiveClosedForumTopics(body)))
-            );
+        if(order != ""){
+            const url1 = '&sort='+order
+            fetch(baseUrl+url1, {
+                method: 'GET',
+                headers: {
+                    Accept: 'application/json',
+                    'Content-Type': 'application/json',
+                },
+                dataType: 'json',
+            }).then((resp) =>
+                resp.json().then((body) =>
+                    dispatch(receiveClosedForumTopics(body)))
+                );
+        }
+        else{
+            fetch(baseUrl, {
+                method: 'GET',
+                headers: {
+                    Accept: 'application/json',
+                    'Content-Type': 'application/json',
+                },
+                dataType: 'json',
+            }).then((resp) =>
+                resp.json().then((body) =>
+                    dispatch(receiveClosedForumTopics(body)))
+                );
+        }  
     }
 }
 
@@ -40,18 +55,34 @@ export const fetchOpenedForumTopics = (order) => {
     return (dispatch) => {
         dispatch(requestForumTopics());
         const baseUrl = 'http://165.22.76.147:8080/voluntariapp/forum?status=open';
-        const url1 = '&sort='+order
-        fetch(baseUrl+url1, {
-            method: 'GET',
-            headers: {
-                Accept: 'application/json',
-                'Content-Type': 'application/json',
-            },
-            dataType: 'json',
-        }).then((resp) =>
-            resp.json().then((body) =>
-                dispatch(receiveOpenedForumTopics(body)))
-            );
+        if(order != ""){
+            const url1 = '&sort='+order
+            fetch(baseUrl+url1, {
+                method: 'GET',
+                headers: {
+                    Accept: 'application/json',
+                    'Content-Type': 'application/json',
+                },
+                dataType: 'json',
+            }).then((resp) =>
+                resp.json().then((body) =>
+                    dispatch(receiveOpenedForumTopics(body)))
+                );
+        }
+        else{
+            fetch(baseUrl, {
+                method: 'GET',
+                headers: {
+                    Accept: 'application/json',
+                    'Content-Type': 'application/json',
+                },
+                dataType: 'json',
+            }).then((resp) =>
+                resp.json().then((body) =>
+                    dispatch(receiveOpenedForumTopics(body)))
+                );
+        }
+                
     }
 }
 
@@ -78,7 +109,7 @@ export const fetchFilteredTopics = (order) => {
         if(status != ""){
             const url1 = '?status='+status
             const url2 = '&order='+order
-            const url = baseUrl + url1 + url2
+            const url = baseUrl + url2
             fetch(url, {
                 method: 'GET',
                 headers: {

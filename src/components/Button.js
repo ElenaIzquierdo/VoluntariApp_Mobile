@@ -6,8 +6,8 @@ class Button extends React.Component {
     render(){
         const {container, textStyle} = styles;
         return(
-            <TouchableHighlight style={[container,{backgroundColor:this.props.colorButton},{marginLeft:this.props.marginL},{width:this.props.width}]}
-                                onPress={this.props.path}>
+            <TouchableHighlight style={[container,{backgroundColor:this.props.colorButton},{marginLeft:this.props.marginL},{width:this.props.width},{height:this.props.height},{marginRight:this.props.marginR}]}
+                                onPress={this.props.path} >
                 <Text style={textStyle}>{this.props.text}</Text>
             </TouchableHighlight>
         )

@@ -139,7 +139,7 @@ class Separador extends React.Component {
                                    multiline = {true}
                                    placeholder = "Escribe aquí..."
                                    value={'Afegir comentari...'}/>
-                        <Button colorButton={APP_COLORS.color_checked} marginL={"3%"} text={"Fet"} width={"15%"}/>
+                        <Button colorButton={APP_COLORS.color_checked} marginL={"3%"} text={"Fet"} width={"15%"} height={"50%"}/>
                     </View>
 
                         {this.pintarCommentaris()}
@@ -158,7 +158,7 @@ class Separador extends React.Component {
                             <Text style={styles.textFilterStyle}>Ordenat per data</Text>
                         </View>
                         <Button colorButton={APP_COLORS.color_checked} marginL={"27%"} text={"Nova"}
-                                path={() => Actions.newtask()}/>
+                                path={() => Actions.newtask()} height={"55%"}/>
                     </View>
                     {this.pintarTasques()}
                 </View>
@@ -169,7 +169,6 @@ class Separador extends React.Component {
                 <View style={styles.viewContingutPStyle}>
                     <Modal style={styles.modal} position={"top"} ref={"modal"} isDisabled={this.state.isDisabled}>
                         <Text style={styles.modalTitle}>Afegeix participants</Text>
-                        <Button>Holaaa</Button>
                     </Modal>
                     <View style={styles.viewPartStyle}>
                         <View style={styles.viewColumnP1}>

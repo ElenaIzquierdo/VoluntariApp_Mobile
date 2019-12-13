@@ -7,8 +7,6 @@ import {APP_COLORS} from "../constants/colors";
 import { connect } from 'react-redux';
 import {Actions} from "react-native-router-flux";
 import BottomNav from "../components/BottomNav";
-import {FontAwesome} from "@expo/vector-icons";
-import Modal from 'react-native-modalbox';
 import Button from "../components/Button";
 import {closeModal, fetchClosedForumTopics, fetchOpenedForumTopics, changeFilterProperty, fetchFilteredTopics} from "../actions/forumActions";
 
@@ -23,24 +21,6 @@ class ForumScreen extends React.Component{
         this.props.fetchOpenedForumTopics("created_date");
     }
 
-    pressOkModal(){
-        if(!this.props.filters["opened"] && !this.props.filters["closed"]){
-            this.props.changeFilterProperty("opened")
-            this.props.changeFilterProperty("closed")
-        }
-
-        if(this.props.filters["order_by_name"]){
-            this.props.fetchClosedForumTopics("title");
-            this.props.fetchOpenedForumTopics("title");
-        }
-        else{
-            this.props.fetchClosedForumTopics("created_date");
-            this.props.fetchOpenedForumTopics("created_date");
-        }
-
-        this.props.closeModal()
-    }
-
     renderOpenTopics(){
         if(this.props.filters["opened"]){
             return this.props.opened_topics.map((tema)=>{
@@ -51,7 +31,7 @@ class ForumScreen extends React.Component{
         }
     }
 
-    renderClosedTopics(){
+    renderClosedTopics(){ 
         if(this.props.filters["closed"]){
             return this.props.closed_topics.map((topic)=>{
                 return(
@@ -61,20 +41,47 @@ class ForumScreen extends React.Component{
         }
     }
 
-    renderFilters(){
-        return(
-            <View style={styles.viewFilterStyle}>
-                <FontAwesome name='filter' size={25} color= {APP_COLORS.text_color} style={styles.filterIconStyle}
-                             onPress={()=>this.props.closeModal()}/>
-                <View style={styles.viewTextFilterStyle}>
-                    <Text style={styles.textFilterStyle}>Temes oberts, tancats</Text>
-                    <Text style={styles.textFilterStyle}>Ordenat per data</Text>
-                </View>
-                <Button colorButton={APP_COLORS.color_checked} marginL={"27%"} text={"Nou"} path={() => Actions.newforumtheme()} width={"15%"}/>
-            </View>
-        )
+    changeFiltersAndFetchFilteredTopics(propertyName){
+        this.props.changeFilterProperty(propertyName);
+        if(propertyName === "order_by_name"){
+            this.props.fetchClosedForumTopics("title");
+            this.props.fetchOpenedForumTopics("title");
+        } 
+        else{
+            this.props.fetchOpenedForumTopics("created_date");
+            this.props.fetchClosedForumTopics("created_date");
+        } 
     }
 
+    renderFilterHeader(){
+        return(
+            <View style={styles.viewFilterHeaderStyle}>
+                <View style={styles.viewTextFilterStyle}>
+                    <View style={styles.viewFilterStyle}>
+                        <Text style={styles.textFilterStyle}>Temes</Text>
+                        <CheckBox title={"Temes tancats"} checked={this.props.filters["closed"]} size={9} textStyle={styles.textFilterStyle}
+                                            center={true} checkedColor={APP_COLORS.color_checked} containerStyle={styles.checkBoxContainerStyle}
+                                            onPress={()=>this.props.changeFilterProperty("closed")}/>
+                        <CheckBox title={"Temes oberts"} checked={this.props.filters["opened"]} size={9} textStyle={styles.textFilterStyle}
+                                    center={true} checkedColor={APP_COLORS.color_checked} containerStyle={styles.checkBoxContainerStyle}
+                                    onPress={()=>this.props.changeFilterProperty("opened")}/>
+                    </View>
+                    <View style={styles.viewFilterStyle}>
+                        <Text style={styles.textFilterStyle}>Ordenar</Text>
+                        <CheckBox title={"Data ceació"} checked={this.props.filters["order_by_date"]} size={10} textStyle={styles.textFilterStyle}
+                            center={true} checkedColor={APP_COLORS.color_checked} containerStyle={styles.checkBoxContainerStyle}
+                            onPress={this.changeFiltersAndFetchFilteredTopics.bind(this,"order_by_date")} checkedIcon='dot-circle-o' uncheckedIcon='circle-o' />
+                        
+                        <CheckBox title={"Títol"} checked={this.props.filters["order_by_name"]} size={10} textStyle={styles.textFilterStyle}
+                            center={true} checkedColor={APP_COLORS.color_checked} containerStyle={styles.checkBoxContainerStyle}
+                            onPress={this.changeFiltersAndFetchFilteredTopics.bind(this,"order_by_name")} checkedIcon='dot-circle-o' uncheckedIcon='circle-o' />
+                    </View>
+                </View>
+                <Button colorButton={APP_COLORS.color_checked} marginL={"2%"} height={"30%"} text={"Nou"} path={() => Actions.newforumtheme()} width={"10%"} marginR={"2%"}/>
+            </View>
+            
+        )
+    }
     
 
     render(){
@@ -94,33 +101,8 @@ class ForumScreen extends React.Component{
                         rightComponent={{ icon: 'person', color: APP_COLORS.color_neutral, onPress: () => Actions.profile()}}
                         backgroundColor={APP_COLORS.color_orange}
                     />
-                    <Modal style={styles.modalStyle} position={"center"} isOpen={this.props.isOpen}>
-                        <Text style={styles.modalTitle}>Filtrar per</Text>
-                        <View style={styles.viewTextFilterStyle}>
-                                <CheckBox title={"Temes tancats"} checked={this.props.filters["closed"]} size={14} textStyle={styles.textFilterStyle}
-                                            center={true} checkedColor={APP_COLORS.color_checked} containerStyle={styles.checkBoxContainerStyle}
-                                            onPress={()=>this.props.changeFilterProperty("closed")}/>
-                                <CheckBox title={"Temes oberts"} checked={this.props.filters["opened"]} size={14} textStyle={styles.textFilterStyle}
-                                            center={true} checkedColor={APP_COLORS.color_checked} containerStyle={styles.checkBoxContainerStyle}
-                                            onPress={()=>this.props.changeFilterProperty("opened")}/>
-                        </View>
-                        <Text style={styles.modalTitle}>Ordenar per</Text>
-                        <View style={styles.viewTextFilterStyle}>
-                                <CheckBox title={"Data ceació"} checked={this.props.filters["order_by_date"]} size={14} textStyle={styles.textFilterStyle}
-                                          center={true} checkedColor={APP_COLORS.color_checked} containerStyle={styles.checkBoxContainerStyle}
-                                          onPress={()=>this.props.changeFilterProperty("order_by_date")} checkedIcon='dot-circle-o' uncheckedIcon='circle-o' />
-                                <CheckBox title={"Títol"} checked={this.props.filters["order_by_name"]} size={14} textStyle={styles.textFilterStyle}
-                                          center={true} checkedColor={APP_COLORS.color_checked} containerStyle={styles.checkBoxContainerStyle}
-                                          onPress={()=>this.props.changeFilterProperty("order_by_name")} checkedIcon='dot-circle-o' uncheckedIcon='circle-o' />
-                        </View>
-                        <View>
-                            <TouchableHighlight style={{paddingRight: '5%'}} onPress={this.pressOkModal.bind(this)}>
-                                <Text style={{color:APP_COLORS.color_checked}} >Ok</Text>
-                            </TouchableHighlight>
-                        </View>
-                    </Modal>
                     <ScrollView>
-                        {this.renderFilters()}
+                        {this.renderFilterHeader()}
                         {this.renderOpenTopics()}
                         {this.renderClosedTopics()}
                     </ScrollView>
@@ -156,14 +138,19 @@ const styles = StyleSheet.create({
     },
     textFilterStyle:{
         color: APP_COLORS.text_color,
-        fontSize: 14,
+        fontSize: 10,
+    },
+    viewFilterHeaderStyle: {
+        flexDirection: 'row',
+        borderBottomColor: APP_COLORS.text_color,
+        borderBottomWidth: 0.6,
+        width: '100%',
     },
     viewFilterStyle: {
         flexDirection: 'row',
         borderBottomColor: APP_COLORS.text_color,
         borderBottomWidth: 0.6,
-        width: '95%',
-        alignSelf: 'center'
+        width: '87%',
     },
     viewTextFilterStyle: {
         marginTop: '2%',
@@ -182,7 +169,15 @@ const styles = StyleSheet.create({
         alignSelf: 'center'
     },
     checkBoxContainerStyle: {
-        backgroundColor: APP_COLORS.color_neutral
+        backgroundColor: APP_COLORS.color_neutral,
+        borderColor: APP_COLORS.color_neutral,
+        marginLeft: '1%',
+        width: '40%'
+    },
+    viewHeaderStyle: {
+        height: '30%',
+        borderBottomColor: APP_COLORS.text_color,
+        borderBottomWidth: 0.6,
     }
 });
 
