@@ -84,7 +84,7 @@ class Separador extends React.Component {
             image={item.image}
             user={item.author}
             content={item.content}
-            data={item.created_date}
+            created_date={item.created_date}
         />
     );
 
@@ -134,13 +134,6 @@ class Separador extends React.Component {
         if(this.state.comments){
             return (
                 <View>
-                    <View style={{height:'12%', flexDirection: 'row'}}>
-                        <TextInput style={styles.textInputStyle}
-                                   multiline = {true}
-                                   placeholder = "Escribe aquí..."
-                                   value={'Afegir comentari...'}/>
-                        <Button colorButton={APP_COLORS.color_checked} marginL={"3%"} text={"Fet"} width={"15%"} height={"50%"}/>
-                    </View>
 
                         {this.pintarCommentaris()}
 
