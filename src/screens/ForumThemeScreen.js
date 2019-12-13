@@ -7,11 +7,19 @@ import {APP_COLORS} from "../constants/colors";
 import {Icon} from "react-native-elements";
 import {Actions} from "react-native-router-flux";
 import { connect } from 'react-redux';
+import Moment from 'react-moment';
+import {fetchForumTopic, fetchForumTopicComments} from "../actions/forumthemeActions";
 
 class ForumThemeScreen extends React.Component{
     constructor(props) {
         super(props)
     }
+
+    componentWillMount(){
+        this.props.fetchForumTopic(this.props.id)
+        this.props.fetchForumTopicComments(this.props.id)
+    }
+
     render(){
         const {titleStyle, viewStyle, infoStyle, descriptionStyle, iconInfoTextStyle, titleViewStyle, iconEditStyle} = styles;
         return(
@@ -39,7 +47,9 @@ class ForumThemeScreen extends React.Component{
                         color={APP_COLORS.text_color}
                         size={20}
                     />
-                    <Text style = {infoStyle}> {this.props.theme.data} </Text>
+                    <Moment style = {infoStyle} element={Text} format="DD/MM/YYYY HH:mm">
+                                {this.props.created_date}
+                    </Moment>
                 </View>
 
                 <View style={iconInfoTextStyle}>
@@ -135,6 +145,8 @@ const mapStateToProps = (state) => {
 
 const  mapDispatchToProps = (dispatch)=>{
     return {
+        fetchForumTopic: (id) => dispatch(fetchForumTopic(id)),
+        fetchForumTopicComments: (id) => dispatch(fetchForumTopicComments(id))
     }
 }
 

@@ -2,6 +2,7 @@ import React from 'react';
 import { View, Text, Image } from 'react-native';
 import { Avatar } from 'react-native-elements';
 import {APP_COLORS} from "../constants/colors";
+import Moment from 'react-moment';
 
 class Comment extends React.Component {
     constructor(props) {
@@ -9,7 +10,7 @@ class Comment extends React.Component {
     }
 
     displayAvatar(){
-        if(this.props.image == null){
+        if(this.props.image == null && this.props.user != null){
             var str_name=this.props.user.split(" ");
             var initial_name=str_name[0].charAt(0).toUpperCase();
             var initial_surname=str_name[1].charAt(0).toUpperCase();
@@ -20,7 +21,7 @@ class Comment extends React.Component {
                         titleStyle={styles.titleAvatarStyle}/>
             )
         }
-        else{
+        else if(this.props.image != null){
             return(
                 <Avatar
                     rounded
@@ -39,7 +40,9 @@ class Comment extends React.Component {
                     <Text style={nameStyle}>{this.props.user}</Text>
                 </View>
                 <Text style={contenttextStyle}>{this.props.content}</Text>
-                <Text style={datetextStyle}>{this.props.data}</Text>
+                <Moment style = {datetextStyle} element={Text} format="DD/MM/YYYY HH:mm">
+                    {this.props.created_date}
+                </Moment>
 
             </View>
         );

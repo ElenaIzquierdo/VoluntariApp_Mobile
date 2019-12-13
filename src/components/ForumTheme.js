@@ -41,7 +41,7 @@ class ForumTheme extends React.Component {
     render(){
         const {textStyle, viewStyle, infoStyle, iconTextStyle, viewInformationStyle, iconInfoTextStyle} = styles;
         return(
-            <TouchableHighlight onPress = {() => Actions.forumtheme()}>
+            <TouchableHighlight onPress = {() => Actions.forumtheme({id: this.props.id})}>
             <View style={viewStyle}>
 
                     <View style={iconTextStyle}>

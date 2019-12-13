@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {StyleSheet, View, ScrollView, TouchableHighlight, ActivityIndicator} from 'react-native';
+import {StyleSheet, View, ScrollView, ActivityIndicator} from 'react-native';
 import { Text } from 'react-native-ui-kitten';
 import {Header, CheckBox} from 'react-native-elements';
 import ForumTheme from '../components/ForumTheme';
@@ -23,9 +23,10 @@ class ForumScreen extends React.Component{
 
     renderOpenTopics(){
         if(this.props.filters["opened"]){
-            return this.props.opened_topics.map((tema)=>{
+            return this.props.opened_topics.map((topic)=>{
                 return(
-                    <ForumTheme key={tema.id} titleForum={tema.title} creator={tema.creator} finished={tema.finished} data={tema.created_date}/>
+                    <ForumTheme key={topic.id} titleForum={topic.title} creator={topic.creator} finished={topic.finished} 
+                                data={topic.created_date} id={topic.id}/>
                 )
             });
         }
@@ -35,7 +36,8 @@ class ForumScreen extends React.Component{
         if(this.props.filters["closed"]){
             return this.props.closed_topics.map((topic)=>{
                 return(
-                    <ForumTheme key={topic.id} titleForum={topic.title} creator={topic.creator} finished={topic.finished} data={topic.created_date}/>
+                    <ForumTheme key={topic.id} titleForum={topic.title} creator={topic.creator} finished={topic.finished} 
+                                data={topic.created_date} id={topic.id}/>
                 )
             });
         }
