@@ -86,9 +86,8 @@ class ForumThemeScreen extends React.Component{
                     </View>
 
                     <Text style = {descriptionStyle}> {this.props.theme.description} </Text>
-
+                   
                     <Comments comments={this.props.comments}/>
-
                 </View>
             )
         }

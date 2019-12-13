@@ -21,16 +21,26 @@ class Comments extends React.Component {
     );
 
     pintarCommentaris(){
-        return(
-            <View>
-                <FlatList
-                    data={this.props.comments}
-                    style={{width:"100%",height:"100%"}}
-                    keyExtractor={this._keyExtractor}
-                    renderItem={this._renderItem}
-                />
-            </View>
-        )
+        if(this.props.comments.length > 0){
+            return(
+                <View>
+                    <FlatList
+                        data={this.props.comments}
+                        style={{width:"100%",height:"100%"}}
+                        keyExtractor={this._keyExtractor}
+                        renderItem={this._renderItem}
+                    />
+                </View>
+            )
+        }
+        else{
+            return(
+                <View style={styles.viewNoComments}>
+                    <Text style={styles.textNoComments}>No hi ha comentaris per aquest tema encara</Text>
+                </View>
+            )
+        }
+        
     }
 
     render(){
@@ -38,7 +48,7 @@ class Comments extends React.Component {
         return(
             <View style={viewGeneralStyle}>
                 <View style={viewStyle}>
-                    <Text style={textStyle}>Comentaris</Text>
+                    <Text style={textStyle}>Comentaris ({this.props.comments.length})</Text>
                 </View>
                 <View style={{flex:1,height:"100%"}}>
                 {this.pintarCommentaris()}
@@ -74,6 +84,14 @@ const styles ={
         fontSize: 17,
         fontWeight: 'bold'
     },
+    textNoComments: {
+        color: APP_COLORS.text_color,
+        fontSize: 16,
+        textAlign: 'center'
+    },
+    viewNoComments: {
+        paddingTop: '50%'
+    }
 };
 
 export default Comments;
