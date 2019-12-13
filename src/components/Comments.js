@@ -1,5 +1,5 @@
 import React from 'react';
-import {View, Text, FlatList} from 'react-native';
+import {View, Text, FlatList, TouchableHighlight} from 'react-native';
 import {APP_COLORS} from "../constants/colors";
 import Comment from '../components/Comment';
 
@@ -37,6 +37,9 @@ class Comments extends React.Component {
             return(
                 <View style={styles.viewNoComments}>
                     <Text style={styles.textNoComments}>No hi ha comentaris per aquest tema encara</Text>
+                    <TouchableHighlight>
+                        <Text style={styles.newCommentLinkText}>Afegir un comentari</Text>
+                    </TouchableHighlight>
                 </View>
             )
         }
@@ -51,7 +54,7 @@ class Comments extends React.Component {
                     <Text style={textStyle}>Comentaris ({this.props.comments.length})</Text>
                 </View>
                 <View style={{flex:1,height:"100%"}}>
-                {this.pintarCommentaris()}
+                    {this.pintarCommentaris()}
                 </View>
             </View>
         );
@@ -91,6 +94,12 @@ const styles ={
     },
     viewNoComments: {
         paddingTop: '50%'
+    },
+    newCommentLinkText: {
+        color: APP_COLORS.color_green   ,
+        fontSize: 16,
+        textAlign: 'center',
+        textDecorationLine: 'underline'
     }
 };
 

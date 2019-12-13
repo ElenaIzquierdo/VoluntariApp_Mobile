@@ -54,3 +54,17 @@ const receiveTopicComments =(comments)=>{
         data: comments
     }
 }
+
+export const changeModal =() => {
+    return{
+        type: 'CHANGE_MODAL'
+    }
+};
+
+export const changeNewComment =(text) => {
+    return{
+        type: 'CHANGE_NEW_COMMENT',
+        data: text
+    }
+};
+
