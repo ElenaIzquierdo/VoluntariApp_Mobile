@@ -11,7 +11,9 @@ import {profileReducer} from "./reducers/profileReducer";
 import {registerReducer} from "./reducers/registerReducer";
 import {loginReducer} from "./reducers/loginReducer";
 import {provaReducer} from "./reducers/provaReducer";
+import {createForumTopicReducer} from "./reducers/createForumTopicReducer";
 import thunk from 'redux-thunk';
+import { create } from 'uuid-js';
 
 const rootReducer = combineReducers({
     homeReducer: homeReducer,
@@ -25,7 +27,8 @@ const rootReducer = combineReducers({
     profileReducer: profileReducer,
     registerReducer: registerReducer,
     loginReducer: loginReducer,
-    provaReducer: provaReducer
+    provaReducer: provaReducer,
+    createForumTopicReducer: createForumTopicReducer
 });
 
 const store= createStore(
