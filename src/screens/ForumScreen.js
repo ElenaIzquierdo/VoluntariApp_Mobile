@@ -17,8 +17,8 @@ class ForumScreen extends React.Component{
     }
 
     componentWillMount(){
-        this.props.fetchClosedForumTopics("created_date");
-        this.props.fetchOpenedForumTopics("created_date");
+        this.props.fetchClosedForumTopics("-created_date");
+        this.props.fetchOpenedForumTopics("-created_date");
     }
 
     renderOpenTopics(){
@@ -50,8 +50,8 @@ class ForumScreen extends React.Component{
             this.props.fetchOpenedForumTopics("title");
         } 
         else{
-            this.props.fetchOpenedForumTopics("created_date");
-            this.props.fetchClosedForumTopics("created_date");
+            this.props.fetchOpenedForumTopics("-created_date");
+            this.props.fetchClosedForumTopics("-created_date");
         } 
     }
 

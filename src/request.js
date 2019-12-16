@@ -14,17 +14,13 @@ export const request = async (path = "", method = "GET", body) => {
             headers,
             body: bodyString
         }).then(response => {
-            console.log(response)
             if (response.ok) {
-                console.log(response.ok)
-                console.log(res(response))
                 return res(response)
             } else {
                 rej(new Error('Server responded with ' + response.code))
             }
         }).catch(err => {
             rej(err)
-            console.log("Fetch error", err)
         })
 
     })

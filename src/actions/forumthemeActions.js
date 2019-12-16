@@ -1,3 +1,4 @@
+import {request} from "../request";
 export const fetchForumTopic = (id) => {
     return (dispatch) => {
         dispatch(requestTopic());
@@ -68,12 +69,9 @@ export const changeNewComment =(text) => {
     }
 };
 
-export const publishNewComment =(comment) =>{
-    console.log("HOLA! Actions")
-    //POST
-    return{
-        type: 'CHANGE_NEW_COMMENT',
-        data: ""
-    }
+export const publishNewComment =(commentInfo) =>{
+    return () => {
+        request('/comment', 'POST', commentInfo);
+    } 
 }
 

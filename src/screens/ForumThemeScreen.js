@@ -74,9 +74,14 @@ class ForumThemeScreen extends React.Component{
     }
 
     publishComment(){
-        console.log("HOla publish comment")
-        this.props.publishNewComment(this.props.new_comment);
+        const commentInfo = {
+            content: this.props.new_comment,
+            forumtheme: this.props.id
+        };
+        this.props.publishNewComment(commentInfo);
+        this.props.changeNewComment("");
         this.props.changeModal();
+        this.props.fetchForumTopicComments(this.props.id);
     }
     
     cancelNewComment(){
@@ -266,7 +271,7 @@ const  mapDispatchToProps = (dispatch)=>{
         fetchForumTopicComments: (id) => dispatch(fetchForumTopicComments(id)),
         changeModal: () => dispatch(changeModal()),
         changeNewComment: (text) => dispatch(changeNewComment(text)),
-        publishNewComment: (comment) => dispatch(publishNewComment(comment))
+        publishNewComment: (commentInfo) => dispatch(publishNewComment(commentInfo))
     }
 }
 
