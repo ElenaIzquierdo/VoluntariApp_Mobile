@@ -10,13 +10,13 @@ class Week extends React.Component {
     }
 
     static renderIconAssistencia(ass){
-        if(ass === "baixa"){
+        if(ass === 1){
             return(<FontAwesome name="angle-double-down" size={18} color = {APP_COLORS.color_green} style={styles.iconAssStyle}/>)
         }
-        if(ass === "mitja"){
+        if(ass === 2){
             return(<FontAwesome name="angle-up" size={18} color = {APP_COLORS.color_green} style={styles.iconAssStyle}/>)
         }
-        if(ass === "alta"){
+        if(ass === 3){
             return(<FontAwesome name="angle-double-up" size={18} color = {APP_COLORS.color_green} style={styles.iconAssStyle}/>)
         }
         if(ass === null){
@@ -24,6 +24,7 @@ class Week extends React.Component {
         }
     }
     static renderIconValoracio(rate){
+        console.log("RATE ", rate)
         if(rate === 0 || rate === null){
             return(<Text style={[{color: APP_COLORS.text_color},styles.iconAssStyle]}>-</Text>)
         }
@@ -76,7 +77,7 @@ class Week extends React.Component {
             <TouchableHighlight style={touchableStyle} onPress = {() => Actions.week()}>
                 <View>
                     <View style={rowStyle}>
-                        <Text style={titleStyle}>Setmana {this.props.name}</Text>
+                        <Text style={titleStyle}>{this.props.name}</Text>
                         <FontAwesome name='download' size={25} color= {APP_COLORS.text_color} style={iconStyle}/>
                     </View>
                     <View>

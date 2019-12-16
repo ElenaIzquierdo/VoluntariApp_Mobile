@@ -6,16 +6,21 @@ import { connect } from 'react-redux';
 import {Actions} from "react-native-router-flux";
 import Week from "../components/Week";
 import BottomNav from "../components/BottomNav";
+import {fetchWeeksForQuarter} from "../actions/programacioActions";
 
 class ProgramacioScreen extends React.Component{
     constructor(props) {
         super(props)
     }
 
+    componentWillMount(){
+        this.props.fetchWeeksForQuarter("1");
+    }
+
     _keyExtractor = (item) => item.id.toString();
 
     _renderSetmana = ({item}) => (
-        <Week name={item.name} id={item.id} ass={item.ass} rate={item.global_rate}/>
+        <Week name={item.name} id={item.id} ass={item.attendance_avg} rate={item.rate_avg}/>
     );
 
     render(){
@@ -58,6 +63,7 @@ const mapStateToProps = (state) => {
 
 const  mapDispatchToProps = (dispatch)=>{
     return {
+        fetchWeeksForQuarter: (quarter) => dispatch(fetchWeeksForQuarter(quarter)),
     }
 };
 
