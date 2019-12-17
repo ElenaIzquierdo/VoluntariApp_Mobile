@@ -1,14 +1,15 @@
 import * as React from 'react';
-import { StyleSheet, View, TouchableHighlight, Switch } from 'react-native';
+import { StyleSheet, View, TouchableHighlight, Switch, ActivityIndicator } from 'react-native';
 import {  Text } from 'react-native-ui-kitten';
 import { Actions } from 'react-native-router-flux';
 import { connect } from 'react-redux';
 import {Header} from 'react-native-elements';
 import {APP_COLORS} from "../constants/colors";
-import {changeIteratorNextParam, changeIteratorPreviousParam, changeSwitch} from "../actions/homeActions";
+import {changeIteratorNextParam, changeIteratorPreviousParam, changeSwitch, fetchNextEvents, fetchPreviousEvents} from "../actions/homeActions";
 import {EvilIcons, FontAwesome} from "@expo/vector-icons";
 import Modal from 'react-native-modalbox';
 import BottomNav from "../components/BottomNav";
+import Moment from 'react-moment';
 
 class HomeScreen extends React.Component{
     constructor(props) {
@@ -17,6 +18,12 @@ class HomeScreen extends React.Component{
         this.previous = this.previous.bind(this);
         this.next_eventsPrevious = this.next_eventsPrevious.bind(this);
         this.previous_eventsPrevious = this.previous_eventsPrevious.bind(this);
+    }
+
+    componentWillMount(){
+        console.log("Aixo hauria de ser lo primer")
+        this.props.fetchPreviousEvents();
+        this.props.fetchNextEvents();
     }
 
     next(){
@@ -68,84 +75,99 @@ class HomeScreen extends React.Component{
         const {iconModalStyle, modal, modalTitle, viewCardsStyle, viewCardNextStyle, viewIconArrowStyle,
             viewCardFooterStyle, texticonStyle, titleStyle, iconStyle, textStyle, infoviewStyle, viewCardPreviousStyle,
             textModalStyle, switchViewStyle} = styles;
-        return(
-            <View style={styles.viewStyle}>
-                <Header
-                    centerComponent={{ text: 'VoluntariApp', style: { color: APP_COLORS.color_neutral, fontSize: 25, fontWeight: 'bold' } }}
-                    backgroundColor={APP_COLORS.color_orange}
-                    rightComponent={{ icon: 'person', color: APP_COLORS.color_neutral, onPress: () => Actions.profile()}}
-                />
-
-                <View style={viewCardsStyle}>
-                    <Modal style={modal} position={"center"} ref={"modal"} isDisabled={this.props.isDisabled}>
-                        <Text style={modalTitle}> {this.props.events_next[this.props.iterator].title}</Text>
-                        <View style={switchViewStyle}>
-                            {this.props.events_next[this.props.iterator].attending ?
-                                <Text>Assistiràs</Text>:
-                                <Text>No assistiràs</Text>
-                            }
-                            <Switch value={this.props.events_next[this.props.iterator].attending} onValueChange = {this.toggleSwitch}/>
-                        </View>
-                        <FontAwesome name='download' size={55} color= {APP_COLORS.color_button_1} style={iconModalStyle}/>
-                        <Text style={textModalStyle}>Descarregar la fitxa de la tarda</Text>
-
-                    </Modal>
-
-                    <TouchableHighlight onPress={() => this.refs.modal.open()} style={[viewCardNextStyle,{backgroundColor:'#B2C78E'}]}>
-                        <View>
-                            <View style={viewCardFooterStyle}>
-                                <View style={viewIconArrowStyle}>
-                                    <EvilIcons name="chevron-left" size={35} color = {APP_COLORS.black} onPress={this.previous}/>
-                                </View>
-                                <View style={infoviewStyle}>
-                                    <Text style={titleStyle}>
-                                        {this.props.events_next[this.props.iterator].title}
-                                    </Text>
-                                    <View style={texticonStyle}>
-                                        <EvilIcons name="location" size={25} color = {APP_COLORS.text_color} style = {iconStyle}/>
-                                        <Text style={textStyle}>{this.props.events_next[this.props.iterator].grup}</Text>
-                                    </View>
-                                    <View style={texticonStyle}>
-                                        <EvilIcons name="calendar" size={25} color = {APP_COLORS.text_color} style = {iconStyle}/>
-                                        <Text style={textStyle}>{this.props.events_next[this.props.iterator].dia} - {this.props.events_next[this.props.iterator].hora} h</Text>
-                                    </View>
-                                </View>
-                                <View>
-                                    <EvilIcons name="chevron-right" size={35} color = {APP_COLORS.black} onPress={this.next}/>
-                                </View>
-                            </View>
-                        </View>
-                    </TouchableHighlight>
-
-                    <TouchableHighlight onPress = {() => Actions.event()} style={[viewCardPreviousStyle,{backgroundColor:'#F5C15F'}]}>
-                        <View>
-                            <View style={viewCardFooterStyle}>
-                                <View style={viewIconArrowStyle}>
-                                    <EvilIcons name="chevron-left" size={35} color = {APP_COLORS.black} onPress={this.previous_eventsPrevious}/>
-                                </View>
-                                <View style={infoviewStyle}>
-                                    <Text style={titleStyle}>
-                                        {this.props.events_previous[this.props.iterator_previous].title}
-                                    </Text>
-                                    <View style={texticonStyle}>
-                                        <EvilIcons name="location" size={25} color = {APP_COLORS.text_color} style = {iconStyle}/>
-                                        <Text style={textStyle}>{this.props.events_previous[this.props.iterator_previous].grup}</Text>
-                                    </View>
-                                    <View style={texticonStyle}>
-                                        <EvilIcons name="calendar" size={25} color = {APP_COLORS.text_color} style = {iconStyle}/>
-                                        <Text style={textStyle}>{this.props.events_previous[this.props.iterator_previous].dia} - {this.props.events_previous[this.props.iterator_previous].hora} h</Text>
-                                    </View>
-                                </View>
-                                <View>
-                                    <EvilIcons name="chevron-right" size={35} color = {APP_COLORS.black} onPress={this.next_eventsPrevious}/>
-                                </View>
-                            </View>
-                        </View>
-                    </TouchableHighlight>
+        if(this.props.isFetching){
+            console.log("fetching")
+            return (
+                <View style = {{justifyContent: 'center', alignContent: 'center', width: '100%', height: '100%'}}>
+                    <ActivityIndicator size="large" color={APP_COLORS.color_orange}/>
                 </View>
-                <BottomNav/>
-            </View>
-        );
+            );
+        }
+        else{
+            console.log("Ja esta de fetching")
+            return(
+                <View style={styles.viewStyle}>
+                    <Header
+                        centerComponent={{ text: 'VoluntariApp', style: { color: APP_COLORS.color_neutral, fontSize: 25, fontWeight: 'bold' } }}
+                        backgroundColor={APP_COLORS.color_orange}
+                        rightComponent={{ icon: 'person', color: APP_COLORS.color_neutral, onPress: () => Actions.profile()}}
+                    />
+    
+                    <View style={viewCardsStyle}>
+                        <Modal style={modal} position={"center"} ref={"modal"} isDisabled={this.props.isDisabled}>
+                            <Text style={modalTitle}> {this.props.events_next[this.props.iterator].title}</Text>
+                            <View style={switchViewStyle}>
+                                {this.props.events_next[this.props.iterator].attending ?
+                                    <Text>Assistiràs</Text>:
+                                    <Text>No assistiràs</Text>
+                                }
+                                <Switch value={this.props.events_next[this.props.iterator].attending} onValueChange = {this.toggleSwitch}/>
+                            </View>
+                            <FontAwesome name='download' size={55} color= {APP_COLORS.color_button_1} style={iconModalStyle}/>
+                            <Text style={textModalStyle}>Descarregar la fitxa de la tarda</Text>
+    
+                        </Modal>
+    
+                        <TouchableHighlight onPress={() => this.refs.modal.open()} style={[viewCardNextStyle,{backgroundColor:'#B2C78E'}]}>
+                            <View>
+                                <View style={viewCardFooterStyle}>
+                                    <View style={viewIconArrowStyle}>
+                                        <EvilIcons name="chevron-left" size={35} color = {APP_COLORS.black} onPress={this.previous}/>
+                                    </View>
+                                    <View style={infoviewStyle}>
+                                        <Text style={titleStyle}>
+                                            {this.props.events_next[this.props.iterator].title}
+                                        </Text>
+                                        <View style={texticonStyle}>
+                                            <EvilIcons name="location" size={25} color = {APP_COLORS.text_color} style = {iconStyle}/>
+                                            <Text style={textStyle}>{this.props.events_next[this.props.iterator].group}</Text>
+                                        </View>
+                                        <View style={texticonStyle}>
+                                            <EvilIcons name="calendar" size={25} color = {APP_COLORS.text_color} style = {iconStyle}/>
+                                            <Moment style = {textStyle} element={Text} format="DD/MM/YYYY HH:mm">
+                                                {this.props.events_next[this.props.iterator].start_date}
+                                            </Moment>
+                                        </View>
+                                    </View>
+                                    <View>
+                                        <EvilIcons name="chevron-right" size={35} color = {APP_COLORS.black} onPress={this.next}/>
+                                    </View>
+                                </View>
+                            </View>
+                        </TouchableHighlight>
+    
+                        <TouchableHighlight onPress = {() => Actions.event()} style={[viewCardPreviousStyle,{backgroundColor:'#F5C15F'}]}>
+                            <View>
+                                <View style={viewCardFooterStyle}>
+                                    <View style={viewIconArrowStyle}>
+                                        <EvilIcons name="chevron-left" size={35} color = {APP_COLORS.black} onPress={this.previous_eventsPrevious}/>
+                                    </View>
+                                    <View style={infoviewStyle}>
+                                        <Text style={titleStyle}>
+                                            {this.props.events_previous[this.props.iterator_previous].title}
+                                        </Text>
+                                        <View style={texticonStyle}>
+                                            <EvilIcons name="location" size={25} color = {APP_COLORS.text_color} style = {iconStyle}/>
+                                            <Text style={textStyle}>{this.props.events_previous[this.props.iterator_previous].group}</Text>
+                                        </View>
+                                        <View style={texticonStyle}>
+                                            <EvilIcons name="calendar" size={25} color = {APP_COLORS.text_color} style = {iconStyle}/>
+                                            <Moment style = {textStyle} element={Text} format="DD/MM/YYYY HH:mm">
+                                                {this.props.events_previous[this.props.iterator_previous].start_date}
+                                            </Moment>
+                                        </View>
+                                    </View>
+                                    <View>
+                                        <EvilIcons name="chevron-right" size={35} color = {APP_COLORS.black} onPress={this.next_eventsPrevious}/>
+                                    </View>
+                                </View>
+                            </View>
+                        </TouchableHighlight>
+                    </View>
+                    <BottomNav/>
+                </View>
+            );
+        }
     }
 }
 
@@ -269,7 +291,8 @@ const mapStateToProps = (state) => {
         events_previous: state.homeReducer.events_previous,
         iterator_previous: state.homeReducer.iterator_previous,
         isDisabled: state.homeReducer.isDisabled,
-        switchValue: state.homeReducer.switchValue
+        switchValue: state.homeReducer.switchValue,
+        isFetching: state.homeReducer.isFetching,
     }
 }
 
@@ -277,7 +300,9 @@ const  mapDispatchToProps = (dispatch)=>{
     return {
         changeIteratorNextParam: (i)=>dispatch(changeIteratorNextParam(i)),
         changeIteratorPreviousParam: (i)=>dispatch(changeIteratorPreviousParam(i)),
-        changeSwitch : (value) => dispatch(changeSwitch(value))
+        changeSwitch: (value) => dispatch(changeSwitch(value)),
+        fetchPreviousEvents: () => dispatch(fetchPreviousEvents()),
+        fetchNextEvents: () => dispatch(fetchNextEvents())
     }
 }
 
