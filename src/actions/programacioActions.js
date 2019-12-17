@@ -24,7 +24,6 @@ const requestWeeks = () =>{
 }
 
 const receiveWeeksForQuarter =(weeks)=>{
-    console.log("Hola ", weeks)
     return {
         type: 'RECEIVE_WEEKS',
         data: weeks

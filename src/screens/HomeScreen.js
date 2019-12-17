@@ -21,7 +21,6 @@ class HomeScreen extends React.Component{
     }
 
     componentWillMount(){
-        console.log("Aixo hauria de ser lo primer")
         this.props.fetchPreviousEvents();
         this.props.fetchNextEvents();
     }
@@ -76,7 +75,6 @@ class HomeScreen extends React.Component{
             viewCardFooterStyle, texticonStyle, titleStyle, iconStyle, textStyle, infoviewStyle, viewCardPreviousStyle,
             textModalStyle, switchViewStyle} = styles;
         if(this.props.isFetching){
-            console.log("fetching")
             return (
                 <View style = {{justifyContent: 'center', alignContent: 'center', width: '100%', height: '100%'}}>
                     <ActivityIndicator size="large" color={APP_COLORS.color_orange}/>
@@ -84,7 +82,6 @@ class HomeScreen extends React.Component{
             );
         }
         else{
-            console.log("Ja esta de fetching")
             return(
                 <View style={styles.viewStyle}>
                     <Header
