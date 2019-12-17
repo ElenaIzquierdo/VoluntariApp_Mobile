@@ -6,9 +6,16 @@ import { connect } from 'react-redux';
 import {Actions} from "react-native-router-flux";
 import SeparadorCI from '../components/SeparadorCI';
 import BottomNav from "../components/BottomNav";
+import {fetchExplicacions, fetchObjectius} from "../actions/centreInteresActions";
+
 class CentreInteresScreen extends React.Component{
     constructor(props) {
         super(props)
+    }
+
+    componentWillMount(){
+        this.props.fetchExplicacions(1);
+        this.props.fetchObjectius(1);
     }
 
     render(){
@@ -21,7 +28,7 @@ class CentreInteresScreen extends React.Component{
                     backgroundColor={APP_COLORS.color_orange}
                 />
                 <SeparadorCI objectius={this.props.objectius} estat_actual={this.props.estat_actual}
-                                explicacio={this.props.explicacio}/>
+                                explicacions={this.props.explicacions}/>
                 <BottomNav selected={"ci"}/>
             </View>
         );
@@ -42,12 +49,14 @@ const mapStateToProps = (state) => {
     return {
         objectius: state.centreinteresReducer.objectius,
         estat_actual: state.centreinteresReducer.estat_actual,
-        explicacio: state.centreinteresReducer.explicacio,
+        explicacions: state.centreinteresReducer.explicacions,
     }
 };
 
 const  mapDispatchToProps = (dispatch)=>{
     return {
+        fetchExplicacions: (centreInteres_id) => dispatch(fetchExplicacions(centreInteres_id)),
+        fetchObjectius: (centreInteres_id) => dispatch(fetchObjectius(centreInteres_id))
     }
 };
 

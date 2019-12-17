@@ -52,7 +52,7 @@ class SeparadorCI extends React.Component {
     );
 
     _renderExplicacio = ({item}) => (
-        <Explication description={item.description} title={item.title} finished={item.finished}/>
+        <Explication description={item.description} date={item.date} finished={item.finished}/>
     );
 
     renderContingut(){
@@ -68,7 +68,7 @@ class SeparadorCI extends React.Component {
         if(this.state.explicacio){
             return(
                 <FlatList
-                    data={this.props.explicacio}
+                    data={this.props.explicacions}
                     keyExtractor={this._keyExtractor}
                     renderItem={this._renderExplicacio}
                 />

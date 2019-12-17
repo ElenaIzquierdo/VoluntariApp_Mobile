@@ -1,4 +1,5 @@
 import React from 'react';
+import Moment from 'react-moment';
 import {View, Text} from 'react-native';
 import {APP_COLORS} from "../constants/colors";
 
@@ -7,22 +8,23 @@ class Explication extends React.Component {
         super(props)
     }
 
-    renderTitle(){
+    renderTitle(){  
         if(this.props.finished){
             return(
                 <View style={styles.rowStyle}>
-                    <Text style={styles.titleFinishedStyle}>{this.props.title}</Text>
+                    <Moment style = {styles.titleFinishedStyle} element={Text} format="DD/MM/YYYY">{this.props.date}</Moment>
                     <Text style={styles.doneStyle}>- Fet</Text>
                 </View>
             )
         }
         else{
-            return(<Text style={styles.titleStyle}>{this.props.title}</Text>)
+            return(
+                <Moment style = {styles.titleStyle} element={Text} format="DD/MM/YYYY">{this.props.date}</Moment>)
         }
     }
 
     render(){
-        const {descriptionStyle, titleStyle, viewStyle} = styles;
+        const {descriptionStyle, viewStyle} = styles;
         return(
             <View style={viewStyle}>
                 {this.renderTitle()}
