@@ -1,7 +1,7 @@
 export const fetchExplicacions = (centreInteresId) => {
     return (dispatch) => {
         dispatch(requestExplicacions());
-        const baseUrl = 'http://165.22.76.147:8080/voluntariapp/explicacio/centreinteres/';
+        const baseUrl = 'http://165.22.76.147:8080/voluntariapp/explicacio/centreinteres-no-pagination/';
         
         fetch(baseUrl+centreInteresId, {
             method: 'GET',
@@ -34,7 +34,7 @@ const receiveExplicacions =(explicacions)=>{
 export const fetchObjectius = (centreInteresId) => {
     return (dispatch) => {
         dispatch(requestObjectius());
-        const baseUrl = 'http://165.22.76.147:8080/voluntariapp/objectiu/centreinteres/';
+        const baseUrl = 'http://165.22.76.147:8080/voluntariapp/objectiu/centreinteres-no-pagination/';
         
         fetch(baseUrl+centreInteresId, {
             method: 'GET',
