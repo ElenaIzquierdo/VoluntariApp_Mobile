@@ -1,7 +1,7 @@
 export const fetchWeeksForQuarter = (quarter) => {
     return (dispatch) => {
         dispatch(requestWeeks());
-        const baseUrl = 'http://165.22.76.147:8080/voluntariapp/week/quarter/'+quarter;
+        const baseUrl = 'http://165.22.76.147:8080/voluntariapp/week/quarter-no-pagination/'+quarter;
         fetch(baseUrl, {
             method: 'GET',
             headers: {

@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { StyleSheet, View, FlatList } from 'react-native';
+import { StyleSheet, View, FlatList, ActivityIndicator } from 'react-native';
 import {Header} from 'react-native-elements';
 import {APP_COLORS} from "../constants/colors";
 import { connect } from 'react-redux';
@@ -24,23 +24,32 @@ class ProgramacioScreen extends React.Component{
     );
 
     render(){
-        return(
-            <View style={styles.viewStyle}>
-                <Header
-                    leftComponent={{ icon: 'home', color: APP_COLORS.color_neutral,onPress: () => Actions.home()}}
-                    centerComponent={{ text: 'VoluntariApp', style: { color: APP_COLORS.color_neutral, fontSize: 25, fontWeight: 'bold' } }}
-                    rightComponent={{ icon: 'person', color: APP_COLORS.color_neutral, onPress: () => Actions.profile()}}
-                    backgroundColor={APP_COLORS.color_orange}
-                />
-                <FlatList
-                    data={this.props.setmanes}
-                    style={{width:"100%",height:"100%"}}
-                    keyExtractor={this._keyExtractor}
-                    renderItem={this._renderSetmana}
-                />
-                <BottomNav selected={"programacio"}/>
-            </View>
-        );
+        if(this.props.isFetching){
+            return(
+                <View style = {{justifyContent: 'center', alignContent: 'center', width: '100%', height: '100%'}}>
+                    <ActivityIndicator size="large" color={APP_COLORS.color_orange}/>
+                </View>
+            )
+        }
+        else{
+            return(
+                <View style={styles.viewStyle}>
+                    <Header
+                        leftComponent={{ icon: 'home', color: APP_COLORS.color_neutral,onPress: () => Actions.home()}}
+                        centerComponent={{ text: 'VoluntariApp', style: { color: APP_COLORS.color_neutral, fontSize: 25, fontWeight: 'bold' } }}
+                        rightComponent={{ icon: 'person', color: APP_COLORS.color_neutral, onPress: () => Actions.profile()}}
+                        backgroundColor={APP_COLORS.color_orange}
+                    />
+                    <FlatList
+                        data={this.props.setmanes}
+                        style={{width:"100%",height:"100%"}}
+                        keyExtractor={this._keyExtractor}
+                        renderItem={this._renderSetmana}
+                    />
+                    <BottomNav selected={"programacio"}/>
+                </View>
+            );
+        }
     }
 }
 
@@ -57,6 +66,7 @@ const styles = StyleSheet.create({
 const mapStateToProps = (state) => {
     return {
         setmanes: state.programacioReducer.setmanes,
+        isFetching: state.programacioReducer.isFetching,
     }
 
 };

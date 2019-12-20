@@ -21,6 +21,13 @@ class ForumThemeScreen extends React.Component{
         this.props.fetchForumTopicComments(this.props.id)
     }
 
+    componentDidUpdate(prevProps) {
+        if (prevProps.comments.length !== this.props.comments.length) {
+            
+            this.props.fetchForumTopicComments(this.props.id);
+        }
+    }
+
     _keyExtractor = (item) => item.id.toString();
 
     _renderItem = ({item}) => (
@@ -81,7 +88,6 @@ class ForumThemeScreen extends React.Component{
         this.props.publishNewComment(commentInfo);
         this.props.changeNewComment("");
         this.props.changeModal();
-        this.props.fetchForumTopicComments(this.props.id);
     }
     
     cancelNewComment(){
