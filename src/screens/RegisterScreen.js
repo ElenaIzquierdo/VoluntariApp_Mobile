@@ -7,7 +7,8 @@ import {APP_COLORS} from "../constants/colors";
 
 import Subtitle from "../components/Subtitle";
 
-import {changeRegisterFormProperty, changeCheckedDay, changeErrorRegisterMapProperty, resetErrorRegisterMap} from "../actions/registerActions";
+import {changeRegisterFormProperty, changeCheckedDay, changeErrorRegisterMapProperty, 
+        resetErrorRegisterMap, registerUser} from "../actions/registerActions";
 
 
 class RegisterScreen extends React.Component{
@@ -54,7 +55,30 @@ class RegisterScreen extends React.Component{
             this.props.changeErrorRegisterMapProperty("days");
             count ++
         }
-        if(count == 0) Actions.home()
+        if(count == 0){
+            days_translated = ""
+            var i;
+            for(i = 0; i < 5; i++){
+                if(this.props.dies[i]){
+                    days_translated += "1"
+                }
+                else{
+                    days_translated += "0"
+                }
+            }
+            userprofile = {
+                mobile_phone: this.props.telf,
+                days: days_translated,
+                group: this.props.grup
+            }
+            const userInfo = {
+                email: this.props.correu,
+                password: this.props.password,
+                first_name: this.props.nom_usuari,
+                profile: userprofile
+            };
+            this.props.registerUser(userInfo)
+        }
     }
 
     renderThirdFirstDays(){
@@ -289,6 +313,7 @@ const  mapDispatchToProps = (dispatch)=>{
         changeRegisterFormProperty : (propertyName, value) => dispatch(changeRegisterFormProperty(propertyName, value)),
         changeErrorRegisterMapProperty: (propertyName) => dispatch(changeErrorRegisterMapProperty(propertyName)),
         resetErrorRegisterMap: () => dispatch(resetErrorRegisterMap()),
+        registerUser: (userInfo) => dispatch(registerUser(userInfo)),
     }
 };
 

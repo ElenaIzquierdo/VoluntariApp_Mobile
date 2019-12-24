@@ -1,3 +1,5 @@
+import { Actions } from "react-native-router-flux";
+import {requestNoToken} from "../requestNoToken";
 export const changeRegisterFormProperty=(propertyName, value) =>{
     return {
         type:'CHANGE_PROPERTY',
@@ -30,4 +32,11 @@ export const resetErrorRegisterMap=() =>{
     return{
         type: 'RESET_ERROR_MAP'
     }
+}
+
+export const registerUser=(userInfo) =>{
+    return () => {
+        requestNoToken('/users', 'POST', userInfo);
+        Actions.login();
+    } 
 }

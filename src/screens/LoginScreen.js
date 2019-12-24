@@ -7,7 +7,7 @@ import Title from "../components/Title";
 import Logo from "../components/Logo";
 import Subtitle from "../components/Subtitle";
 import { Input } from 'react-native-elements'
-import {changeLoginFormProperty, changeErrorLoginMapProperty, resetErrorLoginMap} from "../actions/loginActions";
+import {changeLoginFormProperty, changeErrorLoginMapProperty, resetErrorLoginMap, login} from "../actions/loginActions";
 
 
 class LoginScreen extends React.Component{
@@ -22,7 +22,13 @@ class LoginScreen extends React.Component{
             this.props.changeErrorLoginMapProperty("email_empty")
             count ++
         }
-        if(count == 0) Actions.home()
+        if(count == 0){
+            const loginInfo = {
+                username: this.props.email,
+                password: this.props.password,
+            };
+            this.props.login(loginInfo)
+        }
     }
     render(){
         return(
@@ -121,6 +127,7 @@ const  mapDispatchToProps = (dispatch)=>{
         changeLoginFormProperty : (propertyName, value) => dispatch(changeLoginFormProperty(propertyName, value)),
         changeErrorLoginMapProperty: (propertyName) => dispatch(changeErrorLoginMapProperty(propertyName)),
         resetErrorLoginMap: () => dispatch(resetErrorLoginMap()),
+        login: (loginInfo) => dispatch(login(loginInfo))
     }
 };
 

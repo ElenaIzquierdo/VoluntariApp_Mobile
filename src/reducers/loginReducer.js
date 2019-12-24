@@ -5,6 +5,7 @@ const INITIAL_STATE ={
         email_empty: false,
         password_empty: false,
     },
+    isFetching: false
 };
 
 const loginReducer = (state = INITIAL_STATE,action) => {
@@ -25,6 +26,10 @@ const loginReducer = (state = INITIAL_STATE,action) => {
                 password_empty: false,
             }
             return {...state, errors:errors_new}
+        case 'RECEIVE_TOKEN':
+            return {...state, isFetching: false}
+        case 'REQUEST_LOGIN':
+            return {...state, isFetching: true}
 
         default: return state
     }

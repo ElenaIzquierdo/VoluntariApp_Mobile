@@ -34,7 +34,7 @@ const receiveExplicacions =(explicacions)=>{
 export const fetchObjectius = (centreInteresId) => {
     return (dispatch) => {
         dispatch(requestObjectius());
-        const baseUrl = 'http://165.22.76.147:8080/voluntariapp/objectiu/centreinteres-no-pagination/';
+        const baseUrl = 'http://127.0.0.1:8000/voluntariapp/objectiu/centreinteres-no-pagination/';
         
         fetch(baseUrl+centreInteresId, {
             method: 'GET',
