@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { StyleSheet, View, TouchableHighlight, ActivityIndicator } from 'react-native';
+import { StyleSheet, View, ActivityIndicator } from 'react-native';
 import { Text } from 'react-native-ui-kitten';
 import {Header, Avatar, Icon, CheckBox} from 'react-native-elements';
 import {APP_COLORS} from "../constants/colors";
@@ -7,11 +7,6 @@ import { connect } from 'react-redux';
 import {Actions} from "react-native-router-flux";
 import {changeCheckedDay, updateProfilePicture, setTrueModifiedAttribute, setFalseModifiedAttribute, 
         saveChanges, fetchUserProfile} from "../actions/profileActions";
-
-
-import Button from "../components/Button";
-
-//import ImagePicker from "react-native-image-picker";
 
 
 class ProfileScreen extends React.Component{
