@@ -23,54 +23,27 @@ class ProfileScreen extends React.Component{
         this.props.fetchUserProfile()
     }
 
-    _onPressCancelModify(){
-        this.props.setFalseModifiedAttribute()
-    }
-
-    _onPressSave(){
-        this.props.saveChanges()
-    }
-
-    _onPressButton(day) {
-        if(!this.props.modified){
-            this.props.setTrueModifiedAttribute()
-        }
-        this.props.changeCheckedDay(day);
-    }
 
     renderDays(){
         return(
             <View>
                 <CheckBox title={"Dilluns"} checked={this.props.days[0]} size={14} textStyle={styles.infoStyle}
-                            center={false} checkedColor={APP_COLORS.color_checked} containerStyle={styles.checkBoxContainerStyle}
-                            onPress={this._onPressButton.bind(this,0)}/>
+                            center={false} checkedColor={APP_COLORS.color_checked} 
+                            containerStyle={styles.checkBoxContainerStyle} disabled={true}/>
                 <CheckBox title={"Dimarts"} checked={this.props.days[1]} size={14} textStyle={styles.infoStyle}
-                            center={false} checkedColor={APP_COLORS.color_checked} containerStyle={styles.checkBoxContainerStyle}
-                            onPress={this._onPressButton.bind(this,1)}/>
+                            center={false} checkedColor={APP_COLORS.color_checked} 
+                            containerStyle={styles.checkBoxContainerStyle} disabled={true}/>
                 <CheckBox title={"Dimecres"} checked={this.props.days[2]} size={14} textStyle={styles.infoStyle}
-                            center={false} checkedColor={APP_COLORS.color_checked} containerStyle={styles.checkBoxContainerStyle}
-                            onPress={this._onPressButton.bind(this,2)}/>
+                            center={false} checkedColor={APP_COLORS.color_checked} 
+                            containerStyle={styles.checkBoxContainerStyle} disabled={true}/>
                 <CheckBox title={"Dijous"} checked={this.props.days[3]} size={14} textStyle={styles.infoStyle}
-                            center={false} checkedColor={APP_COLORS.color_checked} containerStyle={styles.checkBoxContainerStyle}
-                            onPress={this._onPressButton.bind(this,3)}/>
+                            center={false} checkedColor={APP_COLORS.color_checked} 
+                            containerStyle={styles.checkBoxContainerStyle} disabled={true}/>
                 <CheckBox title={"Divendres"} checked={this.props.days[4]} size={14} textStyle={styles.infoStyle}
-                            center={false} checkedColor={APP_COLORS.color_checked} containerStyle={styles.checkBoxContainerStyle}
-                            onPress={this._onPressButton.bind(this,4)}/>
+                            center={false} checkedColor={APP_COLORS.color_checked} 
+                            containerStyle={styles.checkBoxContainerStyle} disabled={true}/>
             </View>
         )
-    }
-
-    displayButtons(){
-        if(this.props.modified){
-            return(
-                <View style={styles.rowStyle}>
-                    <TouchableHighlight style={{paddingLeft: '5%', paddingTop: '3%'}} onPress={this._onPressCancelModify.bind(this)}>
-                        <Text style={{color:APP_COLORS.color_darkred}}>Cancel·lar</Text>
-                    </TouchableHighlight>
-                    <Button text={"Guardar"} colorButton={APP_COLORS.color_green} width={"15%"} path={this._onPressSave.bind(this)}/>
-                </View>
-            )
-        }
     }
 
     
@@ -124,13 +97,9 @@ class ProfileScreen extends React.Component{
                             {this.renderDays()}
                         </View>
                     </View>
-                    <View style={buttonChangesStyle}>
-                        {this.displayButtons()}
-                    </View>
                 </View>
             );
-        }
-        
+        }  
     }
 }
 
