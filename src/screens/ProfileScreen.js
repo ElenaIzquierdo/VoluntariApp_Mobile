@@ -1,14 +1,13 @@
 import * as React from 'react';
-import { StyleSheet, View, TouchableHighlight } from 'react-native';
+import { StyleSheet, View, TouchableHighlight, ActivityIndicator } from 'react-native';
 import { Text } from 'react-native-ui-kitten';
 import {Header, Avatar, Icon, CheckBox} from 'react-native-elements';
 import {APP_COLORS} from "../constants/colors";
 import { connect } from 'react-redux';
 import {Actions} from "react-native-router-flux";
-import {changeCheckedDay, updateProfilePicture, setTrueModifiedAttribute, setFalseModifiedAttribute, saveChanges} from "../actions/profileActions";
+import {changeCheckedDay, updateProfilePicture, setTrueModifiedAttribute, setFalseModifiedAttribute, 
+        saveChanges, fetchUserProfile} from "../actions/profileActions";
 
-import * as Permissions from 'expo-permissions';
-import * as ImagePicker from 'expo-image-picker';
 
 import Button from "../components/Button";
 
@@ -20,22 +19,8 @@ class ProfileScreen extends React.Component{
         super(props)
     }
 
-    componentDidMount() {
-        this.getPermissionAsync();
-      }
-    
-      getPermissionAsync = async () => {
-          const { status } = await Permissions.askAsync(Permissions.CAMERA_ROLL);
-          if (status !== 'granted') {
-            alert('Sorry, we need camera roll permissions to make this work!');
-          }
-      }
-
-    _onPressButton(day) {
-        if(!this.props.modified){
-            this.props.setTrueModifiedAttribute()
-        }
-        this.props.changeCheckedDay(day);
+    componentWillMount(){
+        this.props.fetchUserProfile()
     }
 
     _onPressCancelModify(){
@@ -46,49 +31,34 @@ class ProfileScreen extends React.Component{
         this.props.saveChanges()
     }
 
+    _onPressButton(day) {
+        if(!this.props.modified){
+            this.props.setTrueModifiedAttribute()
+        }
+        this.props.changeCheckedDay(day);
+    }
 
-    pintarDies(){
+    renderDays(){
         return(
             <View>
-                    <CheckBox title={"Dilluns"} checked={this.props.user.dies[0]} size={14} textStyle={styles.infoStyle}
-                              center={false} checkedColor={APP_COLORS.color_checked} containerStyle={styles.checkBoxContainerStyle}
-                              onPress={this._onPressButton.bind(this,0)}/>
-                    <CheckBox title={"Dimarts"} checked={this.props.user.dies[1]} size={14} textStyle={styles.infoStyle}
-                              center={false} checkedColor={APP_COLORS.color_checked} containerStyle={styles.checkBoxContainerStyle}
-                              onPress={this._onPressButton.bind(this,1)}/>
-                    <CheckBox title={"Dimecres"} checked={this.props.user.dies[2]} size={14} textStyle={styles.infoStyle}
-                              center={false} checkedColor={APP_COLORS.color_checked} containerStyle={styles.checkBoxContainerStyle}
-                              onPress={this._onPressButton.bind(this,2)}/>
-                    <CheckBox title={"Dijous"} checked={this.props.user.dies[3]} size={14} textStyle={styles.infoStyle}
-                              center={false} checkedColor={APP_COLORS.color_checked} containerStyle={styles.checkBoxContainerStyle}
-                              onPress={this._onPressButton.bind(this,3)}/>
-                    <CheckBox title={"Divendres"} checked={this.props.user.dies[4]} size={14} textStyle={styles.infoStyle}
-                              center={false} checkedColor={APP_COLORS.color_checked} containerStyle={styles.checkBoxContainerStyle}
-                              onPress={this._onPressButton.bind(this,4)}/>
+                <CheckBox title={"Dilluns"} checked={this.props.days[0]} size={14} textStyle={styles.infoStyle}
+                            center={false} checkedColor={APP_COLORS.color_checked} containerStyle={styles.checkBoxContainerStyle}
+                            onPress={this._onPressButton.bind(this,0)}/>
+                <CheckBox title={"Dimarts"} checked={this.props.days[1]} size={14} textStyle={styles.infoStyle}
+                            center={false} checkedColor={APP_COLORS.color_checked} containerStyle={styles.checkBoxContainerStyle}
+                            onPress={this._onPressButton.bind(this,1)}/>
+                <CheckBox title={"Dimecres"} checked={this.props.days[2]} size={14} textStyle={styles.infoStyle}
+                            center={false} checkedColor={APP_COLORS.color_checked} containerStyle={styles.checkBoxContainerStyle}
+                            onPress={this._onPressButton.bind(this,2)}/>
+                <CheckBox title={"Dijous"} checked={this.props.days[3]} size={14} textStyle={styles.infoStyle}
+                            center={false} checkedColor={APP_COLORS.color_checked} containerStyle={styles.checkBoxContainerStyle}
+                            onPress={this._onPressButton.bind(this,3)}/>
+                <CheckBox title={"Divendres"} checked={this.props.days[4]} size={14} textStyle={styles.infoStyle}
+                            center={false} checkedColor={APP_COLORS.color_checked} containerStyle={styles.checkBoxContainerStyle}
+                            onPress={this._onPressButton.bind(this,4)}/>
             </View>
         )
     }
-
-    _pickImage = async () => {
-        let result = await ImagePicker.launchImageLibraryAsync({
-            mediaTypes: ImagePicker.MediaTypeOptions.Images,
-            allowsEditing: true,
-            aspect: [4, 4],
-            quality: 1
-          });
-          console.log("SCREEN",result.uri)
-
-          updateProfilePicture(result.uri)
-    }
-
-/*    pickImage = () => {
-        ImagePicker.launchImageLibrary(response => {
-            console.log("response", response)
-            if(response.uri) {
-                updateProfilePicture(respone.uri)
-            }
-        })
-    }*/
 
     displayButtons(){
         if(this.props.modified){
@@ -103,60 +73,64 @@ class ProfileScreen extends React.Component{
         }
     }
 
+    
+
     displayAvatar(){
-        if(this.props.user.profilephotoURI == null){
-            var str_name=this.props.user.nom_usuari;
-            var initial_name=str_name.charAt(0).toUpperCase();
-            return(
-                <Avatar rounded title={initial_name} size="large"
-                    titleStyle={styles.titleAvatarStyle} showEditButton={true} onEditPress={this._pickImage}/>
-            )
-        }
-        else{
-            return(
-                <Avatar size="large" rounded source={{uri: this.props.user.profilephotoURI}}
-                    showEditButton={true}  onEditPress={this._pickImage}/>
-            )
-        }
+        var initial_name=this.props.user.first_name.charAt(0).toUpperCase();
+        return(
+            <Avatar rounded title={initial_name} size="large"
+                titleStyle={styles.titleAvatarStyle}/>
+        )
     }
 
     render(){
         const { viewStyle, nameStyle, viewnamephotoStyle, correuStyle, infoStyle, viewinfoStyle, buttonChangesStyle } = styles;
-        return(
-            <View style={viewStyle}>
-                <Header
-                    leftComponent={{ icon: 'home', color: APP_COLORS.color_neutral, onPress: () => Actions.home() }}
-                    centerComponent={{ text: 'VoluntariApp', style: { color: APP_COLORS.color_neutral, fontSize: 25, fontWeight: 'bold' } }}
-                    backgroundColor={APP_COLORS.color_orange}
-                />
+        if(this.props.isFetching){
+            return(
+                <View style = {{justifyContent: 'center', alignContent: 'center', width: '100%', height: '100%'}}>
+                    <ActivityIndicator size="large" color={APP_COLORS.color_orange}/>
+                </View>
+            );
+        }
+        else{
+            return(
                 <View style={viewStyle}>
-                    <View style={viewnamephotoStyle}>
-                        {this.displayAvatar()}
-                        <View>
-                            <Text style={nameStyle}>{this.props.user.nom_usuari}</Text>
-                            <Text style={correuStyle}>{this.props.user.correu}</Text>
-                        </View>
-                    </View>
-                    <View style={viewinfoStyle}>
-                        <Text style={nameStyle}>Grup</Text>
+                    <Header
+                        leftComponent={{ icon: 'home', color: APP_COLORS.color_neutral, onPress: () => Actions.home() }}
+                        centerComponent={{ text: 'VoluntariApp', style: { color: APP_COLORS.color_neutral, fontSize: 25, fontWeight: 'bold' } }}
+                        backgroundColor={APP_COLORS.color_orange}
+                    />
+                    <View style={viewStyle}>
                         <View style={viewnamephotoStyle}>
-                            <Icon
-                                name='location'
-                                type='evilicon'
-                                color={APP_COLORS.text_color}
-                                size={23}
-                            />
-                            <Text style = {infoStyle}> {this.props.user.grup} - {this.props.user.centre} </Text>
+                            {this.displayAvatar()}
+                            <View>
+                                <Text style={nameStyle}>{this.props.user.first_name} {this.props.user.last_name}</Text>
+                                <Text style={correuStyle}>{this.props.user.email}</Text>
+                                <Text style={correuStyle}>{this.props.user.profile.mobile_phone}</Text>
+                            </View>
                         </View>
-                        <Text style={nameStyle}>Dies a assistir</Text>
-                        {this.pintarDies()}
+                        <View style={viewinfoStyle}>
+                            <Text style={nameStyle}>Grup</Text>
+                            <View style={viewnamephotoStyle}>
+                                <Icon
+                                    name='location'
+                                    type='evilicon'
+                                    color={APP_COLORS.text_color}
+                                    size={23}
+                                />
+                                <Text style = {infoStyle}> {this.props.user.profile.group} - Raval </Text>
+                            </View>
+                            <Text style={nameStyle}>Dies a assistir</Text>
+                            {this.renderDays()}
+                        </View>
+                    </View>
+                    <View style={buttonChangesStyle}>
+                        {this.displayButtons()}
                     </View>
                 </View>
-                <View style={buttonChangesStyle}>
-                    {this.displayButtons()}
-                </View>
-            </View>
-        );
+            );
+        }
+        
     }
 }
 
@@ -214,7 +188,9 @@ const styles = StyleSheet.create({
 const mapStateToProps = (state) => {
     return {
         user: state.profileReducer.user,
-        modified: state.profileReducer.modified
+        modified: state.profileReducer.modified,
+        isFetching: state.profileReducer.isFetching,
+        days: state.profileReducer.days
     }
 };
 
@@ -224,7 +200,8 @@ const  mapDispatchToProps = (dispatch)=>{
         updateProfilePicture : (uri) => dispatch(updateProfilePicture(uri)),
         setTrueModifiedAttribute : () => dispatch(setTrueModifiedAttribute()),
         setFalseModifiedAttribute : () => dispatch(setFalseModifiedAttribute()),
-        saveChanges : () => dispatch(saveChanges())
+        saveChanges : () => dispatch(saveChanges()),
+        fetchUserProfile: () => dispatch(fetchUserProfile())
     }
 };
 
