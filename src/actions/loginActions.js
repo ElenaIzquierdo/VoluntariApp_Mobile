@@ -88,7 +88,7 @@ export const receiveToken=(token) =>{
             console.log('Error saving token: ' + token)
         }
         else{
-            Actions.profile();
+            Actions.home();
         }
     });
     return{

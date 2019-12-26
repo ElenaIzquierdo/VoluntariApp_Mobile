@@ -1,3 +1,4 @@
+import {AsyncStorage} from "react-native";
 export const changeIteratorNextParam =(iterator) => {
     return{
         type: 'CHANGE_ITERATOR_NEXT_PARAM',
@@ -27,19 +28,23 @@ export const changeSwitch = (value) =>{
 
 export const fetchPreviousEvents = () => {
     return (dispatch) => {
-        dispatch(requestEvents());
-        const baseUrl = 'http://165.22.76.147:8080/voluntariapp/event-before';
-        fetch(baseUrl, {
-            method: 'GET',
-            headers: {
-                Accept: 'application/json',
-                'Content-Type': 'application/json',
-            },
-            dataType: 'json',
-        }).then((resp) =>
-            resp.json().then((body) =>
-                dispatch(receivePreviousEvents(body)))
-            );  
+        AsyncStorage.getItem('token').then((token) => {
+            console.log('Token: ' + token);
+            const baseUrl = 'http://165.22.76.147:8080/voluntariapp/event-before';
+            dispatch(requestEvents())
+            fetch(baseUrl, {
+                method: 'GET',
+                headers: {
+                    Accept: 'application/json',
+                    'Content-Type': 'application/json',
+                    Authorization: 'Bearer ' + token
+                },
+                dataType: 'json',
+            }).then((resp) => {
+                    resp.json().then((body) =>
+                    dispatch(receiveNextEvents(body)))
+                })
+        });
     }
 }
 
@@ -58,21 +63,26 @@ const receivePreviousEvents =(previousEvents)=>{
 
 export const fetchNextEvents = () => {
     return (dispatch) => {
-        dispatch(requestEvents());
-        const baseUrl = 'http://165.22.76.147:8080/voluntariapp/event-after';
-        fetch(baseUrl, {
-            method: 'GET',
-            headers: {
-                Accept: 'application/json',
-                'Content-Type': 'application/json',
-            },
-            dataType: 'json',
-        }).then((resp) =>
-            resp.json().then((body) =>
-                dispatch(receiveNextEvents(body)))
-            );  
+        AsyncStorage.getItem('token').then((token) => {
+            console.log('Token: ' + token);
+            const baseUrl = 'http://165.22.76.147:8080/voluntariapp/event-after';
+            dispatch(requestEvents())
+            fetch(baseUrl, {
+                method: 'GET',
+                headers: {
+                    Accept: 'application/json',
+                    'Content-Type': 'application/json',
+                    Authorization: 'Bearer ' + token
+                },
+                dataType: 'json',
+            }).then((resp) => {
+                    resp.json().then((body) =>
+                    dispatch(receiveNextEvents(body)))
+                })
+        });
     }
 }
+
 
 const receiveNextEvents =(nextEvents)=>{
     return {
