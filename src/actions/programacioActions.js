@@ -2,7 +2,6 @@ import {AsyncStorage} from "react-native";
 export const fetchWeeksForQuarter = (quarter) => {
     return (dispatch) => {
         AsyncStorage.getItem('token').then((token) => {
-            console.log('Token: ' + token);
             dispatch(requestWeeks());
             const baseUrl = 'http://165.22.76.147:8080/voluntariapp/week/quarter-no-pagination/'+quarter;
             fetch(baseUrl, {

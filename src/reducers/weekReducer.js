@@ -8,7 +8,18 @@ const INITIAL_STATE ={
         {id:3, name: 'Dijous', date: '19/09/2019', attendee: false, finished: true},
         {id:4, name: 'Divendres', date: '20/09/2019', attendee: false, finished: false}
     ],
-    modified: false
+    week: {
+        "id": 1,
+        "name": "Setmana 16/09-20/09",
+        "start_date": "2019-09-16T16:00:01.846839Z",
+        "end_date": "2019-09-20T16:00:01.846839Z",
+        "rate_avg": null,
+        "attendance_avg": null,
+        "quarter": 1
+        },
+    days: [],
+    isFetching: false
+        
 }
 
 const weekReducer = (state = INITIAL_STATE,action) => {
@@ -17,15 +28,23 @@ const weekReducer = (state = INITIAL_STATE,action) => {
             return state;
 
         case 'CHANGE_SWITCH_WEEK':
-            const new_setmana = [...state.setmana];
-            new_setmana[action.data.day].attendee = !new_setmana[action.data.day].attendee
-            return {...state, setmana: new_setmana};
+            const new_days = [...state.days];
+            var i;
+            for (i = 0; i < new_days.length; i++) {
+                if(new_days[i].id === action.data.id){
+                    new_days[i].attending = action.data.value
+                }
+            }
+            return {...state, days: new_days};
+        case 'REQUEST_WEEK':
+            return {...state, isFetching: true}
+        case 'RECEIVE_WEEK':
+            return {...state, week:action.data, isFetching: false}
+        case 'REQUEST_ACTIVITIES_FROM_WEEK':
+            return {...state, isFetching: true}
+        case 'RECEIVE_ACTIVITIES_FROM_WEEK':
+            return {...state, days:action.data, isFetching: false}
 
-        case 'SET_TRUE_MODIFIED_ATTRIBUTE':
-            return {...state, modified: true}
-
-        case 'SET_FALSE_MODIFIED_ATTRIBUTE':
-            return {...state, modified: false}
         default: return state
     }
 };

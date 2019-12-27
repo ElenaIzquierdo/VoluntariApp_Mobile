@@ -1,27 +1,122 @@
-export const changeSwitchForDay = (day) =>{
+import {AsyncStorage} from "react-native";
+
+export const fetchWeek = (id) => {
+    return (dispatch) => {
+        AsyncStorage.getItem('token').then((token) => {
+            console.log('Token: ' + token);
+            dispatch(requestWeek());
+            const baseUrl = 'http://165.22.76.147:8080/voluntariapp/week/';
+            const finalPath = baseUrl + id;
+            fetch(finalPath, {
+                method: 'GET',
+                headers: {
+                    Accept: 'application/json',
+                    'Content-Type': 'application/json',
+                    Authorization: 'Bearer ' + token
+                },
+                dataType: 'json',
+            }).then((resp) =>
+                resp.json().then((body) =>
+                    dispatch(receiveWeek(body)))
+                );
+        });
+    }
+}
+
+const requestWeek = () =>{
+    return{
+        type: 'REQUEST_WEEK'
+    }
+}
+
+const receiveWeek =(week)=>{
+    return {
+        type: 'RECEIVE_WEEK',
+        data: week
+    }
+}
+
+export const fetchActivitiesFromWeek = (weekid) => {
+    return (dispatch) => {
+        AsyncStorage.getItem('token').then((token) => {
+            dispatch(requestActivitiesFromWeek());
+            const baseUrl = 'http://165.22.76.147:8080/voluntariapp/event/week/'+weekid;
+            fetch(baseUrl, {
+                method: 'GET',
+                headers: {
+                    Accept: 'application/json',
+                    'Content-Type': 'application/json',
+                    Authorization: 'Bearer ' + token
+                },
+                dataType: 'json',
+            }).then((resp) =>
+                resp.json().then((body) =>
+                    dispatch(receiveActivitiesFromWeek(body)))
+                );
+        })    
+    }
+}
+
+const requestActivitiesFromWeek = () =>{
+    return{
+        type: 'REQUEST_ACTIVITIES_FROM_WEEK'
+    }
+}
+
+const receiveActivitiesFromWeek =(activities)=>{
+    return {
+        type: 'RECEIVE_ACTIVITIES_FROM_WEEK',
+        data: activities
+    }
+}
+
+export const changeSwitchForDay = (id, value) =>{
     return{
         type: 'CHANGE_SWITCH_WEEK',
         data: {
-            day: day
+            id: id,
+            value: value
         }
     }
 }
 
-export const setTrueModifiedAttribute = () =>{
-    return{
-        type: 'SET_TRUE_MODIFIED_ATTRIBUTE',
-    }
-}
-//Aqui s'haura de restablir l'estat originial, s'haura de fet un get del estat inicial cridant a la base de dades
-export const setFalseModifiedAttribute = () =>{
-    return{
-        type: 'SET_FALSE_MODIFIED_ATTRIBUTE',
+export const unAttendEvent = (id, value) => {
+    console.log("event ",id)
+    console.log("value ",value)
+    return (dispatch) => {
+        AsyncStorage.getItem('token').then((token) => {
+            const baseUrl = 'http://165.22.76.147:8080/voluntariapp/event/'+id+'/unattend';
+            fetch(baseUrl, {
+                method: 'DELETE',
+                headers: {
+                    Accept: 'application/json',
+                    'Content-Type': 'application/json',
+                    Authorization: 'Bearer ' + token
+                },
+                dataType: 'json',
+            }).then((resp) => {
+                if(resp.ok)dispatch(changeSwitchForDay(id, value))
+            })
+        });
     }
 }
 
-//Aqui s'haura de guardar a base de dades tots els canvis i shaura de fer que l'usuari atendra als esdeveniments indicats
-export const saveChanges = () =>{
-    return{
-        type: 'SET_FALSE_MODIFIED_ATTRIBUTE',
+export const attendEvent = (id, value) => {
+    return (dispatch) => {
+        AsyncStorage.getItem('token').then((token) => {
+            const baseUrl = 'http://165.22.76.147:8080/voluntariapp/event/'+id+'/attendee';
+            fetch(baseUrl, {
+                method: 'POST',
+                headers: {
+                    Accept: 'application/json',
+                    'Content-Type': 'application/json',
+                    Authorization: 'Bearer ' + token
+                },
+                dataType: 'json',
+            }).then((resp) => {
+                console.log(resp)
+                if(resp.ok)dispatch(changeSwitchForDay(id, value))
+            })
+        });
     }
 }

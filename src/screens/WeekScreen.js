@@ -1,35 +1,34 @@
 import * as React from 'react';
-import { StyleSheet, View, TouchableHighlight,  } from 'react-native';
+import { StyleSheet, View, TouchableHighlight, ActivityIndicator, FlatList } from 'react-native';
 import { Text } from 'react-native-ui-kitten';
 import {Header, CheckBox} from 'react-native-elements';
 import {APP_COLORS} from "../constants/colors";
 import { connect } from 'react-redux';
 import {Actions} from "react-native-router-flux";
-import SeparadorSimple from "../components/SeparadorSimple";
-import {changeSwitchForDay, setTrueModifiedAttribute, setFalseModifiedAttribute, saveChanges} from "../actions/weekActions";
+import {changeSwitchForDay, fetchActivitiesFromWeek, fetchWeek, unAttendEvent, attendEvent} from "../actions/weekActions";
 import {FontAwesome} from "@expo/vector-icons";
 import BottomNav from "../components/BottomNav";
-import Button from "../components/Button";
+import Moment from 'react-moment';
 
 class WeekScreen extends React.Component{
     constructor(props) {
         super(props)
     }
 
-    _onPressButton(day) {
-        if(!this.props.modified){
-            this.props.setTrueModifiedAttribute()
+    componentWillMount(){
+        this.props.fetchWeek(this.props.id)
+        this.props.fetchActivitiesFromWeek(this.props.id)
+    }
+
+    _onPressButton(day, value) {
+        if(value){
+            this.props.unAttendEvent(day, false);
         }
-        this.props.changeSwitchForDay(day);
+        else{
+            this.props.attendEvent(day, true)
+        }
     }
 
-    _onPressCancelModify(){
-        this.props.setFalseModifiedAttribute()
-    }
-
-    _onPressSave(){
-        this.props.saveChanges()
-    }
 
     static pintarFinished(finished){
         if(finished){
@@ -41,70 +40,98 @@ class WeekScreen extends React.Component{
 
     }
 
-    pintarDies(){
-        return this.props.setmana.map((dia)=>{
-            return(
-                <View key={dia.id} style={styles.viewDayStyle}>
-                    <View  style={styles.rowStyle}>
-                        {dia.finished ?
-                            <TouchableHighlight onPress = {() => Actions.event()}>
-                                <Text style={styles.titleStyle}>{dia.name}{' '}{dia.date}</Text>
-                            </TouchableHighlight>:
-                            <View>
-                                <Text style={styles.titleStyle}>{dia.name}{' '}{dia.date}</Text>
-                            </View>
-                        }
-
-                        <View style={{flexDirection: 'row'}}>
-                            <FontAwesome name='download' size={22} color= {APP_COLORS.text_color} style={styles.iconStyle}/>
-                            <CheckBox center key={dia.id} checked = {dia.attendee} onPress={this._onPressButton.bind(this,dia.id)}
-                                        checkedIcon='dot-circle-o' uncheckedIcon='circle-o' iconRight size={18} containerStyle = {styles.containerCheckStyle}
-                                        checkedColor = {APP_COLORS.color_green} uncheckedColor = {APP_COLORS.color_green}/>
-                        </View>
-                    </View>
+    _renderItem = ({item}) => (
+        <View key={item.id} style={styles.viewDayStyle}>
+            <View  style={styles.rowStyle}>
+                {item.finished ?
+                    <TouchableHighlight onPress = {() => Actions.event()} style={styles.viewFinishedStyle}>
+                        <Text style={styles.titleStyle}>{item.title}</Text>
+                        <Moment style = {styles.textNotFinishedStyle} element={Text} format="DD/MM/YYYY HH:mm">
+                            {item.start_date}
+                        </Moment>
+                    </TouchableHighlight>:
                     <View style={styles.viewFinishedStyle}>
-                        {WeekScreen.pintarFinished(dia.finished)}
+                        <Text style={styles.titleStyle}>{item.title}</Text>
+                        <Moment style = {styles.textNotFinishedStyle} element={Text} format="DD/MM/YYYY HH:mm">
+                            {item.start_date}
+                        </Moment>
                     </View>
-                </View>
-            )
-        })
-    }
+                }
 
-    displayButtons(){
-        if(this.props.modified){
-            return(
-                <View style={styles.rowStyle}>
-                    <TouchableHighlight style={{paddingLeft: '5%', paddingTop: '3%'}} onPress={this._onPressCancelModify.bind(this)}>
-                        <Text style={{color:APP_COLORS.color_darkred}}>Cancel·lar</Text>
-                    </TouchableHighlight>
-                    <Button text={"Guardar"} colorButton={APP_COLORS.color_green} width={"15%"} path={this._onPressSave.bind(this)}/>
+                <View style={{flexDirection: 'row'}}>
+                    <FontAwesome name='download' size={22} color= {APP_COLORS.text_color} style={styles.iconStyle}/>
+                    <CheckBox center key={item.id} checked = {item.attending} onPress={this._onPressButton.bind(this,item.id,item.attending)}
+                                checkedIcon='dot-circle-o' uncheckedIcon='circle-o' iconRight size={18} containerStyle = {styles.containerCheckStyle}
+                                checkedColor = {APP_COLORS.color_green} uncheckedColor = {APP_COLORS.color_green}/>
                 </View>
-            )
-        }
-    }
+            </View>
+            <View style={styles.viewFinishedStyle}>
+                {WeekScreen.pintarFinished(item.finished)}
+            </View>
+        </View>
+    );
 
-    render(){
+    _keyExtractor = (item) => item.id.toString();
+
+    renderDies(){
         return(
             <View>
-            <View style={styles.viewStyle}>
-                <Header
-                    leftComponent={{ icon: 'home', color: APP_COLORS.color_neutral, onPress: () => Actions.home() }}
-                    centerComponent={{ text: 'VoluntariApp', style: { color: APP_COLORS.color_neutral, fontSize: 25, fontWeight: 'bold' } }}
-                    rightComponent={{ icon: 'person', color: APP_COLORS.color_neutral, onPress: () => Actions.profile()}}
-                    backgroundColor={APP_COLORS.color_orange}
+                <FlatList
+                    data={this.props.days}
+                    style={{width:"100%",height:"100%"}}
+                    keyExtractor={this._keyExtractor}
+                    renderItem={this._renderItem}
                 />
-                <View style={styles.viewTopStyle}>
-                    <Text style={styles.titleStyle}>Setmana {this.props.setmana[0].date}-{this.props.setmana[4].date}</Text>
-                    <Text style={styles.descriptionStyle}>{this.props.message}</Text>
-                </View>
-                <SeparadorSimple/>
-                {this.pintarDies()}
-                {this.displayButtons()}
+            </View>
+        )
+    }
 
+    renderActivitiesFromWeekView(){
+        return(
+            <View style={styles.viewCommentsGeneralStyle}>
+                <View style={styles.viewCommentsStyle}>
+                    <Text style={styles.textStyle}>Activitats ({this.props.days.length})</Text>
+                </View>
+                <View style={{flex:1,height:"100%"}}>
+                    {this.renderDies()}
+                </View>
             </View>
-            <BottomNav selected={"programacio"}/>
-            </View>
-        );
+        )
+    }
+
+
+    render(){
+        if(this.props.isFetching){
+            return (
+                <View style = {{justifyContent: 'center', alignContent: 'center', width: '100%', height: '100%'}}>
+                    <ActivityIndicator size="large" color={APP_COLORS.color_orange}/>
+                </View>
+            );
+        }
+        else{
+            return(
+                <View>
+                <View style={styles.viewStyle}>
+                    <Header
+                        leftComponent={{ icon: 'home', color: APP_COLORS.color_neutral, onPress: () => Actions.home() }}
+                        centerComponent={{ text: 'VoluntariApp', style: { color: APP_COLORS.color_neutral, fontSize: 25, fontWeight: 'bold' } }}
+                        rightComponent={{ icon: 'person', color: APP_COLORS.color_neutral, onPress: () => Actions.profile()}}
+                        backgroundColor={APP_COLORS.color_orange}
+                    />
+                    <View style={styles.viewTopStyle}>
+                        <View style={styles.rowStyle}>
+                            <Text style={styles.titleStyle}>{this.props.week.name}</Text>
+                            <FontAwesome name='download' size={22} color= {APP_COLORS.text_color} style={styles.iconStyle}/>
+                        </View>
+                        
+                    </View>
+                    {this.renderActivitiesFromWeekView()}
+    
+                </View>
+                <BottomNav selected={"programacio"}/>
+                </View>
+            );
+        } 
     }
 }
 
@@ -133,7 +160,7 @@ const styles = StyleSheet.create({
         paddingLeft: '5%'
     },
     viewTopStyle: {
-        height: '20%',
+        height: '16%',
         paddingTop: '3%'
     },
     viewFinishedStyle: {
@@ -162,7 +189,26 @@ const styles = StyleSheet.create({
         padding: '1%',
         paddingTop: '3%'
         
-    }
+    },
+    viewCommentsGeneralStyle: {
+        flex:1,
+        height: '100%'
+    },
+    viewCommentsStyle: {
+        flexDirection: 'row',
+        backgroundColor: APP_COLORS.color_orange,
+        height: '10%',
+        marginTop: '5%',
+        justifyContent: 'space-between',
+        paddingRight: '4%',
+        paddingLeft: '7%',
+        alignItems: 'center'
+    },
+    textStyle: {
+        color: APP_COLORS.color_neutral,
+        fontSize: 17,
+        fontWeight: 'bold'
+    },
 });
 
 
@@ -170,16 +216,19 @@ const mapStateToProps = (state) => {
     return {
         message: state.weekReducer.message,
         setmana: state.weekReducer.setmana,
-        modified: state.weekReducer.modified
+        isFetching: state.weekReducer.isFetching,
+        days: state.weekReducer.days,
+        week: state.weekReducer.week
     }
 };
 
 const  mapDispatchToProps = (dispatch)=>{
     return {
         changeSwitchForDay : (day) => dispatch(changeSwitchForDay(day)),
-        setTrueModifiedAttribute : () => dispatch(setTrueModifiedAttribute()),
-        setFalseModifiedAttribute : () => dispatch(setFalseModifiedAttribute()),
-        saveChanges : () => dispatch(saveChanges())
+        fetchWeek: (id) => dispatch(fetchWeek(id)),
+        fetchActivitiesFromWeek: (id) => dispatch(fetchActivitiesFromWeek(id)),
+        unAttendEvent: (id, value) => dispatch(unAttendEvent(id, value)),
+        attendEvent: (id, value) => dispatch(attendEvent(id, value))
     }
 };
 

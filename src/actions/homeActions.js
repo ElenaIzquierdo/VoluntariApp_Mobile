@@ -32,7 +32,6 @@ export const unAttendEvent = (id, value) => {
     console.log("value ",value)
     return (dispatch) => {
         AsyncStorage.getItem('token').then((token) => {
-            console.log('Token: ' + token);
             const baseUrl = 'http://165.22.76.147:8080/voluntariapp/event/'+id+'/unattend';
             fetch(baseUrl, {
                 method: 'DELETE',
@@ -52,7 +51,6 @@ export const unAttendEvent = (id, value) => {
 export const attendEvent = (id, value) => {
     return (dispatch) => {
         AsyncStorage.getItem('token').then((token) => {
-            console.log('Token: ' + token);
             const baseUrl = 'http://165.22.76.147:8080/voluntariapp/event/'+id+'/attendee';
             fetch(baseUrl, {
                 method: 'POST',
@@ -73,7 +71,6 @@ export const attendEvent = (id, value) => {
 export const fetchPreviousEvents = () => {
     return (dispatch) => {
         AsyncStorage.getItem('token').then((token) => {
-            console.log('Token: ' + token);
             const baseUrl = 'http://165.22.76.147:8080/voluntariapp/event-before';
             dispatch(requestEvents())
             fetch(baseUrl, {

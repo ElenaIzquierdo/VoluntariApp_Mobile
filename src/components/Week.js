@@ -24,7 +24,6 @@ class Week extends React.Component {
         }
     }
     static renderIconValoracio(rate){
-        console.log("RATE ", rate)
         if(rate === 0 || rate === null){
             return(<Text style={[{color: APP_COLORS.text_color},styles.iconAssStyle]}>-</Text>)
         }
@@ -74,7 +73,7 @@ class Week extends React.Component {
     render(){
         const {rowStyle, titleStyle, iconStyle, infoStyle, touchableStyle, iconInfoTextStyle} = styles;
         return(
-            <TouchableHighlight style={touchableStyle} onPress = {() => Actions.week()}>
+            <TouchableHighlight style={touchableStyle} onPress = {() => Actions.week({id: this.props.id})}>
                 <View>
                     <View style={rowStyle}>
                         <Text style={titleStyle}>{this.props.name}</Text>
