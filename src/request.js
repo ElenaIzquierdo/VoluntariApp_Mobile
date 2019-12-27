@@ -17,8 +17,6 @@ export const request = async (path = "", method = "GET", body) => {
                 body: bodyString
             }).then(response => {
                 if (response.ok) {
-                    console.log(response.ok)
-                    console.log(res(response))
                     return res(response)
                 } else {
                     rej(new Error('Server responded with ' + response.code))

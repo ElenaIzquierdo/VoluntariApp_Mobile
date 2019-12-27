@@ -8,7 +8,6 @@ export const closeModal =() => {
 export const fetchClosedForumTopics = (order) => {
     return (dispatch) => {
         AsyncStorage.getItem('token').then((token) => {
-            console.log('Token: ' + token);
             dispatch(requestForumTopics());
             const baseUrl = 'http://165.22.76.147:8080/voluntariapp/forum?status=closed';
             if(order != ""){
@@ -60,7 +59,6 @@ const receiveClosedForumTopics =(closedTopics)=>{
 export const fetchOpenedForumTopics = (order) => {
     return (dispatch) => {
         AsyncStorage.getItem('token').then((token) => {
-            console.log('Token: ' + token);
             dispatch(requestForumTopics());
             const baseUrl = 'http://165.22.76.147:8080/voluntariapp/forum?status=open';
             if(order != ""){
@@ -115,7 +113,6 @@ export const changeFilterProperty=(propertyName) =>{
 export const fetchFilteredTopics = (order) => {
     return (dispatch) => {
         AsyncStorage.getItem('token').then((token) => {
-            console.log('Token: ' + token);
             dispatch(requestForumTopics());
             const baseUrl = 'http://165.22.76.147:8080/voluntariapp/forum';
             if(status != ""){
