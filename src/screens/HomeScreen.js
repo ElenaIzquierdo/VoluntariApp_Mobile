@@ -68,7 +68,6 @@ class HomeScreen extends React.Component{
 
     changeAttending() {
         if(this.props.events_next[this.props.iterator].attending){
-            console.log("hola vaig a unattend el event")
             this.props.unAttendEvent(this.props.events_next[this.props.iterator].id, false)
         }
         else this.props.attendEvent(this.props.events_next[this.props.iterator].id, true)

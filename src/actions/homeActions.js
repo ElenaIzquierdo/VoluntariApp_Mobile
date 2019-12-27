@@ -18,7 +18,6 @@ export const changeIteratorPreviousParam =(iterator) => {
 };
 
 export const changeSwitch = (value) =>{
-    console.log("value ",value)
     return{
         type: 'CHANGE_SWITCH',
         data: {
@@ -28,8 +27,6 @@ export const changeSwitch = (value) =>{
 };
 
 export const unAttendEvent = (id, value) => {
-    console.log("event ",id)
-    console.log("value ",value)
     return (dispatch) => {
         AsyncStorage.getItem('token').then((token) => {
             const baseUrl = 'http://165.22.76.147:8080/voluntariapp/event/'+id+'/unattend';
@@ -61,7 +58,6 @@ export const attendEvent = (id, value) => {
                 },
                 dataType: 'json',
             }).then((resp) => {
-                console.log(resp)
                 if(resp.ok)dispatch(changeSwitch(value))
             })
         });
@@ -105,7 +101,6 @@ const receivePreviousEvents =(previousEvents)=>{
 export const fetchNextEvents = () => {
     return (dispatch) => {
         AsyncStorage.getItem('token').then((token) => {
-            console.log('Token: ' + token);
             const baseUrl = 'http://165.22.76.147:8080/voluntariapp/event-after';
             dispatch(requestEvents())
             fetch(baseUrl, {
