@@ -5,7 +5,8 @@ import { Actions } from 'react-native-router-flux';
 import { connect } from 'react-redux';
 import {Header} from 'react-native-elements';
 import {APP_COLORS} from "../constants/colors";
-import {changeIteratorNextParam, changeIteratorPreviousParam, changeSwitch, fetchNextEvents, fetchPreviousEvents} from "../actions/homeActions";
+import {changeIteratorNextParam, changeIteratorPreviousParam, changeSwitch, fetchNextEvents, 
+        fetchPreviousEvents, attendEvent, unAttendEvent} from "../actions/homeActions";
 import {EvilIcons, FontAwesome} from "@expo/vector-icons";
 import Modal from 'react-native-modalbox';
 import BottomNav from "../components/BottomNav";
@@ -65,10 +66,15 @@ class HomeScreen extends React.Component{
         }
     }
 
-    toggleSwitch = (value) => {
-
-        this.props.changeSwitch(value);
+    changeAttending() {
+        if(this.props.events_next[this.props.iterator].attending){
+            console.log("hola vaig a unattend el event")
+            this.props.unAttendEvent(this.props.events_next[this.props.iterator].id, false)
+        }
+        else this.props.attendEvent(this.props.events_next[this.props.iterator].id, true)
     }
+
+
 
     render(){
         const {iconModalStyle, modal, modalTitle, viewCardsStyle, viewCardNextStyle, viewIconArrowStyle,
@@ -98,7 +104,7 @@ class HomeScreen extends React.Component{
                                     <Text>Assistiràs</Text>:
                                     <Text>No assistiràs</Text>
                                 }
-                                <Switch value={this.props.events_next[this.props.iterator].attending} onValueChange = {this.toggleSwitch}/>
+                                <Switch value={this.props.events_next[this.props.iterator].attending} onValueChange = {this.changeAttending.bind(this)}/>
                             </View>
                             <FontAwesome name='download' size={55} color= {APP_COLORS.color_button_1} style={iconModalStyle}/>
                             <Text style={textModalStyle}>Descarregar la fitxa de la tarda</Text>
@@ -299,7 +305,9 @@ const  mapDispatchToProps = (dispatch)=>{
         changeIteratorPreviousParam: (i)=>dispatch(changeIteratorPreviousParam(i)),
         changeSwitch: (value) => dispatch(changeSwitch(value)),
         fetchPreviousEvents: () => dispatch(fetchPreviousEvents()),
-        fetchNextEvents: () => dispatch(fetchNextEvents())
+        fetchNextEvents: () => dispatch(fetchNextEvents()),
+        unAttendEvent: (id,value) => dispatch(unAttendEvent(id,value)),
+        attendEvent: (id,value) => dispatch(attendEvent(id,value)),
     }
 }
 

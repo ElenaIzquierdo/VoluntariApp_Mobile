@@ -18,6 +18,7 @@ export const changeIteratorPreviousParam =(iterator) => {
 };
 
 export const changeSwitch = (value) =>{
+    console.log("value ",value)
     return{
         type: 'CHANGE_SWITCH',
         data: {
@@ -25,6 +26,49 @@ export const changeSwitch = (value) =>{
         }
     }
 };
+
+export const unAttendEvent = (id, value) => {
+    console.log("event ",id)
+    console.log("value ",value)
+    return (dispatch) => {
+        AsyncStorage.getItem('token').then((token) => {
+            console.log('Token: ' + token);
+            const baseUrl = 'http://165.22.76.147:8080/voluntariapp/event/'+id+'/unattend';
+            fetch(baseUrl, {
+                method: 'DELETE',
+                headers: {
+                    Accept: 'application/json',
+                    'Content-Type': 'application/json',
+                    Authorization: 'Bearer ' + token
+                },
+                dataType: 'json',
+            }).then((resp) => {
+                if(resp.ok)dispatch(changeSwitch(value))
+            })
+        });
+    }
+}
+
+export const attendEvent = (id, value) => {
+    return (dispatch) => {
+        AsyncStorage.getItem('token').then((token) => {
+            console.log('Token: ' + token);
+            const baseUrl = 'http://165.22.76.147:8080/voluntariapp/event/'+id+'/attendee';
+            fetch(baseUrl, {
+                method: 'POST',
+                headers: {
+                    Accept: 'application/json',
+                    'Content-Type': 'application/json',
+                    Authorization: 'Bearer ' + token
+                },
+                dataType: 'json',
+            }).then((resp) => {
+                console.log(resp)
+                if(resp.ok)dispatch(changeSwitch(value))
+            })
+        });
+    }
+}
 
 export const fetchPreviousEvents = () => {
     return (dispatch) => {
@@ -42,7 +86,7 @@ export const fetchPreviousEvents = () => {
                 dataType: 'json',
             }).then((resp) => {
                     resp.json().then((body) =>
-                    dispatch(receiveNextEvents(body)))
+                    dispatch(receivePreviousEvents(body)))
                 })
         });
     }
