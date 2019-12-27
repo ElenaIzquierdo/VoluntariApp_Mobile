@@ -2,7 +2,6 @@ import {AsyncStorage} from "react-native";
 export const fetchExplicacions = (centreInteresId) => {
     return (dispatch) => {
         AsyncStorage.getItem('token').then((token) => {
-            console.log('Token: ' + token);
             dispatch(requestExplicacions());
             const baseUrl = 'http://165.22.76.147:8080/voluntariapp/explicacio/centreinteres-no-pagination/';
             
@@ -11,6 +10,7 @@ export const fetchExplicacions = (centreInteresId) => {
                 headers: {
                     Accept: 'application/json',
                     'Content-Type': 'application/json',
+                    Authorization: 'Bearer ' + token
                 },
                 dataType: 'json',
             }).then((resp) =>
@@ -38,7 +38,6 @@ const receiveExplicacions =(explicacions)=>{
 export const fetchObjectius = (centreInteresId) => {
     return (dispatch) => {
         AsyncStorage.getItem('token').then((token) => {
-            console.log('Token: ' + token);
             dispatch(requestObjectius());
             const baseUrl = 'http://127.0.0.1:8000/voluntariapp/objectiu/centreinteres-no-pagination/';
             
@@ -47,6 +46,7 @@ export const fetchObjectius = (centreInteresId) => {
                 headers: {
                     Accept: 'application/json',
                     'Content-Type': 'application/json',
+                    Authorization: 'Bearer ' + token
                 },
                 dataType: 'json',
             }).then((resp) =>
