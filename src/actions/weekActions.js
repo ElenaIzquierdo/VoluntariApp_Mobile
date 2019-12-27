@@ -3,7 +3,6 @@ import {AsyncStorage} from "react-native";
 export const fetchWeek = (id) => {
     return (dispatch) => {
         AsyncStorage.getItem('token').then((token) => {
-            console.log('Token: ' + token);
             dispatch(requestWeek());
             const baseUrl = 'http://165.22.76.147:8080/voluntariapp/week/';
             const finalPath = baseUrl + id;
@@ -81,8 +80,6 @@ export const changeSwitchForDay = (id, value) =>{
 }
 
 export const unAttendEvent = (id, value) => {
-    console.log("event ",id)
-    console.log("value ",value)
     return (dispatch) => {
         AsyncStorage.getItem('token').then((token) => {
             const baseUrl = 'http://165.22.76.147:8080/voluntariapp/event/'+id+'/unattend';
@@ -114,7 +111,6 @@ export const attendEvent = (id, value) => {
                 },
                 dataType: 'json',
             }).then((resp) => {
-                console.log(resp)
                 if(resp.ok)dispatch(changeSwitchForDay(id, value))
             })
         });
