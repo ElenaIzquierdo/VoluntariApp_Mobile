@@ -62,7 +62,8 @@ class WeekScreen extends React.Component{
                     <FontAwesome name='download' size={22} color= {APP_COLORS.text_color} style={styles.iconStyle}/>
                     <CheckBox center key={item.id} checked = {item.attending} onPress={this._onPressButton.bind(this,item.id,item.attending)}
                                 checkedIcon='dot-circle-o' uncheckedIcon='circle-o' iconRight size={18} containerStyle = {styles.containerCheckStyle}
-                                checkedColor = {APP_COLORS.color_green} uncheckedColor = {APP_COLORS.color_green}/>
+                                checkedColor = {APP_COLORS.color_green} uncheckedColor = {APP_COLORS.color_green}
+                                disabled={item.finished}/>
                 </View>
             </View>
             <View style={styles.viewFinishedStyle}>
@@ -123,6 +124,7 @@ class WeekScreen extends React.Component{
                             <Text style={styles.titleStyle}>{this.props.week.name}</Text>
                             <FontAwesome name='download' size={22} color= {APP_COLORS.text_color} style={styles.iconStyle}/>
                         </View>
+                        <Text style={styles.descriptionStyle}>{this.props.week.description}</Text>
                         
                     </View>
                     {this.renderActivitiesFromWeekView()}
