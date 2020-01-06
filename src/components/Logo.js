@@ -4,7 +4,7 @@ import {Image} from 'react-native';
 
 const Logo = () => {
     return (
-        <Image source={require('../images/casalfoto.jpg')} style = {styles.imageStyle}/>
+        <Image source={require('../images/VoluntariApp_Logo.png')} style = {styles.imageStyle}/>
     );
 };
 

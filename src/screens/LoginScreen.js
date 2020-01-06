@@ -62,7 +62,7 @@ class LoginScreen extends React.Component{
 
 const styles = {
     viewStyle: {
-        backgroundColor: APP_COLORS.color_yellow,
+        backgroundColor: APP_COLORS.color_neutral,
         width: '100%',
         height: '100%',
         flex: 1,
