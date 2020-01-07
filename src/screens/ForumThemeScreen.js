@@ -8,7 +8,7 @@ import {Actions} from "react-native-router-flux";
 import { connect } from 'react-redux';
 import Moment from 'react-moment';
 import {fetchForumTopic, fetchForumTopicComments, changeModal, changeNewComment, 
-        publishNewComment, changeStatusTopic} from "../actions/forumthemeActions";
+        publishNewComment, changeStatusTopic, deleteComment} from "../actions/forumthemeActions";
 import Comment from "../components/Comment";
 import Modal from 'react-native-modalbox';
 import Button from "../components/Button";
@@ -39,6 +39,10 @@ class ForumThemeScreen extends React.Component{
             user={item.user}
             content={item.content}
             created_date={item.created_date}
+            delete_method={this.props.deleteComment}
+            refresh_topic_method={this.props.fetchForumTopic}
+            refresh_comments_method={this.props.fetchForumTopicComments}
+            id_topic={this.props.id}
         />
     );
 
@@ -332,7 +336,8 @@ const  mapDispatchToProps = (dispatch)=>{
         changeModal: () => dispatch(changeModal()),
         changeNewComment: (text) => dispatch(changeNewComment(text)),
         publishNewComment: (commentInfo) => dispatch(publishNewComment(commentInfo)),
-        changeStatusTopic: (id, info) => dispatch(changeStatusTopic(id, info))
+        changeStatusTopic: (id, info) => dispatch(changeStatusTopic(id, info)),
+        deleteComment: (id) => dispatch(deleteComment(id))
     }
 }
 

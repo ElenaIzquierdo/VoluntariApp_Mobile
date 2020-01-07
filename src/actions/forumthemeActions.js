@@ -42,6 +42,12 @@ export const changeStatusTopic = (id, forumTopicInfo) => {
     }
 }
 
+export const deleteComment = (id) =>{
+    return () => {
+        request('/comment/'+id, 'DELETE');
+    }
+}
+
 export const fetchForumTopicComments = (id) => {
     return (dispatch) => {
         AsyncStorage.getItem('token').then((token) => {
