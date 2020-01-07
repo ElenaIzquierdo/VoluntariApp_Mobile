@@ -36,6 +36,12 @@ const receiveTopic =(topic)=>{
     }
 }
 
+export const changeStatusTopic = (id, forumTopicInfo) => {
+    return () => {
+        request('/forum/'+id, 'PATCH', forumTopicInfo);
+    }
+}
+
 export const fetchForumTopicComments = (id) => {
     return (dispatch) => {
         AsyncStorage.getItem('token').then((token) => {

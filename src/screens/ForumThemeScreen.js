@@ -7,9 +7,11 @@ import {Icon} from "react-native-elements";
 import {Actions} from "react-native-router-flux";
 import { connect } from 'react-redux';
 import Moment from 'react-moment';
-import {fetchForumTopic, fetchForumTopicComments, changeModal, changeNewComment, publishNewComment} from "../actions/forumthemeActions";
+import {fetchForumTopic, fetchForumTopicComments, changeModal, changeNewComment, 
+        publishNewComment, changeStatusTopic} from "../actions/forumthemeActions";
 import Comment from "../components/Comment";
 import Modal from 'react-native-modalbox';
+import Button from "../components/Button";
 
 class ForumThemeScreen extends React.Component{
     constructor(props) {
@@ -57,9 +59,11 @@ class ForumThemeScreen extends React.Component{
             return(
                 <View style={styles.viewNoComments}>
                     <Text style={styles.textNoComments}>No hi ha comentaris per aquest tema encara</Text>
-                    <TouchableHighlight onPress={()=>this.props.changeModal()}>
-                        <Text style={styles.newCommentLinkText}>Afegir un comentari</Text>
-                    </TouchableHighlight>
+                    {this.props.theme.finished ? null: 
+                        <TouchableHighlight onPress={()=>this.props.changeModal()}>
+                            <Text style={styles.newCommentLinkText}>Afegir un comentari</Text>
+                        </TouchableHighlight>
+                    }
                 </View>
             )
         }
@@ -70,14 +74,65 @@ class ForumThemeScreen extends React.Component{
             <View style={styles.viewCommentsGeneralStyle}>
                 <View style={styles.viewCommentsStyle}>
                     <Text style={styles.textStyle}>Comentaris ({this.props.comments.length})</Text>
-                    <Icon name='plus' type='evilicon' color={APP_COLORS.color_neutral}
+                    {this.props.theme.finished ? null:
+                        <Icon name='plus' type='evilicon' color={APP_COLORS.color_neutral}
                             size={35} iconStyle={styles.iconEditStyle} onPress={() => this.props.changeModal()}/>
+                    }
+                    
                 </View>
                 <View style={{flex:1,height:"100%"}}>
                     {this.renderTopicComments()}
                 </View>
             </View>
         )
+    }
+
+    displayStatus(){
+        if(this.props.theme.finished){
+            return(
+                <View style={styles.iconInfoTextStyle}>
+                    <Icon
+                        name='close-o'
+                        type='evilicon'
+                        color={APP_COLORS.color_darkred}
+                        size={20}
+                    />
+                    <Text style = {styles.infoStyle}> Tancat</Text>
+                </View>
+            );
+        }
+        else{
+            return(
+                <View style={styles.iconInfoTextStyle}>
+                    <Icon
+                        name='check'
+                        type='evilicon'
+                        color={APP_COLORS.color_green}
+                        size={20}
+                    />
+                    <Text style = {styles.infoStyle}> Obert </Text>
+                </View>
+            );
+        }
+
+    }
+
+    oncloseForumTopic(){
+        const forumTopicInfo = {
+            finished: true
+        };
+        this.props.changeStatusTopic(this.props.id, forumTopicInfo);
+        this.props.fetchForumTopic(this.props.id);
+        this.props.fetchForumTopicComments(this.props.id);
+    }
+
+    onopenForumTopic(){
+        const forumTopicInfo = {
+            finished: false
+        };
+        this.props.changeStatusTopic(this.props.id, forumTopicInfo);
+        this.props.fetchForumTopic(this.props.id);
+        this.props.fetchForumTopicComments(this.props.id);
     }
 
     publishComment(){
@@ -134,8 +189,11 @@ class ForumThemeScreen extends React.Component{
                     </Modal>
                     <View style={titleViewStyle}>
                         <Text style = {titleStyle}> {this.props.theme.title} </Text>
-                        <Icon name='pencil' type='evilicon' color={APP_COLORS.text_color}
-                            size={35} iconStyle={iconEditStyle}/>
+                        {this.props.theme.finished ? 
+                            <Button colorButton={APP_COLORS.color_checked} marginL={"2%"} height={"60%"} 
+                                    text={"Obrir"} path={this.onopenForumTopic.bind(this)} width={"15%"} marginR={"2%"}/>:
+                                    <Button colorButton={APP_COLORS.color_darkred} marginL={"2%"} height={"60%"} text={"Tancar"} 
+                                    path={this.oncloseForumTopic.bind(this)} width={"15%"} marginR={"2%"}/>}
                     </View>
 
                     <View style={iconInfoTextStyle}>
@@ -147,6 +205,7 @@ class ForumThemeScreen extends React.Component{
                         <Icon name='location' type='evilicon' color={APP_COLORS.text_color} size={20}/>
                         <Text style = {infoStyle}> {this.props.theme.group} </Text>
                     </View>
+                    {this.displayStatus()}
 
                     <Text style = {descriptionStyle}> {this.props.theme.description} </Text>
                    
@@ -272,7 +331,8 @@ const  mapDispatchToProps = (dispatch)=>{
         fetchForumTopicComments: (id) => dispatch(fetchForumTopicComments(id)),
         changeModal: () => dispatch(changeModal()),
         changeNewComment: (text) => dispatch(changeNewComment(text)),
-        publishNewComment: (commentInfo) => dispatch(publishNewComment(commentInfo))
+        publishNewComment: (commentInfo) => dispatch(publishNewComment(commentInfo)),
+        changeStatusTopic: (id, info) => dispatch(changeStatusTopic(id, info))
     }
 }
 
