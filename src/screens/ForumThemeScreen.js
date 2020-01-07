@@ -34,7 +34,7 @@ class ForumThemeScreen extends React.Component{
         <Comment
             id={item.id}
             image={item.image}
-            user={item.author}
+            user={item.user}
             content={item.content}
             created_date={item.created_date}
         />
@@ -141,11 +141,6 @@ class ForumThemeScreen extends React.Component{
                     <View style={iconInfoTextStyle}>
                         <Icon name='calendar' type='evilicon' color={APP_COLORS.text_color} size={20}/>
                         <Moment style = {infoStyle} element={Text} format="DD/MM/YYYY HH:mm">{this.props.created_date}</Moment>
-                    </View>
-
-                    <View style={iconInfoTextStyle}>
-                        <Icon name='user' type='evilicon' color={APP_COLORS.text_color} size={20}/>
-                        <Text style = {infoStyle}> {this.props.theme.creator} </Text>
                     </View>
 
                     <View style={iconInfoTextStyle}>

@@ -38,19 +38,22 @@ const receiveTopic =(topic)=>{
 
 export const fetchForumTopicComments = (id) => {
     return (dispatch) => {
-        const baseUrl = 'http://165.22.76.147:8080/voluntariapp/comment/forum/';
-        const finalPath = baseUrl + id;
-        fetch(finalPath, {
-            method: 'GET',
-            headers: {
-                Accept: 'application/json',
-                'Content-Type': 'application/json',
-            },
-            dataType: 'json',
-        }).then((resp) =>
-            resp.json().then((body) =>
-                dispatch(receiveTopicComments(body)))
-            );
+        AsyncStorage.getItem('token').then((token) => {
+            const baseUrl = 'http://165.22.76.147:8080/voluntariapp/comment/forum/';
+            const finalPath = baseUrl + id;
+            fetch(finalPath, {
+                method: 'GET',
+                headers: {
+                    Accept: 'application/json',
+                    'Content-Type': 'application/json',
+                    Authorization: 'Bearer ' + token
+                },
+                dataType: 'json',
+            }).then((resp) =>
+                resp.json().then((body) =>
+                    dispatch(receiveTopicComments(body)))
+                );
+        })
     }
 }
 

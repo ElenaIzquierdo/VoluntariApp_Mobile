@@ -6,6 +6,7 @@ export const request = async (path = "", method = "GET", body) => {
           let headers = {
             Accept: 'application/json',
             'Content-Type': 'application/json',
+            Authorization: 'Bearer ' + token
           };
           if(token != null) console.log("Bearer ", token)
           const finalPath = baseUrl + path;

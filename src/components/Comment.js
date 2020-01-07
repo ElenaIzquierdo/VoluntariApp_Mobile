@@ -36,7 +36,6 @@ class Comment extends React.Component {
         return(
             <View style={viewStyle}>
                 <View style={viewUserStyle}>
-                    {this.displayAvatar()}
                     <Text style={nameStyle}>{this.props.user}</Text>
                 </View>
                 <Text style={contenttextStyle}>{this.props.content}</Text>
@@ -51,7 +50,9 @@ class Comment extends React.Component {
 };
 const styles ={
     nameStyle: {
-        paddingLeft: '2%'
+        paddingLeft: '2%',
+        color: APP_COLORS.color_green,
+        fontSize: 15,
     },
     viewStyle:{
         padding:'3%'
