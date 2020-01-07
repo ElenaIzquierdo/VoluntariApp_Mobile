@@ -29,7 +29,6 @@ const requestExplicacions = () =>{
 }
 
 const receiveExplicacions =(explicacions)=>{
-    console.log("hola",explicacions)
     return {
         type: 'RECEIVE_EXPLICACIONS',
         data: explicacions
@@ -39,7 +38,6 @@ const receiveExplicacions =(explicacions)=>{
 export const fetchObjectius = (centreInteresId) => {
     return (dispatch) => {
         AsyncStorage.getItem('token').then((token) => {
-            console.log("hola2")
             dispatch(requestObjectius());
             const baseUrl = 'http://165.22.76.147:8080/voluntariapp/goal/centreinteres-no-pagination/';
             

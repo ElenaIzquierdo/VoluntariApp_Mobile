@@ -138,7 +138,7 @@ class HomeScreen extends React.Component{
                             </View>
                         </TouchableHighlight>
     
-                        <TouchableHighlight onPress = {() => Actions.event()} style={[viewCardPreviousStyle,{backgroundColor:'#F5C15F'}]}>
+                        <TouchableHighlight onPress = {() => Actions.event({id: this.props.events_previous[this.props.iterator_previous].id})} style={[viewCardPreviousStyle,{backgroundColor:'#F5C15F'}]}>
                             <View>
                                 <View style={viewCardFooterStyle}>
                                     <View style={viewIconArrowStyle}>

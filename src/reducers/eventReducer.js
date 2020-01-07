@@ -4,9 +4,9 @@ const INITIAL_STATE ={
             'El WB estava molt alterat i ha arribat plorant del cole.' ,
         assMonitors: 'baixa', assInfants: 'mitja', activitat: 'Intentarem treballar els sentits: olfacte, gust, vista, ' +
             'tacte i oïda. '},
-    rate_event: {id: 0, rotllana: 1, respecte: 2, berenar: 0, files: 1, activitat: 1},
     isDisabled: false,
-    isHiden: true
+    isHiden: true,
+    isFetching: false
 }
 
 const eventReducer = (state = INITIAL_STATE,action) => {
@@ -15,6 +15,10 @@ const eventReducer = (state = INITIAL_STATE,action) => {
             return state;
         case 'ISHIDEN_CHANGE':
             return {...state, isHiden: !state.isHiden}
+        case 'REQUEST_EVENT':
+            return {...state, isFetching: true}
+        case 'RECEIVE_EVENT':
+            return {...state, isFetching: false, event: action.data}
 
         default: return state
     }

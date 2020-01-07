@@ -44,11 +44,13 @@ class WeekScreen extends React.Component{
         <View key={item.id} style={styles.viewDayStyle}>
             <View  style={styles.rowStyle}>
                 {item.finished ?
-                    <TouchableHighlight onPress = {() => Actions.event()} style={styles.viewFinishedStyle}>
-                        <Text style={styles.titleStyle}>{item.title}</Text>
-                        <Moment style = {styles.textNotFinishedStyle} element={Text} format="DD/MM/YYYY HH:mm">
-                            {item.start_date}
-                        </Moment>
+                    <TouchableHighlight onPress = {() => Actions.event({id: item.id})} style={styles.viewFinishedStyle}>
+                        <View>
+                            <Text style={styles.titleStyle}>{item.title}</Text>
+                            <Moment style = {styles.textNotFinishedStyle} element={Text} format="DD/MM/YYYY HH:mm">
+                                {item.start_date}
+                            </Moment>
+                        </View>
                     </TouchableHighlight>:
                     <View style={styles.viewFinishedStyle}>
                         <Text style={styles.titleStyle}>{item.title}</Text>

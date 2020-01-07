@@ -1,19 +1,24 @@
 import * as React from 'react';
-import {StyleSheet, View, ScrollView} from 'react-native';
+import {StyleSheet, View, ScrollView, ActivityIndicator} from 'react-native';
 import { Text } from 'react-native-ui-kitten';
 import {Header, Icon} from 'react-native-elements';
 import {APP_COLORS} from "../constants/colors";
 import { connect } from 'react-redux';
 import {Actions} from "react-native-router-flux";
 import { FontAwesome,EvilIcons } from '@expo/vector-icons';
+import Moment from 'react-moment';
 
-import {isHidenChange} from "../actions/eventActions";
+import {isHidenChange, fetchEvent} from "../actions/eventActions";
 import BottomNav from "../components/BottomNav";
 
 
 class EventScreen extends React.Component{
     constructor(props) {
         super(props)
+    }
+
+    componentWillMount(){
+        this.props.fetchEvent(this.props.id)
     }
 
     pintarViewHide(){
@@ -70,23 +75,23 @@ class EventScreen extends React.Component{
             <View style={styles.valoracioViewStyle}>
                 <View style={styles.rowStyle}>
                     <Text style={styles.textStyle}>Respecte</Text>
-                    {EventScreen.pintarIconValoracio(this.props.rate_event.respecte)}
+                    {EventScreen.pintarIconValoracio(this.props.event.rate.respect_rate)}
                 </View>
                 <View style={styles.rowStyle}>
                     <Text style={styles.textStyle}>Rotllana</Text>
-                    {EventScreen.pintarIconValoracio(this.props.rate_event.rotllana)}
+                    {EventScreen.pintarIconValoracio(this.props.event.rate.circle_rate)}
                 </View>
                 <View style={styles.rowStyle}>
                     <Text style={styles.textStyle}>Berenar</Text>
-                    {EventScreen.pintarIconValoracio(this.props.rate_event.berenar)}
+                    {EventScreen.pintarIconValoracio(this.props.event.rate.snack_rate)}
                 </View>
                 <View style={styles.rowStyle}>
                     <Text style={styles.textStyle}>Files</Text>
-                    {EventScreen.pintarIconValoracio(this.props.rate_event.files)}
+                    {EventScreen.pintarIconValoracio(this.props.event.rate.line_rate)}
                 </View>
                 <View style={styles.rowStyle}>
                     <Text style={styles.textStyle}>Activitat</Text>
-                    {EventScreen.pintarIconValoracio(this.props.rate_event.activitat)}
+                    {EventScreen.pintarIconValoracio(this.props.event.rate.activity_rate)}
                 </View>
             </View>
         )
@@ -121,84 +126,85 @@ class EventScreen extends React.Component{
 
     render(){
         const {titleStyle, iconInfoTextStyle, infoStyle, viewStyle, subtitleStyle, rowStyle, downloadStyle, descriptionStyle} = styles;
-        return(
-            <View style={viewStyle}>
-                <Header
-                    leftComponent={{ icon: 'home', color: APP_COLORS.color_neutral, onPress: () => Actions.home() }}
-                    centerComponent={{ text: 'VoluntariApp', style: { color: APP_COLORS.color_neutral, fontSize: 25, fontWeight: 'bold' } }}
-                    rightComponent={{ icon: 'person', color: APP_COLORS.color_neutral, onPress: () => Actions.profile()}}
-                    backgroundColor={APP_COLORS.color_orange}
-                />
+        if(this.props.isFetching){
+            return (
+                <View style = {{justifyContent: 'center', alignContent: 'center', width: '100%', height: '100%'}}>
+                    <ActivityIndicator size="large" color={APP_COLORS.color_orange}/>
+                </View>
+            );
+        }
+        else{
+            return(
                 <View style={viewStyle}>
-                    <ScrollView>
-                        <View>
-                            <Text style = {titleStyle}> {this.props.event.title} </Text>
-                        </View>
-                        <View style={iconInfoTextStyle}>
-                            <Icon
-                                name='calendar'
-                                type='evilicon'
-                                color={APP_COLORS.text_color}
-                                size={20}
-                            />
-                            <Text style = {infoStyle}> {this.props.event.data}-{this.props.event.hora} </Text>
-                        </View>
-                        <View style={iconInfoTextStyle}>
-                            <Icon
-                                name='location'
-                                type='evilicon'
-                                color={APP_COLORS.text_color}
-                                size={20}
-                            />
-                            <Text style = {infoStyle}> {this.props.event.grup} </Text>
-                        </View>
-                        <View style={iconInfoTextStyle}>
-                            <Icon
-                                name='question'
-                                type='evilicon'
-                                color={APP_COLORS.text_color}
-                                size={20}
-                            />
-                            <Text style = {infoStyle}> {this.props.event.type} </Text>
-                        </View>
-                        <View>
-                            <View style={rowStyle}>
-                                <Text style = {subtitleStyle}> Activitat </Text>
-                                <FontAwesome name='download' size={22} color= {APP_COLORS.color_green} style={downloadStyle}/>
-                            </View>
-                            <Text style={descriptionStyle}>{this.props.event.activitat}</Text>
-                        </View>
-                        <View>
-                            <View style={rowStyle}>
-                                <Text style = {subtitleStyle}> Valoració </Text>
-                                {EventScreen.pintarValoracioGlobal()}
-                            </View>
+                    <Header
+                        leftComponent={{ icon: 'home', color: APP_COLORS.color_neutral, onPress: () => Actions.home() }}
+                        centerComponent={{ text: 'VoluntariApp', style: { color: APP_COLORS.color_neutral, fontSize: 25, fontWeight: 'bold' } }}
+                        rightComponent={{ icon: 'person', color: APP_COLORS.color_neutral, onPress: () => Actions.profile()}}
+                        backgroundColor={APP_COLORS.color_orange}
+                    />
+                    <View style={viewStyle}>
+                        <ScrollView>
                             <View>
-                                {this.pintarValoracioNens()}
-                            </View>
-                        </View>
-                        <View>
-                            <Text style = {subtitleStyle}> Comentaris </Text>
-                            <Text style={descriptionStyle}>{this.props.event.rate_description}</Text>
-                        </View>
-                        <View>
-                            <View style={rowStyle}>
-                                <Text style = {subtitleStyle}> Assistència </Text>
-                                {this.props.isHiden ? <FontAwesome name='question-circle' size={17} color= {APP_COLORS.color_darkred}
-                                                                   style={styles.questionStyle} onPress={() => this.props.isHidenChange()}/>:
-                                                        null}
-
+                                <Text style = {titleStyle}> {this.props.event.title} </Text>
                             </View>
                             <View style={iconInfoTextStyle}>
-                                {this.pintarAssistencia()}
-                                {this.pintarViewHide()}
+                                <Icon
+                                    name='calendar'
+                                    type='evilicon'
+                                    color={APP_COLORS.text_color}
+                                    size={20}
+                                />
+                                <Moment style = {infoStyle} element={Text} format="DD/MM/YYYY HH:mm">
+                                    {this.props.event.start_date}
+                                </Moment>
                             </View>
-                        </View>
-                    </ScrollView>
+                            <View style={iconInfoTextStyle}>
+                                <Icon
+                                    name='calendar'
+                                    type='evilicon'
+                                    color={APP_COLORS.text_color}
+                                    size={20}
+                                />
+                                <Moment style = {infoStyle} element={Text} format="DD/MM/YYYY HH:mm">
+                                    {this.props.event.end_date}
+                                </Moment>
+                            </View>
+                            <View style={iconInfoTextStyle}>
+                                <Icon
+                                    name='location'
+                                    type='evilicon'
+                                    color={APP_COLORS.text_color}
+                                    size={20}
+                                />
+                                <Text style = {infoStyle}> {this.props.event.group} </Text>
+                            </View>
+                            <View>
+                                <View style={rowStyle}>
+                                    <Text style = {subtitleStyle}> Activitat </Text>
+                                    <FontAwesome name='download' size={22} color= {APP_COLORS.color_green} style={downloadStyle}/>
+                                </View>
+                                <Text style={descriptionStyle}>{this.props.event.description}</Text>
+                            </View>
+                            <View>
+                                <View style={rowStyle}>
+                                    <Text style = {subtitleStyle}> Valoració </Text>
+                                    {EventScreen.pintarValoracioGlobal()}
+                                </View>
+                                <View>
+                                    {this.pintarValoracioNens()}
+                                </View>
+                            </View>
+                            <View>
+                                <Text style = {subtitleStyle}> Comentaris </Text>
+                                <Text style={descriptionStyle}>{this.props.event.rate.comments}</Text>
+                            </View>
+                            
+                        </ScrollView>
+                    </View>
+                    <BottomNav selected={"programacio"}/>
                 </View>
-                <BottomNav selected={"programacio"}/>
-            </View>
-        );
+            );
+        }
     }
 }
 
@@ -302,16 +308,17 @@ const styles = StyleSheet.create({
 const mapStateToProps = (state) => {
     return {
         event: state.eventReducer.event,
-        rate_event: state.eventReducer.rate_event,
         isDisabled: state.eventReducer.isDisabled,
-        isHiden: state.eventReducer.isHiden
+        isHiden: state.eventReducer.isHiden,
+        isFetching: state.eventReducer.isFetching
     }
 
 };
 
 const  mapDispatchToProps = (dispatch)=>{
     return {
-        isHidenChange : () => dispatch(isHidenChange())
+        isHidenChange : () => dispatch(isHidenChange()),
+        fetchEvent: (id) => dispatch(fetchEvent(id))
     }
 };
 

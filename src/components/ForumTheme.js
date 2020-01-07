@@ -50,16 +50,6 @@ class ForumTheme extends React.Component {
                     <View style={viewInformationStyle}>
                         <View style={iconInfoTextStyle}>
                             <Icon
-                                name='user'
-                                type='evilicon'
-                                color={APP_COLORS.text_color}
-                                size={20}
-                            />
-                            <Text style = {infoStyle}> Creat per {this.props.creator} </Text>
-                        </View>
-
-                        <View style={iconInfoTextStyle}>
-                            <Icon
                                 name='calendar'
                                 type='evilicon'
                                 color={APP_COLORS.text_color}

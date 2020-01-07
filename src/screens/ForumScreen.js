@@ -25,7 +25,7 @@ class ForumScreen extends React.Component{
         if(this.props.filters["opened"]){
             return this.props.opened_topics.map((topic)=>{
                 return(
-                    <ForumTheme key={topic.id} titleForum={topic.title} creator={topic.creator} finished={topic.finished} 
+                    <ForumTheme key={topic.id} titleForum={topic.title} finished={topic.finished} 
                                 data={topic.created_date} id={topic.id}/>
                 )
             });

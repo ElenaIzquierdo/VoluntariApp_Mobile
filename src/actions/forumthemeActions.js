@@ -1,20 +1,25 @@
 import {request} from "../request";
+import {AsyncStorage} from "react-native";
 export const fetchForumTopic = (id) => {
     return (dispatch) => {
-        dispatch(requestTopic());
-        const baseUrl = 'http://165.22.76.147:8080/voluntariapp/forum/';
-        const finalPath = baseUrl + id;
-        fetch(finalPath, {
-            method: 'GET',
-            headers: {
-                Accept: 'application/json',
-                'Content-Type': 'application/json',
-            },
-            dataType: 'json',
-        }).then((resp) =>
-            resp.json().then((body) =>
-                dispatch(receiveTopic(body)))
-            );
+        AsyncStorage.getItem('token').then((token) => {
+            dispatch(requestTopic());
+            const baseUrl = 'http://165.22.76.147:8080/voluntariapp/forum/';
+            const finalPath = baseUrl + id;
+            fetch(finalPath, {
+                method: 'GET',
+                headers: {
+                    Accept: 'application/json',
+                    'Content-Type': 'application/json',
+                    Authorization: 'Bearer ' + token
+                },
+                dataType: 'json',
+            }).then((resp) =>
+                resp.json().then((body) =>
+                    dispatch(receiveTopic(body)))
+                );
+            }
+            )
     }
 }
 
