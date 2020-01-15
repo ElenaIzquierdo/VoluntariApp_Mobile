@@ -24,13 +24,13 @@ class Week extends React.Component {
         }
     }
     static renderIconValoracio(rate){
-        if(rate === 0 || rate === null){
+        if(rate === "0.0" || rate === null){
             return(<Text style={[{color: APP_COLORS.text_color},styles.iconAssStyle]}>-</Text>)
         }
-        if(rate === 1){
+        if(rate === "1.0"){
             return(<FontAwesome name='star' size={18} color= {APP_COLORS.color_yellow} style={styles.starStyle}/>)
         }
-        if(rate === 2){
+        if(rate === "2.0"){
             return(
                 <View style={styles.iconInfoTextStyle}>
                     <FontAwesome name='star' size={18} color= {APP_COLORS.color_yellow} style={styles.starStyle}/>
@@ -38,7 +38,7 @@ class Week extends React.Component {
                 </View>
             )
         }
-        if(rate === 3){
+        if(rate === "3.0"){
             return(
                 <View style={styles.iconInfoTextStyle}>
                     <FontAwesome name='star' size={18} color= {APP_COLORS.color_yellow} style={styles.starStyle}/>
@@ -47,7 +47,7 @@ class Week extends React.Component {
                 </View>
             )
         }
-        if(rate === 4){
+        if(rate === "4.0"){
             return(
                 <View style={styles.iconInfoTextStyle}>
                     <FontAwesome name='star' size={18} color= {APP_COLORS.color_yellow} style={styles.starStyle}/>
@@ -57,7 +57,7 @@ class Week extends React.Component {
                 </View>
             )
         }
-        if(rate === 5){
+        if(rate === "5.0"){
             return(
                 <View style={styles.iconInfoTextStyle}>
                     <FontAwesome name='star' size={18} color= {APP_COLORS.color_yellow} style={styles.starStyle}/>
@@ -77,7 +77,6 @@ class Week extends React.Component {
                 <View>
                     <View style={rowStyle}>
                         <Text style={titleStyle}>{this.props.name}</Text>
-                        <FontAwesome name='download' size={25} color= {APP_COLORS.text_color} style={iconStyle}/>
                     </View>
                     <View>
                         <View style={iconInfoTextStyle}>

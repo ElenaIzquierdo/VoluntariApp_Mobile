@@ -43,6 +43,7 @@ class ForumThemeScreen extends React.Component{
             refresh_topic_method={this.props.fetchForumTopic}
             refresh_comments_method={this.props.fetchForumTopicComments}
             id_topic={this.props.id}
+            owner={item.owner}
         />
     );
 

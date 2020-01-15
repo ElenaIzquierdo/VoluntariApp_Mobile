@@ -63,7 +63,6 @@ const requestActivitiesFromWeek = () =>{
 }
 
 const receiveActivitiesFromWeek =(activities)=>{
-    console.log(activities)
     return {
         type: 'RECEIVE_ACTIVITIES_FROM_WEEK',
         data: activities

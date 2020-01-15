@@ -5,7 +5,6 @@ export const changeDescriptionModified = () =>{
 };
 
 export const changeDescription = (descr) =>{
-    console.log("HOLA",descr)
     return{
         type: 'CHANGE_DESCRIPTION¡',
         data: {

@@ -54,7 +54,7 @@ class LoginScreen extends React.Component{
                         <Text style={styles.textButtonStyle}>Acceptar</Text>
                     </TouchableHighlight>
                 </View>
-                <Subtitle text={"No tens compta?"} linkText={"Registrat!"} path={() => Actions.register()}/>
+                <Subtitle text={"No tens compte?"} linkText={"Registrat!"} path={() => Actions.register()}/>
             </View>
         )
     }

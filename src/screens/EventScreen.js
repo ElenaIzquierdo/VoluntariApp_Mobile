@@ -11,6 +11,10 @@ import Moment from 'react-moment';
 import {isHidenChange, fetchEvent} from "../actions/eventActions";
 import BottomNav from "../components/BottomNav";
 
+import * as FileSystem from 'expo-file-system';
+import * as Permissions from 'expo-permissions';
+import * as MediaLibrary from 'expo-media-library';
+
 
 class EventScreen extends React.Component{
     constructor(props) {
@@ -48,14 +52,61 @@ class EventScreen extends React.Component{
         }
     }
 
-    static pintarValoracioGlobal(){
-        return(
-            <View style={styles.viewValoracioStyle}>
-                <FontAwesome name='star' size={18} color= {APP_COLORS.color_yellow} style={styles.starStyle}/>
-                <FontAwesome name='star' size={18} color= {APP_COLORS.color_yellow} style={styles.starStyle}/>
-                <FontAwesome name='star' size={18} color= {APP_COLORS.color_yellow} style={styles.starStyle}/>
-            </View>
-        )
+    pintarValoracioGlobal(){
+        if(this.props.event.rate.total_rate === "0.0"){
+            return(
+                <View style={styles.viewValoracioStyle}>
+                    <Text>
+                        -
+                    </Text>
+                </View>
+            )
+        }
+        else if(this.props.event.rate.total_rate === "1.0"){
+            return(
+                <View style={styles.viewValoracioStyle}>
+                    <FontAwesome name='star' size={18} color= {APP_COLORS.color_yellow} style={styles.starStyle}/> 
+                </View>
+            )
+        }
+        else if(this.props.event.rate.total_rate === "2.0"){
+            return(
+                <View style={styles.viewValoracioStyle}>
+                    <FontAwesome name='star' size={18} color= {APP_COLORS.color_yellow} style={styles.starStyle}/> 
+                    <FontAwesome name='star' size={18} color= {APP_COLORS.color_yellow} style={styles.starStyle}/> 
+                </View>
+            )
+        }
+        else if(this.props.event.rate.total_rate === "3.0"){
+            return(
+                <View style={styles.viewValoracioStyle}>
+                    <FontAwesome name='star' size={18} color= {APP_COLORS.color_yellow} style={styles.starStyle}/> 
+                    <FontAwesome name='star' size={18} color= {APP_COLORS.color_yellow} style={styles.starStyle}/>
+                    <FontAwesome name='star' size={18} color= {APP_COLORS.color_yellow} style={styles.starStyle}/> 
+                </View>
+            )
+        }
+        else if(this.props.event.rate.total_rate === "4.0"){
+            return(
+                <View style={styles.viewValoracioStyle}>
+                    <FontAwesome name='star' size={18} color= {APP_COLORS.color_yellow} style={styles.starStyle}/> 
+                    <FontAwesome name='star' size={18} color= {APP_COLORS.color_yellow} style={styles.starStyle}/>
+                    <FontAwesome name='star' size={18} color= {APP_COLORS.color_yellow} style={styles.starStyle}/>
+                    <FontAwesome name='star' size={18} color= {APP_COLORS.color_yellow} style={styles.starStyle}/> 
+                </View>
+            )
+        }
+        else if(this.props.event.rate.total_rate == "5.0"){
+            return(
+                <View style={styles.viewValoracioStyle}>
+                    <FontAwesome name='star' size={18} color= {APP_COLORS.color_yellow} style={styles.starStyle}/> 
+                    <FontAwesome name='star' size={18} color= {APP_COLORS.color_yellow} style={styles.starStyle}/>
+                    <FontAwesome name='star' size={18} color= {APP_COLORS.color_yellow} style={styles.starStyle}/>
+                    <FontAwesome name='star' size={18} color= {APP_COLORS.color_yellow} style={styles.starStyle}/>
+                    <FontAwesome name='star' size={18} color= {APP_COLORS.color_yellow} style={styles.starStyle}/> 
+                </View>
+            )
+        }
     }
 
     static pintarIconValoracio(i){
@@ -124,6 +175,27 @@ class EventScreen extends React.Component{
         )
     }
 
+    saveFile = async (fileUri) => {
+        const { status } = await Permissions.askAsync(Permissions.CAMERA_ROLL);
+        if (status === "granted") {
+            const asset = await MediaLibrary.createAssetAsync(fileUri)
+            await MediaLibrary.createAlbumAsync("Download", asset, false)
+        }
+    }
+
+    downloadFile(){
+        console.log("download girllll")
+        const uri = "http://165.22.76.147:8080/voluntariapp/event/"+this.props.event.id+"/file"
+        let fileUri = FileSystem.documentDirectory + "fitxa.pdf";
+        FileSystem.downloadAsync(uri, fileUri)
+        .then(({ uri }) => {
+            this.saveFile(uri);
+        })
+        .catch(error => {
+            console.error(error);
+        })
+    }
+
     render(){
         const {titleStyle, iconInfoTextStyle, infoStyle, viewStyle, subtitleStyle, rowStyle, downloadStyle, descriptionStyle} = styles;
         if(this.props.isFetching){
@@ -181,14 +253,13 @@ class EventScreen extends React.Component{
                             <View>
                                 <View style={rowStyle}>
                                     <Text style = {subtitleStyle}> Activitat </Text>
-                                    <FontAwesome name='download' size={22} color= {APP_COLORS.color_green} style={downloadStyle}/>
                                 </View>
                                 <Text style={descriptionStyle}>{this.props.event.description}</Text>
                             </View>
                             <View>
                                 <View style={rowStyle}>
                                     <Text style = {subtitleStyle}> Valoració </Text>
-                                    {EventScreen.pintarValoracioGlobal()}
+                                    {this.pintarValoracioGlobal()}
                                 </View>
                                 <View>
                                     {this.pintarValoracioNens()}

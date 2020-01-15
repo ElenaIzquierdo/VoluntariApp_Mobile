@@ -39,10 +39,10 @@ class SeparadorCI extends React.Component {
 
     renderSelectedExplicacio(){
         if(this.state.explicacio){
-            return(<Text style={styles.textMarkedStyle}>Explicacio</Text>)
+            return(<Text style={styles.textMarkedStyle}>Explicació</Text>)
         }
         else{
-            return(<Text style={styles.textStyle} onPress={()=>{this.touchExplicacio()}}>Explicacio</Text>)
+            return(<Text style={styles.textStyle} onPress={()=>{this.touchExplicacio()}}>Explicació</Text>)
         }
     }
     _keyExtractor = (item) => item.id.toString();

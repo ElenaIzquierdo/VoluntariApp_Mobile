@@ -105,8 +105,7 @@ class HomeScreen extends React.Component{
                                 }
                                 <Switch value={this.props.events_next[this.props.iterator].attending} onValueChange = {this.changeAttending.bind(this)}/>
                             </View>
-                            <FontAwesome name='download' size={55} color= {APP_COLORS.color_button_1} style={iconModalStyle}/>
-                            <Text style={textModalStyle}>Descarregar la fitxa de la tarda</Text>
+                            <Text style={textModalStyle}> {this.props.events_next[this.props.iterator].description}</Text>
     
                         </Modal>
     

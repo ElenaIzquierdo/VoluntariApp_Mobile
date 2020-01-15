@@ -20,7 +20,7 @@ class BottomNav extends React.Component {
                         size={30}
                         onPress = {() => Actions.programacio()}
                     />
-                    <Text style={styles.textSelectedStyle}>Programacio</Text>
+                    <Text style={styles.textSelectedStyle}>Programació</Text>
                 </View>
             )
         }
@@ -34,7 +34,7 @@ class BottomNav extends React.Component {
                         size={30}
                         onPress = {() => Actions.programacio()}
                     />
-                    <Text style={styles.textStyle}>Programacio</Text>
+                    <Text style={styles.textStyle}>Programació</Text>
                 </View>
             )
         }
@@ -52,7 +52,7 @@ class BottomNav extends React.Component {
                         size={30}
                         onPress = {() => Actions.ci()}
                     />
-                    <Text style={styles.textSelectedStyle}>Centre Interes</Text>
+                    <Text style={styles.textSelectedStyle}>Centre Interès</Text>
                 </View>
             )
         }
@@ -66,7 +66,7 @@ class BottomNav extends React.Component {
                         size={30}
                         onPress = {() => Actions.ci()}
                     />
-                    <Text style={styles.textStyle}>Centre Interes</Text>
+                    <Text style={styles.textStyle}>Centre Interès</Text>
                 </View>
             )
         }
@@ -84,7 +84,7 @@ class BottomNav extends React.Component {
                         size={30}
                         onPress = {() => Actions.forum()}
                     />
-                    <Text style={styles.textSelectedStyle}>Forum</Text>
+                    <Text style={styles.textSelectedStyle}>Fòrum</Text>
                 </View>
             )
         }
@@ -98,7 +98,7 @@ class BottomNav extends React.Component {
                         size={30}
                         onPress = {() => Actions.forum()}
                     />
-                    <Text style={styles.textStyle}>Forum</Text>
+                    <Text style={styles.textStyle}>Fòrum</Text>
                 </View>
             )
         }
