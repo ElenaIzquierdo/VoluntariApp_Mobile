@@ -17,3 +17,18 @@ export const createForumTopic=(topicInfo) =>{
         Actions.forum();
     }   
 }
+
+export const changeErrorValue=(value)=>{
+    return{
+        type:'CHANGE_ERROR_VALUE',
+        data: {
+            value
+        }
+    }
+}
+
+export const resetValues=()=>{
+    return{
+        type:'RESET_VALUES'
+    }
+}

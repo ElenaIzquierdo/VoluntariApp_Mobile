@@ -8,7 +8,8 @@ import { connect } from 'react-redux';
 import BottomNav from "../components/BottomNav";
 import Button from "../components/Button";
 
-import {changeCreateTopicFormProperty, createForumTopic} from "../actions/createForumTopicActions";
+import {changeCreateTopicFormProperty, createForumTopic, changeErrorValue,
+            resetValues} from "../actions/createForumTopicActions";
 
 class NewForumThemeScreen extends React.Component{
     constructor(props) {
@@ -16,16 +17,27 @@ class NewForumThemeScreen extends React.Component{
     }
 
     onPressAccept(){
-        const topicInfo = {
-            title: this.props.title,
-            group: this.props.group,
-            description: this.props.description
-        };
-        this.props.createForumTopic(topicInfo)
+        if(this.props.title != "" && this.props.group != "" && this.props.description != ""){
+            const topicInfo = {
+                title: this.props.title,
+                group: this.props.group,
+                description: this.props.description
+            };
+            this.props.resetValues()
+            this.props.createForumTopic(topicInfo)
+        }
+        else{
+            this.props.changeErrorValue(false)
+        }
+    }
+
+    onPressCancel(){
+        this.props.resetValues()
+        Actions.forum()
     }
 
     render(){
-        const {viewStyle, inputStyle, labelStyle, titleStyle, viewFormStyle} = styles;
+        const {viewStyle, inputStyle, labelStyle, titleStyle, viewFormStyle, redTextStyle} = styles;
         return(
             <View style={viewStyle}>
                 <Header
@@ -56,8 +68,9 @@ class NewForumThemeScreen extends React.Component{
                         </Picker>
                     </View>
                 </View>
+                {this.props.error_value ? <Text style={redTextStyle}>Tots els camps són obligatoris</Text>:null}
                 <View style={{flexDirection: 'row', justifyContent: 'space-between', height: '7%'}}>
-                    <TouchableHighlight style={{paddingLeft: '5%', paddingTop: '3%'}} onPress={() => Actions.forum()}>
+                    <TouchableHighlight style={{paddingLeft: '5%', paddingTop: '3%'}} onPress={this.onPressCancel.bind(this)}>
                         <Text style={{color:APP_COLORS.color_darkred}}>Cancel</Text>
                     </TouchableHighlight>
                     <Button colorButton={APP_COLORS.color_checked} text={"Crear"} path={this.onPressAccept.bind(this)}/>
@@ -103,6 +116,11 @@ const styles = StyleSheet.create({
     viewFormStyle: {
        alignContent: 'center',
         paddingTop: '15%'
+    },
+    redTextStyle: {
+        fontSize: 15,
+        marginLeft: '7%',
+        color: APP_COLORS.color_darkred
     }
 });
 
@@ -111,7 +129,8 @@ const mapStateToProps = (state) => {
         title: state.createForumTopicReducer.title,
         description: state.createForumTopicReducer.description,
         group: state.createForumTopicReducer.group,
-        group_choices: state.createForumTopicReducer.group_choices
+        group_choices: state.createForumTopicReducer.group_choices,
+        error_value: state.createForumTopicReducer.error_value
     }
 
 };
@@ -119,7 +138,9 @@ const mapStateToProps = (state) => {
 const  mapDispatchToProps = (dispatch)=>{
     return {
         changeCreateTopicFormProperty : (propertyName, value) => dispatch(changeCreateTopicFormProperty(propertyName, value)),
-        createForumTopic: (topicInfo) => dispatch(createForumTopic(topicInfo))
+        createForumTopic: (topicInfo) => dispatch(createForumTopic(topicInfo)),
+        changeErrorValue: (value) => dispatch(changeErrorValue(value)),
+        resetValues: () => dispatch(resetValues())
     }
 };
 
