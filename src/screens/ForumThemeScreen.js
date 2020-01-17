@@ -64,11 +64,6 @@ class ForumThemeScreen extends React.Component{
             return(
                 <View style={styles.viewNoComments}>
                     <Text style={styles.textNoComments}>No hi ha comentaris per aquest tema encara</Text>
-                    {this.props.theme.finished ? null: 
-                        <TouchableHighlight onPress={()=>this.props.changeModal()}>
-                            <Text style={styles.newCommentLinkText}>Afegir un comentari</Text>
-                        </TouchableHighlight>
-                    }
                 </View>
             )
         }
@@ -141,13 +136,16 @@ class ForumThemeScreen extends React.Component{
     }
 
     publishComment(){
-        const commentInfo = {
-            content: this.props.new_comment,
-            forumtheme: this.props.id
-        };
-        this.props.publishNewComment(commentInfo);
-        this.props.changeNewComment("");
-        this.props.changeModal();
+        if(this.props.new_comment != ""){
+            const commentInfo = {
+                content: this.props.new_comment,
+                forumtheme: this.props.id
+            };
+            this.props.publishNewComment(commentInfo);
+            this.props.changeNewComment("");
+            this.props.changeModal();
+            this.props.fetchForumTopicComments(this.props.id);
+        }
     }
     
     cancelNewComment(){
