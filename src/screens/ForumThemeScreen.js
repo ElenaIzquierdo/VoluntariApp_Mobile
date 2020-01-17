@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { StyleSheet, View, ActivityIndicator, TouchableHighlight, FlatList, TextInput } from 'react-native';
+import { StyleSheet, View, ActivityIndicator, TouchableHighlight, FlatList, TextInput, Alert } from 'react-native';
 import {Text} from 'react-native-ui-kitten';
 import {Header} from 'react-native-elements';
 import {APP_COLORS} from "../constants/colors";
@@ -114,25 +114,43 @@ class ForumThemeScreen extends React.Component{
                 </View>
             );
         }
-
     }
 
     oncloseForumTopic(){
         const forumTopicInfo = {
             finished: true
         };
-        this.props.changeStatusTopic(this.props.id, forumTopicInfo);
-        this.props.fetchForumTopic(this.props.id);
-        this.props.fetchForumTopicComments(this.props.id);
+        Alert.alert(
+            'Tancar tema',
+            'Estàs segur que vols tancar aquest tema?',
+            [
+                {text: 'No'},
+                {text: 'Sí', onPress: () => {this.props.changeStatusTopic(this.props.id, forumTopicInfo);
+                                            this.props.fetchForumTopic(this.props.id);
+                                            this.props.fetchForumTopicComments(this.props.id);
+                                            }}
+            ],
+            { cancelable: false }
+        );   
     }
 
     onopenForumTopic(){
         const forumTopicInfo = {
             finished: false
         };
-        this.props.changeStatusTopic(this.props.id, forumTopicInfo);
-        this.props.fetchForumTopic(this.props.id);
-        this.props.fetchForumTopicComments(this.props.id);
+        Alert.alert(
+            'Obrir tema',
+            'Estàs segur que vols obrir aquest tema?',
+            [
+                {text: 'No'},
+                {text: 'Sí', onPress: () => {this.props.changeStatusTopic(this.props.id, forumTopicInfo);
+                                            this.props.fetchForumTopic(this.props.id);
+                                            this.props.fetchForumTopicComments(this.props.id);
+                                            }}
+            ],
+            { cancelable: false }
+        );
+        
     }
 
     publishComment(){
