@@ -266,7 +266,7 @@ const styles = StyleSheet.create({
         alignSelf: 'center'
     },
     modal: {
-        height: '45%',
+        height: '20%',
         width: '75%'
     },
     iconModalStyle: {
