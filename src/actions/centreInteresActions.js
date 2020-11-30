@@ -1,4 +1,6 @@
 import {AsyncStorage} from "react-native";
+import {CENTRE_INTERES_ACTIONS} from "../constants/actions";
+
 export const fetchExplicacions = (centreInteresId) => {
     return (dispatch) => {
         AsyncStorage.getItem('token').then((token) => {
@@ -24,13 +26,13 @@ export const fetchExplicacions = (centreInteresId) => {
 
 const requestExplicacions = () =>{
     return{
-        type: 'REQUEST_EXPLICACIONS'
+        type: CENTRE_INTERES_ACTIONS.RequestExplicacions
     }
 }
 
 const receiveExplicacions =(explicacions)=>{
     return {
-        type: 'RECEIVE_EXPLICACIONS',
+        type: CENTRE_INTERES_ACTIONS.ReceiveExplicacions,
         data: explicacions
     }
 }
@@ -60,13 +62,13 @@ export const fetchObjectius = (centreInteresId) => {
 
 const requestObjectius = () =>{
     return{
-        type: 'REQUEST_OBJECTIUS'
+        type: CENTRE_INTERES_ACTIONS.RequestObjectius
     }
 }
 
 const receiveObjectius =(objectius)=>{
     return {
-        type: 'RECEIVE_OBJECTIUS',
+        type: CENTRE_INTERES_ACTIONS.ReceiveObjectius,
         data: objectius
     }
 }
